@@ -1,60 +1,393 @@
-/* Anondo Bangla Premium layer — keeps the existing app structure and data logic */
-:root{
- --bg:#f3f7f5;--card:#ffffff;--text:#142b24;--muted:#65766f;
- --primary:#087f5b;--primary2:#066448;--accent:#e6b64d;
- --line:#dce8e2;--soft:#eaf6f0;--shadow:0 12px 34px rgba(12,62,43,.09);
+/* ANONDO BANGLA — PREMIUM UI REFRESH v3
+   Presentation-only stylesheet. Existing HTML, 64-district data and JavaScript remain unchanged. */
+
+:root {
+  --bg: #f2f7f4;
+  --card: #ffffff;
+  --text: #132c22;
+  --muted: #65786d;
+  --primary: #087b53;
+  --primary2: #055b3e;
+  --accent: #e6b64d;
+  --line: #dce9e1;
+  --soft: #e8f5ed;
+  --shadow: 0 14px 36px rgba(8, 54, 35, .085);
 }
-body{background:radial-gradient(ellipse at 8% 0%,rgba(8,127,91,.07),transparent 32%),var(--bg);letter-spacing:.005em}
-.app{max-width:1240px}
-.topbar{padding:11px 14px;margin:0 -14px;border-radius:0 0 20px 20px;background:rgba(255,255,255,.88);box-shadow:0 5px 24px rgba(10,50,35,.07);border:1px solid rgba(220,232,226,.8)}
-.logo{display:flex;align-items:center;gap:10px;font-size:24px;letter-spacing:-.7px}
-.logo:before{content:"";display:inline-block;width:42px;height:42px;flex:0 0 42px;border-radius:12px;background:url("brand-logo.svg") center/cover no-repeat;box-shadow:0 5px 14px rgba(8,127,91,.18)}
-.logo span{color:#d39a22}
-.hero{padding-top:25px}
-.hero-box{position:relative;overflow:hidden;border:1px solid #d6e9df;border-radius:26px;padding:clamp(22px,4vw,38px);background:linear-gradient(118deg,#e2f4eb 0%,#fff 56%,#fff4d9 100%);box-shadow:0 18px 42px rgba(9,79,53,.10)}
-.hero-box:after{content:"";position:absolute;width:210px;height:210px;right:-55px;top:-70px;border:24px solid rgba(8,127,91,.07);border-radius:50%;pointer-events:none}
-.hero-box h1{max-width:720px;color:#104d39}
-.hero-box p{font-size:15px;line-height:1.8}
-.hero-primary,.primary-btn{background:linear-gradient(135deg,#09845e,#066448);border-color:#087f5b;box-shadow:0 6px 16px rgba(8,127,91,.18);color:#fff}
-.hero-primary:hover,.primary-btn:hover,.travel-btn:hover{transform:translateY(-1px);filter:brightness(.97)}
-.icon-btn,.travel-btn,.hero-primary,.hero-secondary,.primary-btn,.secondary-btn,.export-buttons button{border-radius:13px;transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
-.stat,.profile-box,.controls,.map-board,.district-card,.progress-box,.export-box,.badge{border-color:#e0ebe5;box-shadow:0 8px 25px rgba(18,64,46,.055)}
-.stat{border-radius:18px;padding:17px 12px}
-.stat-number{color:var(--primary);font-variant-numeric:tabular-nums}
-.section-title h2{letter-spacing:-.35px}
-.profile-box{border-radius:20px}
-.profile-preview{border-color:#cce7d9;box-shadow:0 5px 18px rgba(8,127,91,.12)}
-.input{border-color:#d7e3dc;border-radius:12px}
-.input:focus{border-color:#0b8b63;box-shadow:0 0 0 4px rgba(8,127,91,.10)}
-.controls,.map-board,.progress-box,.export-box{border-radius:19px}
-.division-block{border-color:#e0ebe5;background:linear-gradient(160deg,#fff,#f8fcfa);border-radius:15px}
-.district-node{border-color:#dce8e2;border-radius:9px}
-.district-node.visited{background:linear-gradient(135deg,#09845e,#066448)}
-.district-card{border-radius:17px;transition:transform .18s ease,box-shadow .18s ease}
-.district-card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(18,64,46,.10)}
-.district-card.visited{background:linear-gradient(145deg,#f0faf4,#fff);border-color:#a8d7bd}
-.division-tag{background:#eaf6ef;color:#08734f;font-weight:700}
-.district-actions .visit-btn{background:linear-gradient(135deg,#09845e,#066448)}
-.progress{background:#e5eee9}
-.progress-bar{background:linear-gradient(90deg,#087f5b,#35b98b,#e6b64d)}
-.badge{border-radius:18px}
-.badge-status{background:#eaf7ed;color:#166534}
-.export-buttons button:hover{background:#087f5b}
-.footer{border-top:1px solid var(--line);margin-top:30px}
-.theme-dark{--bg:#0b1713;--card:#13231c;--text:#edf7f1;--muted:#a7b9af;--primary:#42c394;--primary2:#249d72;--accent:#f0c35e;--line:#294237;--soft:#17372a;--shadow:0 12px 34px rgba(0,0,0,.20)}
-.theme-dark .topbar{background:rgba(19,35,28,.92);border-color:#294237}
-.theme-dark .hero-box{background:linear-gradient(120deg,#153b2c,#17251d 58%,#3c321b);border-color:#315844}
-.theme-dark .hero-box h1{color:#e9fff3}
-.theme-dark .division-block{background:#13231c}
-.theme-dark .district-card.visited{background:#17372a}
-.theme-dark .division-tag{background:#173b2b;color:#72ddb0}
-.theme-dark .profile-preview{border-color:#315844}
-@media(max-width:560px){
- .topbar{margin:0 -10px;padding:8px 11px;border-radius:0 0 16px 16px}
- .logo{font-size:19px;gap:8px}
- .logo:before{width:36px;height:36px;flex-basis:36px;border-radius:10px}
- .hero-box{border-radius:19px}
- .hero-box p{font-size:12px}
- .district-card:hover{transform:none}
+
+html { scroll-padding-top: 84px; }
+
+body {
+  background:
+    radial-gradient(ellipse at 4% 4%, rgba(8,123,83,.09), transparent 30%),
+    radial-gradient(ellipse at 96% 20%, rgba(230,182,77,.10), transparent 26%),
+    var(--bg);
+  color: var(--text);
 }
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+
+.app { max-width: 1280px; }
+
+body .topbar {
+  padding: 11px 15px;
+  margin: 0 -14px;
+  border: 1px solid rgba(220,233,225,.9);
+  border-top: 0;
+  border-radius: 0 0 20px 20px;
+  background: rgba(255,255,255,.91);
+  box-shadow: 0 8px 28px rgba(8,54,35,.07);
+}
+
+body .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 25px;
+  letter-spacing: -.8px;
+}
+
+body .logo:before {
+  content: "";
+  width: 43px;
+  height: 43px;
+  flex: 0 0 43px;
+  border-radius: 13px;
+  background: url("brand-logo.svg") center/cover no-repeat;
+  box-shadow: 0 6px 16px rgba(8,123,83,.2);
+}
+
+body .logo span { color: #c58d1b; }
+
+body .hero { padding-top: 25px; }
+
+body .hero-box {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 245px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid #176849;
+  border-radius: 28px;
+  padding: clamp(24px, 4vw, 44px);
+  color: #fff;
+  background:
+    radial-gradient(circle at 86% 28%, rgba(255,255,255,.16) 0 8%, transparent 8.5%),
+    radial-gradient(ellipse at 100% 100%, rgba(230,182,77,.28), transparent 38%),
+    linear-gradient(118deg, #064b35 0%, #087b53 52%, #0b6045 100%);
+  box-shadow: 0 22px 48px rgba(5,74,48,.20);
+}
+
+body .hero-box:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 310px;
+  height: 310px;
+  right: 5%;
+  top: -115px;
+  border: 1px solid rgba(255,255,255,.17);
+  border-radius: 50%;
+  box-shadow: 0 0 0 25px rgba(255,255,255,.035), 0 0 0 58px rgba(255,255,255,.025);
+}
+
+body .hero-box:after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 180px;
+  height: 180px;
+  right: 11%;
+  bottom: -115px;
+  border-radius: 50%;
+  background: #e11d2e;
+  box-shadow: 0 0 0 18px rgba(255,255,255,.07);
+}
+
+body .hero-box h1 {
+  max-width: 720px;
+  color: #fff;
+  font-size: clamp(30px, 5vw, 48px);
+  line-height: 1.2;
+  letter-spacing: -.8px;
+  text-shadow: 0 2px 16px rgba(0,0,0,.12);
+}
+
+body .hero-box p {
+  max-width: 690px;
+  color: rgba(255,255,255,.86);
+  font-size: 15px;
+  line-height: 1.85;
+}
+
+body .icon-btn,
+body .travel-btn,
+body .hero-primary,
+body .hero-secondary,
+body .primary-btn,
+body .secondary-btn,
+body .export-buttons button {
+  border-radius: 13px;
+  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+}
+
+body .hero-primary,
+body .primary-btn {
+  background: linear-gradient(135deg, #e8bd5c, #d49b2c);
+  color: #173b2b;
+  border: 1px solid #f0cf7d;
+  font-weight: 800;
+  box-shadow: 0 7px 18px rgba(0,0,0,.13);
+}
+
+body .hero-primary:hover,
+body .primary-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.04);
+  color: #173b2b;
+}
+
+body .hero-secondary {
+  background: rgba(255,255,255,.12);
+  border-color: rgba(255,255,255,.34);
+  color: #fff;
+  backdrop-filter: blur(8px);
+  font-weight: 700;
+}
+
+body .hero-secondary:hover {
+  background: rgba(255,255,255,.22);
+  color: #fff;
+}
+
+body .share-button:hover {
+  border-color: #f0cf7d;
+  color: #fff;
+  background: rgba(255,255,255,.2);
+}
+
+body .stat,
+body .profile-box,
+body .controls,
+body .map-board,
+body .district-card,
+body .progress-box,
+body .export-box,
+body .badge {
+  border-color: var(--line);
+  box-shadow: var(--shadow);
+}
+
+body .stat {
+  border-radius: 18px;
+  padding: 17px 12px;
+}
+
+body .stat-number {
+  color: var(--primary);
+  font-variant-numeric: tabular-nums;
+}
+
+body .section-title h2 { letter-spacing: -.45px; }
+body .profile-box { border-radius: 20px; }
+
+body .profile-preview {
+  border-color: #cbe5d6;
+  box-shadow: 0 6px 18px rgba(8,123,83,.13);
+}
+
+body .input {
+  border-color: #d4e3d9;
+  border-radius: 12px;
+  background: #fff;
+}
+
+body .input:focus {
+  border-color: #087b53;
+  box-shadow: 0 0 0 4px rgba(8,123,83,.1);
+}
+
+body .controls,
+body .map-board,
+body .progress-box,
+body .export-box { border-radius: 19px; }
+
+body .division-block {
+  border-color: #dce9e1;
+  background: linear-gradient(155deg, #fff, #f5faf7);
+  border-radius: 15px;
+}
+
+body .division-title { color: #174b36; }
+
+body .district-node {
+  border-color: #d8e7de;
+  border-radius: 9px;
+  transition: background .15s ease, transform .15s ease;
+}
+
+body .district-node:hover {
+  transform: translateY(-1px);
+  border-color: #0b8a5d;
+}
+
+body .district-node.visited {
+  background: linear-gradient(135deg, #0a895d, #056144);
+  border-color: #087b53;
+}
+
+body .district-card {
+  border-radius: 17px;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+body .district-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 34px rgba(8,54,35,.12);
+}
+
+body .district-card.visited {
+  background: linear-gradient(145deg, #edf8f1, #fff);
+  border-color: #9fd2b4;
+}
+
+body .division-tag {
+  background: #e8f5ed;
+  color: #08734f;
+  font-weight: 800;
+}
+
+body .district-actions .visit-btn {
+  background: linear-gradient(135deg, #09845e, #066448);
+}
+
+body .progress { background: #e4eee8; }
+
+body .progress-bar {
+  background: linear-gradient(90deg, #087b53, #35b98b, #e6b64d);
+}
+
+body .badge { border-radius: 18px; }
+
+body .badge-status {
+  background: #e8f7ed;
+  color: #166534;
+}
+
+body .export-buttons button:hover {
+  background: #087b53;
+  border-color: #087b53;
+}
+
+body .modal-box { box-shadow: 0 24px 70px rgba(0,0,0,.25); }
+body .footer { border-top: 1px solid var(--line); margin-top: 30px; }
+
+body.theme-dark {
+  --bg: #0a1711;
+  --card: #13231a;
+  --text: #edf7f0;
+  --muted: #a8b9ae;
+  --primary: #42c394;
+  --primary2: #249d72;
+  --accent: #f0c35e;
+  --line: #294237;
+  --soft: #17372a;
+  --shadow: 0 14px 36px rgba(0,0,0,.22);
+}
+
+body.theme-dark .topbar {
+  background: rgba(19,35,26,.94);
+  border-color: #294237;
+}
+
+body.theme-dark .hero-box {
+  background:
+    radial-gradient(circle at 86% 28%, rgba(255,255,255,.12) 0 8%, transparent 8.5%),
+    radial-gradient(ellipse at 100% 100%, rgba(230,182,77,.18), transparent 38%),
+    linear-gradient(118deg, #092e20, #105b3e 58%, #173a2b);
+  border-color: #315844;
+}
+
+body.theme-dark .division-block { background: #13231a; }
+body.theme-dark .district-card.visited { background: #17372a; }
+
+body.theme-dark .division-tag {
+  background: #173b2b;
+  color: #72ddb0;
+}
+
+body.theme-dark .profile-preview { border-color: #315844; }
+
+body.theme-dark .input {
+  background: #101e16;
+  color: var(--text);
+  border-color: #345344;
+}
+
+body.theme-dark .hero-secondary {
+  background: rgba(255,255,255,.1);
+  color: #fff;
+}
+
+@media (max-width: 800px) {
+  body .hero-box { min-height: 220px; }
+}
+
+@media (max-width: 560px) {
+  body .topbar {
+    margin: 0 -10px;
+    padding: 8px 11px;
+    border-radius: 0 0 16px 16px;
+  }
+
+  body .logo { font-size: 19px; gap: 8px; }
+
+  body .logo:before {
+    width: 36px;
+    height: 36px;
+    flex-basis: 36px;
+    border-radius: 10px;
+  }
+
+  body .hero { padding-top: 13px; }
+
+  body .hero-box {
+    min-height: 205px;
+    padding: 17px;
+    border-radius: 19px;
+  }
+
+  body .hero-box h1 {
+    font-size: 26px;
+    line-height: 1.24;
+  }
+
+  body .hero-box p {
+    font-size: 12px;
+    line-height: 1.65;
+  }
+
+  body .hero-box:before {
+    width: 210px;
+    height: 210px;
+    right: -65px;
+    top: -70px;
+  }
+
+  body .hero-box:after {
+    width: 115px;
+    height: 115px;
+    right: 8%;
+    bottom: -80px;
+  }
+
+  body .stat { border-radius: 13px; }
+  body .district-card:hover { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *:before, *:after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}

@@ -1,0 +1,18 @@
+ANONDO BANGLA — PREMIUM UI REFRESH v3
+
+এই আপডেটে:
+1. premium.css — নতুন premium green/gold UI design
+2. sw.js — cache version v3, যাতে পুরোনো CSS cache থেকে না আসে
+
+GitHub-এ আপলোড:
+1. rayhanjavaengineer-dotcom/anondo-bangla repository খুলুন।
+2. premium.css ফাইল খুলে Edit (pencil) চাপুন।
+3. এই ZIP-এর premium.css-এর সম্পূর্ণ কোড দিয়ে Replace করুন।
+4. Commit changes করুন।
+5. একইভাবে sw.js ফাইলটিও ZIP-এর sw.js দিয়ে Replace করে Commit changes করুন।
+
+গুরুত্বপূর্ণ:
+- index.html-এর নাম/কোড বদলাতে হবে না।
+- index.html-এ premium.css আগেই linked আছে।
+- ৬৪ জেলার ডেটা, JavaScript, profile, visited list, points ও achievement card অপরিবর্তিত।
+- Commit করার পর ওয়েবসাইট refresh করুন। প্রয়োজনে browser-এর site data/cache clear করে পুনরায় খুলুন।
