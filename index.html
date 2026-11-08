@@ -27,7 +27,7 @@
 <!-- Premium Logo & CSS -->
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="stylesheet" href="premium.css">
-
+<link rel="stylesheet" href="travel-tools.css">
 <title>Anondo Bangla | Explore Bangladesh</title>
 <style>
 :root{--bg:#f4f7f8;--card:#fff;--text:#172033;--muted:#667085;--primary:#0f766e;--primary2:#0b5f59;--accent:#f59e0b;--line:#e3e8ee;--soft:#eef8f6;--danger:#b42318;--shadow:0 8px 24px rgba(15,23,42,.07)}
@@ -202,6 +202,6 @@ function shareSite(){const shareData={title:"Anondo Bangla | Explore Bangladesh"
 function registerServiceWorker(){if("serviceWorker" in navigator&&window.location.protocol!=="file:"){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}}
 function init(){loadState();$("nameInput").value=profileName;updateProfilePreview();renderDivisionMap();renderDistricts();updateStats();$("themeButton").addEventListener("click",function(){document.body.classList.toggle("theme-dark");applyTheme();});$("travelButton").addEventListener("click",function(){$("explorerSection").scrollIntoView({behavior:"smooth"});});$("exploreButton").addEventListener("click",function(){$("explorerSection").scrollIntoView({behavior:"smooth"});});$("profileButton").addEventListener("click",function(){$("profileSection").scrollIntoView({behavior:"smooth"});$("nameInput").focus();});$("shareButton").addEventListener("click",shareSite);$("searchInput").addEventListener("input",function(){renderDistricts();});$("divisionSelect").addEventListener("change",function(){renderDistricts();});$("visitedOnly").addEventListener("change",function(){renderDistricts();});$("saveProfileButton").addEventListener("click",saveProfile);$("photoInput").addEventListener("change",function(){const files=$("photoInput").files;if(!files||!files.length)return;const file=files[0];if(file.size>8*1024*1024){setStatus("ছবিটি 8MB-এর কম দিন");return;}resizePhoto(file).then(function(data){if(data){profilePhoto=data;safeSave(STORAGE_PHOTO,profilePhoto);updateProfilePreview();buildPrintCard();setStatus("ছবি saved ✓");}else setStatus("ছবি পড়া যায়নি");});});$("pngButton").addEventListener("click",function(){downloadAchievement("png");});$("jpgButton").addEventListener("click",function(){downloadAchievement("jpg");});$("pdfButton").addEventListener("click",printAchievementCard);$("resetButton").addEventListener("click",resetData);$("modalClose").addEventListener("click",closeModal);registerServiceWorker();}
 window.addEventListener("DOMContentLoaded",init);
-</script>
+<script src="travel-tools.js"></script>
 </body>
 </html>
