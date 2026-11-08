@@ -1,10 +1,12 @@
-/* Anondo Bangla offline cache — Premium UI v3 */
-const CACHE_NAME = "anondo-bangla-premium-v3";
+/* Anondo Bangla offline cache — Premium UI v4 */
+const CACHE_NAME = "anondo-bangla-premium-v4";
 const CORE_ASSETS = [
   "./",
   "./index.html",
   "./manifest.json",
   "./premium.css",
+  "./travel-tools.css",
+  "./travel-tools.js",
   "./brand-logo.svg",
   "./favicon.svg",
   "./icon-192.png",
