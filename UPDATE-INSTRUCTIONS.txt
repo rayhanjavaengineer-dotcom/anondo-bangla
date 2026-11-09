@@ -1,57 +1,58 @@
-ANONDO BANGLA — ULTIMATE INTERNATIONAL EDITION
-==============================================
+ANONDO BANGLA — GLOBAL EDITION UPDATE
+=====================================
 
-IMPORTANT: This ZIP is a complete root-level site update. Keep the existing
-repository and Cloudflare Pages Git integration. Do not create a new project.
-
-GITHUB REPOSITORY
------------------
-rayhanjavaengineer-dotcom/anondo-bangla
+This is a complete root-level replacement package for the existing repository.
+Repository: rayhanjavaengineer-dotcom/anondo-bangla
 Branch: main
+Hosting: existing Cloudflare Pages Git integration
 
-INSTALL
--------
-1. Download and extract this ZIP on your computer.
-2. Open the existing GitHub repository.
-3. Upload/replace the files from this ZIP in the repository ROOT.
-4. Keep every file in the ZIP. Do not upload the ZIP itself as the website.
-5. Commit the changes to main.
-6. Cloudflare Pages should automatically start a deployment from the connected
-   GitHub repository. Wait until the deployment status is Success.
+UPLOAD
+------
+1. Extract this ZIP.
+2. Upload/replace ALL files inside the extracted folder in the repository ROOT.
+3. Do not upload the ZIP file itself. Do not delete existing repository settings.
+4. Commit to main. Cloudflare Pages should deploy automatically.
 
-CLOUDFLARE PAGES SETTINGS
--------------------------
-Framework preset: None (or existing setting)
-Build command: leave empty
-Build output directory: / (repository root)
-Root directory: / (repository root)
-Environment variables: none required for this static edition
-
-Do not add Workers, D1, KV, or a custom domain for this release.
-The included _headers file is read automatically by Cloudflare Pages.
-
-AFTER DEPLOYMENT
+CLOUDFLARE PAGES
 ----------------
-1. Open the Cloudflare Pages production URL.
-2. Test on both laptop and Android mobile browser.
-3. If an installed PWA shows an old version, close all tabs of the site and
-   reopen it. If necessary, uninstall and reinstall the PWA after confirming
-   the new deployment is successful.
+Framework preset: None
+Build command: blank
+Build output directory: / (root)
+Root directory: / (root)
+No environment variables are required for this static build.
 
-PRIVACY & DATA
---------------
-Profile, visited districts, Wishlist, Budget, Gallery, Planner and Journal
-are stored locally in the browser. They do not automatically synchronize
-between devices. Use Data Backup & Restore to transfer personal data.
-QR Travel Card calls a third-party QR image service only after the user checks
-the consent box. The QR payload contains the chosen display name, visited
-count and public website URL.
+FEATURES PRESERVED
+------------------
+- Original Anondo Bangla branding and creator credit.
+- Bangladesh's existing 64-district dataset and Division Explorer.
+- Existing profile name/photo, visited districts, theme and LocalStorage keys.
+- Existing travel tools: Wishlist, Passport, Budget, Food Guide, Photo Gallery,
+  Planner, Journal, QR Travel Card, Festival Calendar, Emergency info, Backup/Restore.
+- Existing achievement card downloads, print, district details and PWA/offline shell.
+- Premium Travel Identity profile integrated into the existing profile location.
 
-SCOPE NOTES
------------
-This is a static, local-first web app. Real user accounts, cloud sync, public
-community uploads/reviews, live booking, live weather, live route distance,
-and live hotel/transport prices require trusted live data sources and/or a
-backend. They are not represented as working live services in this edition.
-National fixed-date observances are shown; lunar festival dates must be
-verified against official announcements each year.
+GLOBAL FEATURES
+---------------
+- Global Country Explorer loads country names, flags, capital, region, currencies,
+  languages and time zones from REST Countries v3.1 when online; a 7-day local cache
+  supports previously loaded reference data offline.
+- Currency Converter uses Frankfurter daily reference rates (no API key); rates are
+  cached locally for up to 6 hours. The shown date is the provider's rate date.
+- Rates are indicative reference rates, NOT bank cash/card/remittance buy-sell rates.
+
+IMPORTANT LIMITATIONS
+--------------------
+This is still a static website. The Global Country Explorer is a country reference
+directory; it does NOT yet provide verified subnational administrative boundaries
+for every country, live hotels/restaurants/transport bookings, visas, emergency
+contacts for every country, user accounts, cloud sync or server-side exchange-rate
+history/charts. Those require additional verified datasets and/or a backend.
+Currency and country data require an internet connection for first load and updates.
+
+VALIDATION
+----------
+JavaScript syntax checks were run for the inline application script and all JS
+assets. HTML structural checks, duplicate-ID checks, local asset references, 64
+district record count and legacy storage-key checks were run on this package.
+A live browser/Cloudflare deployment test is not possible from this ZIP build;
+please wait for Cloudflare deployment Success before replacing an installed PWA.

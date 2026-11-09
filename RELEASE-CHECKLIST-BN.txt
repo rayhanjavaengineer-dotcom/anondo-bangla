@@ -1,0 +1,19 @@
+Anondo Bangla Global Edition — Release Verification
+
+পরীক্ষিত বিষয়:
+[OK] মূল index.html এবং brand title সংরক্ষিত
+[OK] districts dataset-এ ৬৪টি D(...) record আছে
+[OK] LocalStorage keys: anondoBanglaVisitedV4, anondoBanglaNameV4, anondoBanglaPhotoV4, anondoBanglaThemeV4 অক্ষত
+[OK] travel-tools.js ও travel-tools.css অক্ষত
+[OK] profile patch একই profileSection-এ integrate করা হয়েছে
+[OK] profile photo remove action মূল profilePhoto variable ও storage উভয় আপডেট করে
+[OK] Global Explorer ও Currency Converter আলাদা assets-এ যোগ করা হয়েছে
+[OK] Service worker cache version bump এবং নতুন assets precache তালিকায় আছে
+[OK] প্রতিটি local asset path package-এ আছে
+[OK] JavaScript syntax, duplicate HTML IDs, local link targets যাচাই করা হয়েছে
+
+সীমা:
+[INFO] লাইভ browser/device test এবং Cloudflare deployment test করা হয়নি।
+[INFO] Country Explorer-এর দেশভিত্তিক প্রশাসনিক subdivision সব দেশের জন্য নেই।
+[INFO] Currency data daily reference rate; ব্যাংকের buy/sell rate নয়।
+[INFO] Existing localStorage data একই browser-এ থাকে; ZIP update করলে নিজে থেকে মুছে যায় না।
