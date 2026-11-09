@@ -1,0 +1,92 @@
+ANONDO BANGLA — RELEASE CANDIDATE STATUS
+========================================
+
+এই নথি প্যাকেজের বাস্তব scope ও যাচাইয়ের সীমা জানায়। অসম্পূর্ণ ফিচারকে সম্পূর্ণ বলা হয়নি।
+
+এই প্যাকেজে অন্তর্ভুক্ত / উন্নত:
+- Premium light/dark theme; Hero Box ও full-app background আলাদা; responsive CSS.
+- Dedicated tool navigation; #tool-<key> deep-link, refresh এবং Back/Forward route restore.
+- Global Country Explorer: country/territory name, capital, region, currency, language,
+  calling code, timezone, area, population; search, region filter, sort, cache/retry.
+- Global Travel Records: ব্যবহারকারী নিজে দেশ/স্থান/তারিখ/নোট যোগ, মুছতে ও local device-এ রাখতে পারবেন.
+- Global country/place/points statistics: unique country ও unique country+place থেকে হিসাব;
+  প্রতি unique place-এ ১০ points. একাধিক ভ্রমণ-তারিখ আলাদা record হতে পারে।
+- Global records, expenses ও packing checklist backup/restore payload-এ অন্তর্ভুক্ত.
+- Backup restore validation উন্নত: পুরোনো/আংশিক backup-এ অনুপস্থিত field থাকলে বর্তমান ডেটা অকারণে overwrite হবে না; restore ব্যর্থ হলে আগের local data ফিরিয়ে দেওয়ার চেষ্টা করা হয়.
+- Profile, share text, QR summary-তে global metrics.
+- Currency converter: From ও To উভয় currency selector-এর জন্য search; currency code/name
+  এবং country mapping data পাওয়া গেলে country name দিয়ে filter; currency list cache/fallback ও Enter-to-convert.
+- Weather/local time lookup: Open-Meteo geocoding + current weather; timezone display.
+- City-to-city great-circle distance lookup; driving/flight route নয়.
+- Global places search: countries.dev/GeoNames gazetteer; feature class/country filter,
+  coordinates এবং Google Maps link.
+- Destination/Hotel external Google Maps search shortcut; কোনো live hotel price/availability
+  বা booking confirmation দেখানো হয় না.
+- Travel Expense Tracker, Packing Checklist, existing planner/journal/gallery/wishlist/passport.
+- PWA manifest, install helper, iOS Add to Home Screen guidance, Apple touch icon metadata,
+  offline app shell/service-worker cache version.
+- Existing Bangladesh 64-district data, original app features, original localStorage keys,
+  original logo/icons/photos/assets retained from the supplied source package. No উপজেলা–ইউনিয়ন cascade is required or added for this global travel app.
+
+তথ্যসূত্র / API:
+- Country/city/place: countries.dev; underlying geographic place data via GeoNames (CC BY 4.0).
+- Exchange reference rates: Frankfurter; daily reference data, not cash/bank buy-sell quote.
+- Weather/geocoding: Open-Meteo; internet required, model/current data, not official emergency alerts.
+- Maps and hotel discovery: Google Maps external search only.
+
+এখনো এই প্যাকেজের বাইরে / সীমাবদ্ধতা:
+- পূর্ণ global administrative hierarchy (প্রতিটি দেশের সব state/province/county/municipality)
+  in-app cascading picker হিসেবে নেই। City/place search আছে, কিন্তু এটি পূর্ণ admin directory নয়।
+- Curated worldwide destination catalogue with editorial descriptions, photos, ratings,
+  visitor tips and verified opening hours নেই; gazetteer results সব tourist attraction নয়।
+- Hotel inventory, verified prices/offers, room availability, direct booking integration নেই।
+- In-app turn-by-turn routing, traffic-aware travel time বা flight routing নেই; distance হলো
+  straight-line geographic distance.
+- Visa rules, safety advisories, emergency numbers এবং travel restrictions-এর country-by-country
+  verified live database নেই; সরকারি উৎসে যাচাই করতে হবে।
+- Language selector সব tool-এর প্রতিটি label/response সম্পূর্ণ translate করে না।
+- User travel records manually entered; GPS, ticket বা booking দিয়ে independently verified নয়.
+- এই রানটাইমে বাহ্যিক DNS/ইন্টারনেট সংযোগ পাওয়া যায়নি; তাই countries.dev, Frankfurter ও Open-Meteo API live response যাচাই করা যায়নি.
+- Browser/device বাস্তব পরীক্ষা এই পরিবেশে সম্পন্ন করা যায়নি। JavaScript/JSON/HTML/local asset/ZIP
+  static checks চালানো হয়েছে; Android/iOS install, offline behaviour, API availability এবং visual QA
+  ব্যবহারকারীর বাস্তব device-এ release-এর আগে যাচাই করতে হবে।
+- GitHub repository-তে এই প্যাকেজ push করা হয়নি।
+
+গুরুত্বপূর্ণ:
+- এটি PWA; APK নয়। AI feature যোগ করা হয়নি।
+- API failure হলে live result দেখানো হবে না; কিছু country data আগে cache থাকলে offline-এ দেখা যেতে পারে।
+- নতুন ZIP deploy করার আগে বর্তমান GitHub repository/website backup রাখুন।
+
+সর্বশেষ refinement (Service Worker v14):
+- Currency search-এ non-matching option disable হয়; search মুছে দিলে selectable option পুনরায় পাওয়া যায়।
+- Exchange-rate cache প্রতিটি currency pair-এর rate ও reference date আলাদাভাবে রাখে।
+- Global Places ফলাফলে GeoNames CC BY 4.0 attribution এবং gazetteer data-র সীমাবদ্ধতা দেখানো হয়।
+
+
+সর্বশেষ v16 refinement:
+- Global API request timeout, Weather snapshot cache/fallback, duplicate place filtering এবং coordinate range validation যোগ করা হয়েছে।
+- Service Worker cache v16।
+- Live API এবং বাস্তব ডিভাইস পরীক্ষা এখনও সম্পন্ন হয়নি; এগুলো release blocker হিসেবে রয়ে গেছে।
+
+
+v17 Hotel Explorer
+- Dedicated destination input এবং accommodation type filter যোগ করা হয়েছে।
+- Google Maps, Booking.com, Agoda, Expedia-এর external search links দেখানো হয়।
+- Provider inventory/price/availability integration নেই; UI-তে স্পষ্ট disclosure আছে।
+- এটি curated worldwide hotel database নয়; live booking data দাবি করা হচ্ছে না।
+
+
+সর্বশেষ v19 Global Travel refinement (১০ নভেম্বর ২০২৬):
+- Worldwide curated starter catalogue: ৩০টি নির্বাচিত destination; name/country search, region/type filter, general season notes এবং Google Maps link। এটি পূর্ণাঙ্গ বা সরকারি-যাচাইকৃত বিশ্ব পর্যটন database নয়।
+- Global Destination Wishlist: destination save/remove এবং local device persistence।
+- Global Trip Planner: destination, departure/return date, traveller count ও notes সংরক্ষণ; return date validation।
+- Global Wishlist ও Trip Plan JSON backup/restore payload-এ যুক্ত; Reset Data-তে নতুন storage key-ও clear হয়।
+- Hotel search-এ check-in/check-out ও guest count input; Booking.com ও Expedia search URL-এ প্রযোজ্য parameter পাঠানো হয়। মূল্য/availability provider-এ গিয়ে যাচাই করতে হবে।
+- Visa/entry/safety-এর জন্য IATA এবং US/UK/Canada/Australia official travel advice portal-এর link hub যোগ হয়েছে; app নিজে eligibility/advisory যাচাই করে না।
+- SEO title/description/social preview copy-তে global travel positioning উন্নত। Service Worker cache v19।
+
+এখনো অসম্পূর্ণ / বাহ্যিক নির্ভরতা:
+- ৩০টি starter destination-কে পূর্ণাঙ্গ curated global catalogue বলা যাবে না; আরও দেশ/শহর/attraction, যাচাইকৃত editorial data, licence-cleared photography ও updates প্রয়োজন।
+- Live hotel inventory/rates/availability/direct booking-এর জন্য provider partner/API credentials এবং secure backend প্রয়োজন; static GitHub Pages-এ secret API key রাখা নিরাপদ নয়।
+- Road/flight routing, traffic ETA, offline maps, country-specific visa rules database, local emergency directory এবং full multilingual translation এখনও নেই।
+- Real browser/device, live API, deployment ও end-to-end regression tests এখনও release blocker।

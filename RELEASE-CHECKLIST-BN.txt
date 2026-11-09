@@ -1,30 +1,60 @@
-ANONDO BANGLA GLOBAL EDITION — RELEASE CHECKLIST
+ANONDO BANGLA — MASTER UPDATE RELEASE CHECKLIST
 
-[✓] Original brand name retained
-[✓] Bangladesh 64-district dataset retained
-[✓] Existing storage keys retained
-[✓] Existing travel tools and IDs retained
-[✓] Country API changed to keyless countries.dev with legacy fallback
-[✓] Country data local cache and retry control added
-[✓] Separate dashboard menu and dedicated tool views added
-[✓] World travel slogan and premium global theme updated
-[✓] Achievement card redesigned in premium global style
-[✓] Main dashboard language selector: Bangla, English, Japanese, Chinese, Arabic, French, Spanish, Hindi
-[✓] Service worker cache version updated
-[✓] Currency converter preserved
+IMPLEMENTED IN CURRENT WORKING BUILD
+[✓] Existing Bangladesh 64-district data and original storage keys retained
+[✓] Existing profile, badges, achievement card, tools, logos and icons retained
+[✓] Dedicated tool navigation with hash route restore on refresh and browser Back/Forward
+[✓] Separate hero and app background treatments; light/dark theme styling
+[✓] World Country Explorer country-level search, region filter and sorting
+[✓] Currency From/To search; country matching where country currency data is available
+[✓] User-entered Global Travel Records with country/place/date/notes and calculated counters
+[✓] Global Travel Records included in backup/restore
+[✓] Backup restore validates data and avoids overwriting fields absent from older partial backups
+[✓] Global metrics shown in profile/share/QR/achievement card
+[✓] Travel Expense Tracker and persistent Packing Checklist added and included in backup/restore
+[✓] City weather/current local time lookup via Open-Meteo (internet required)
+[✓] Global place search via countries.dev / GeoNames with feature-class and country filters
+[✓] City-to-city great-circle distance calculator (not road/flight routing)
+[✓] Hotel external Google Maps search links (no fake prices or availability)
+[✓] PWA install helper and Apple touch icon metadata
+[✓] Service-worker cache v19; new global destination JS pre-cached
+[✓] Global curated starter catalogue, region/type/search filters and Maps links
+[✓] Global destination Wishlist and trip planner; backup/restore + reset integration
+[✓] Hotel search check-in/check-out/guest input and provider search parameters
+[✓] Official visa/entry/safety resource link hub (external references, not app verification)
+
+NOT COMPLETE — DO NOT CLAIM AS RELEASED
+[~] City/place online gazetteer search আছে; global admin cascade নেই এবং Bangladesh উপজেলা–ইউনিয়ন cascade এই app-এর scope নয়
+[~] ৩০টি editorial starter destination catalogue; পূর্ণাঙ্গ verified world catalogue নয়
+[~] Hotel search-এ check-in/check-out/guest parameters; provider inventory/rates/availability/direct booking নেই
+[ ] In-app route/distance engine and offline maps
+[ ] সব page/tool-এর পূর্ণ bilingual translation
+[✓] Country API flag URL normalization and REST Countries calling-code fallback
+[✓] Static HTML ID/local asset reference audit
+[✓] CSS parser syntax audit
+[✓] JavaScript syntax and manifest JSON checks
+[ ] Complete accessibility, SEO and performance audit
+[ ] Live API test under normal/slow/offline network conditions (not executable in this offline build environment)
+[ ] Real Android Chrome install and offline test (requires physical Android device)
+[ ] Real iOS Safari Add to Home Screen test
+[ ] Desktop Chrome/Edge/Firefox/Safari regression tests
+[ ] End-to-end functional test for every old and new tool
+[ ] Final GitHub deployment and post-deploy verification
+
+MANUAL TEST PLAN
+1. Open a tool, refresh; confirm the same tool remains open.
+2. Use browser Back/Forward between tools and Home.
+3. Search currencies by code, currency name, and country name.
+4. Add two Global Travel Records; verify country/place/points counters; delete one.
+5. Export backup, restore it, and verify Global Travel Records remain.
+6. Search a city in Weather & Local Time; verify source/timezone label.
+7. Open Destination and Hotel Finder links; verify external Maps search opens.
+8. Test profile, image, Bangladesh district visit, badges, achievement card, wishlist,
+   passport, budget, expense tracker, packing checklist, food, gallery, planner, journal, QR, festival, emergency and backup.
+9. Test install/offline on actual supported devices and browsers.
+10. Confirm original saved data and all assets remain before final release.
 
 IMPORTANT
-- The selected language currently translates the main landing/dashboard controls, not every label inside every tool.
-- The 64-district counter and district achievement data remain Bangladesh-specific.
-- Global Country Explorer is country-level reference data, not a complete worldwide local-administration or visa/hotel database.
-- Country and exchange-rate APIs require an internet connection on first load. Successfully loaded country data is cached on the device.
-
-POST-DEPLOYMENT MANUAL TEST
-1. Open the site in mobile and desktop browsers.
-2. Search Japan, Canada and Bangladesh in Global Explorer.
-3. Try each available language from the header selector.
-4. Open each item from the tool dashboard; confirm Back/Home works.
-5. Test profile photo/name save and refresh.
-6. Test currency conversion.
-7. Test Wishlist, Passport, Budget, Food Guide, Gallery, Planner, Journal, QR, Festival, Emergency and Backup/Restore.
-8. Confirm all 64 Bangladesh districts and previous saved data remain.
+- This is a working build, not yet a verified final release.
+- PWA is not an APK. No AI features are included.
+- No hotel price, room availability, booking, or unverified travel fact is fabricated.

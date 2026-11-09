@@ -1,0 +1,90 @@
+ANONDO BANGLA — RELEASE CANDIDATE
+
+এই প্যাকেজে navigation refresh fix, global country explorer, searchable currency selectors,
+manual global travel records, weather/local time, geographic distance, place finder, hotel map
+search, expense tracker, packing checklist, profile metrics এবং PWA install/offline shell উন্নত করা হয়েছে।
+
+Static validation: JavaScript syntax, manifest JSON, HTML IDs/local asset references, CSS parsing
+এবং ZIP integrity পরীক্ষা করা হয়েছে।
+
+এটি সম্পূর্ণ আন্তর্জাতিক hotel booking/destination content platform নয়। Hotel rates/availability,
+all-country administrative hierarchy, official visa/safety data, full multilingual coverage এবং
+real Android/iOS browser testing এই release-এ অন্তর্ভুক্ত নয়।
+
+প্রকাশের আগে:
+1. বর্তমান GitHub site/repository backup নিন।
+2. ZIP extract করে project root-এর files GitHub-এ upload করুন (ZIP-কে website root-এ রেখে নয়)।
+3. Deploy শেষে Android Chrome-এ install, tool refresh/back, currency search, offline open,
+   Bangladesh 64-district explorer এবং backup/restore পরীক্ষা করুন।
+
+
+নিরাপদ Backup/Restore উন্নয়ন
+- Backup download URL revoke করার আগে সামান্য সময় দেওয়া হয়, যাতে মোবাইল ব্রাউজারে download বাতিল না হয়।
+- Restore-এ অনুপস্থিত optional field-কে default দিয়ে overwrite করা হয় না; বর্তমান সংরক্ষিত ডেটা অক্ষত থাকে।
+- Restore payload-এর field/type যাচাই এবং localStorage write ব্যর্থ হলে rollback যোগ করা হয়েছে।
+- Weather panel-এ Open-Meteo-এর local timestamp আর UTC ধরে পুনরায় convert করা হয় না; ফলে city timezone অনুযায়ী দেখানো সময় ভুলভাবে shift হওয়ার ঝুঁকি কমেছে।
+- Service worker cache version v12 করা হয়েছে, যাতে নতুন JS/CSS release deploy হলে পুরোনো cache থেকে আগের code পরিবেশন না হয়।
+
+
+Currency Converter reliability update
+- Currency list ৩০ দিন পর্যন্ত local cache-এ রাখা হয়; API সাময়িকভাবে বন্ধ থাকলে cached list অথবা country data থেকে পাওয়া currency list দেখানো হয়।
+- Search-এ কোনো matching currency না থাকলে ভুল করে অন্য currency selected রাখা হয় না।
+- Amount field-এ Enter চাপলেও conversion শুরু হয়।
+- Service Worker cache version v13 করা হয়েছে যাতে আপডেটেড assets নতুন cache-এ আসে।
+
+Global Explorer / Currency reliability refinement (v14)
+- Currency search now disables non-matching options while filtering and restores valid choices when the search is cleared.
+- Exchange-rate cache stores the rate and its own reference date per currency pair, avoiding an unrelated date being shown for cached pairs.
+- Global Places results now visibly credit GeoNames (CC BY 4.0) and clarify that gazetteer entries are not verified tourist recommendations.
+
+
+Global data reliability update (v16)
+- বাহ্যিক API request-এ ১২ সেকেন্ড timeout যোগ করা হয়েছে, যাতে সার্ভার আটকে থাকলে UI অনির্দিষ্টকাল loading-এ না থাকে।
+- Weather result সফলভাবে এলে ২৪ ঘণ্টা পর্যন্ত snapshot cache হয়; live API ব্যর্থ হলে স্পষ্ট cached snapshot label-সহ দেখায়।
+- Place search result-এ duplicate GeoNames entry বাদ দেওয়া হয়।
+- Map link তৈরির আগে latitude/longitude বৈধ সীমার মধ্যে আছে কি না যাচাই করা হয়।
+- Service Worker cache v16 করা হয়েছে।
+
+
+Global Hotel Search update (v17)
+- গন্তব্য ও accommodation type বেছে Google Maps, Booking.com, Agoda এবং Expedia-তে আলাদা সার্চ লিংক তৈরি হয়।
+- এগুলো বাহ্যিক সার্চ; কোনো live inventory, room availability, rate বা booking confirmation দেখায় না।
+
+
+Global country rendering refinement (v18)
+- countries.dev-এর country record-এ flag URL `flag` property-তে এলে এখন সেটি সঠিকভাবে card-এ দেখানো হবে।
+- REST Countries fallback-এ calling-code prefix/suffix থেকে dial code তৈরি করা হয়, ফলে fallback তালিকাতেও calling code দেখা যায়।
+- Service Worker cache v18 করা হয়েছে, যাতে সংশোধিত country rendering পুরোনো cached script দিয়ে আটকে না থাকে।
+
+
+## v19 — Global Travel completion pass (১০ নভেম্বর ২০২৬)
+- Added a 30-place curated starter destination catalogue with search, region/type filters, broad season guidance and Maps links.
+- Added persistent worldwide destination wishlist and global trip planner (dates, traveller count, notes).
+- Added backup/restore and reset support for new global travel data.
+- Added hotel search date/guest fields and supported Booking.com/Expedia search parameters. No live price or availability claims.
+- Added official travel-advice resource links for visa/entry/safety checks. These are external resources; the app does not calculate visa eligibility or issue safety alerts.
+- Updated global SEO/social metadata and Service Worker cache to v19.
+- Kept the existing Bangladesh 64-district explorer and all source assets/data; no উপজেলা–ইউনিয়ন cascade was added.
+- Static JS/HTML/JSON/local-reference checks passed in the build environment. Live APIs, browser/device, accessibility/performance, deployment and full regression remain unverified.
+
+============================================================
+ANONDO BANGLA v20 — APP SHELL UPDATE (১০ নভেম্বর ২০২৬)
+============================================================
+- Four primary navigation tabs added: Home, Explore, Tools, Profile.
+- Persistent mobile bottom navigation with active state.
+- Top-right three-dot Settings menu added.
+- Existing top-right Light/Dark theme control retained.
+- Language control narrowed to Bangla/English; shell, hero/workspace and settings labels update.
+- Settings pages/actions: Rate & Feedback (local-only), Privacy Policy, Security & Data,
+  Language, App Settings (font size), Help, Official Travel Links, Share, About, Terms.
+- Official travel resource links added for IATA, US, Canada, UK, Australia, Bangladesh Tourism Ministry
+  and Bangladesh Immigration Police.
+- New app-shell-v20.css/js included in Service Worker v20 cache.
+- No in-app hotel booking or payment added. Hotel details/maps and official/external links remain the model.
+- Existing v19 files and feature assets retained; v20 adds new files and updates index.html/sw.js/release docs.
+
+Limitations: Bangla/English translation is not yet exhaustive across every legacy tool field and API response.
+Feedback is stored on the current device only. Play Store rating cannot be linked until the official listing URL exists.
+Real-device, live API and deployment tests remain pending.
+- API-free Global Flight Search form added (origin/destination/date/passengers), with Google Flights,
+  Skyscanner and selected airline official website links; no in-app fare or ticket booking claims.

@@ -1,0 +1,61 @@
+ANONDO BANGLA — V18 BASE / V19 GLOBAL TRAVEL QA REPORT
+তারিখ: ১০ নভেম্বর ২০২৬
+
+BASELINE
+- মূল ভিত্তি: Anondo-Bangla-Working-Update-v17(1).zip
+- মূল ZIP-এর সব ৩০টি entry অপরিবর্তিত নামে রাখা হয়েছে; কোনো পুরোনো ফাইল বাদ দেওয়া হয়নি।
+- বিদ্যমান logo, favicon, PWA icons, OG image ও অন্যান্য assets রাখা হয়েছে।
+
+এই প্যাচে করা পরিবর্তন
+1. countries.dev country response-এর `flag` URL এখন flag image হিসেবে সঠিকভাবে ব্যবহৃত হবে।
+2. REST Countries fallback-এ `idd.root` ও `idd.suffixes` থেকে calling code তৈরি হবে।
+3. Service Worker cache version v19 করা হয়েছে, যাতে আপডেটেড JavaScript পুরোনো cache-এ আটকে না থাকে।
+4. RELEASE-NOTES ও RELEASE-CHECKLIST-এ পরিবর্তন এবং সীমাবদ্ধতা নথিভুক্ত করা হয়েছে।
+
+যে পরীক্ষাগুলো এই পরিবেশে পাস করেছে
+- ZIP extraction এবং source file inventory check
+- JavaScript syntax check: সব external JS এবং index.html-এর inline JS
+- HTML ID audit: ১৬৬টি ID, duplicate নেই
+- Local asset reference audit: ১২টি local reference, missing নেই
+- manifest.json: valid JSON
+- PWA icon image dimensions: 192x192, 512x512, 512x512
+- CSS parser audit: সব CSS file parse হয়েছে, syntax error নেই
+
+যে পরীক্ষাগুলো করা যায়নি
+- এই build environment-এ external network/DNS access নেই; তাই countries.dev, Frankfurter ও Open-Meteo API-র live request এখানে চালানো যায়নি।
+- বাস্তব Android Chrome / iOS Safari / desktop browser device test করা হয়নি।
+- GitHub/Cloudflare deployment ও post-deploy test করা হয়নি।
+- End-to-end UI test-এর জন্য real browser runtime পাওয়া যায়নি।
+
+গুরুত্বপূর্ণ সীমাবদ্ধতা
+- Global data বর্তমানে live API-ভিত্তিক search; সম্পূর্ণ world city/province data offline ZIP-এর মধ্যে bundle করা নেই।
+- countries.dev-এর city/place search GeoNames-ভিত্তিক online gazetteer; search result-কে verified tourist recommendation ধরে নেওয়া যাবে না।
+- Hotel Finder এখনো Google Maps/Booking.com/Agoda/Expedia-র external search links; verified live rates, room inventory, availability বা booking confirmation দেখায় না।
+- প্রকৃত hotel provider integration-এর জন্য অনুমোদিত provider API/partner access, credentials এবং নিরাপদ backend প্রয়োজন। এগুলো ছাড়া live price/availability বানিয়ে দেখানো হবে না।
+- PWA install/offline support কোডে প্রস্তুত, কিন্তু বাস্তব Android Chrome-এ install/offline/update পরীক্ষা GitHub/Cloudflare deploy-এর পর করতে হবে।
+
+পরবর্তী বাস্তব যাচাই
+1. ZIP extract করে সব ফাইল repository root-এ upload করুন; ZIP-কে root-এ রেখে দেবেন না।
+2. Cloudflare Pages deployment Success হলে Android Chrome-এ site খুলুন।
+3. Install App, refresh/back navigation, Global Explorer, currency, weather, backup/restore পরীক্ষা করুন।
+4. প্রথমবার online load-এর পর airplane mode-এ app shell পুনরায় খুলে offline behavior পরীক্ষা করুন।
+5. নতুন deployment-এর পর cache update হয়েছে কি না যাচাই করুন।
+
+
+V19 Global Travel refinement — ১০ নভেম্বর ২০২৬
+1. ৩০টি নির্বাচিত global starter destination, name/country search, region/type filters, general season guidance এবং map links যোগ।
+2. Global destination wishlist ও global trip planner local storage-এ সংরক্ষণ।
+3. নতুন global wishlist/trip data backup/restore এবং Reset Data-তে যুক্ত।
+4. Hotel search-এ check-in/check-out/guest fields; Booking.com/Expedia search query parameters পাঠানো হয়।
+5. IATA ও US/UK/Canada/Australia official travel advice portals-এর link hub যোগ।
+6. Global SEO/social metadata update এবং Service Worker v19।
+7. Bangladesh 64-district explorer ও পূর্বের assets/data অক্ষত; উপজেলা–ইউনিয়ন cascade যোগ করা হয়নি।
+
+V19 static checks:
+- JavaScript syntax: global-tools.js, global-destinations.js, travel-tools.js — PASS
+- HTML parser/ID audit: ১৮৩ IDs, duplicate নেই — PASS
+- Local script/style/asset references: ১৪টি, missing নেই — PASS
+- manifest.json parse — PASS
+- Runtime UI/browser tests, live provider links/API, physical Android/iOS/desktop, GitHub/Cloudflare deployment — NOT RUN / NOT VERIFIED
+
+Scope সতর্কতা: ৩০টি destination হলো starter catalogue, পূর্ণাঙ্গ বিশ্ব database নয়। Hotel provider integration-এর জন্য partner/API credentials ও secure backend প্রয়োজন। Official travel advice links user-কে বাহ্যিক সরকারি/প্রাতিষ্ঠানিক উৎসে পাঠায়; app নিজে visa eligibility বা live safety advisory নির্ধারণ করে না।

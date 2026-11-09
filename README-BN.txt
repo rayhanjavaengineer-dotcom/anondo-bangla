@@ -55,3 +55,21 @@ This is a PWA install package, not a Play Store APK.
 The original repository could be read, but GitHub rejected write operations
 with HTTP 403 ("Resource not accessible by integration"). Therefore these
 files are packaged for integration; the live GitHub site has NOT been changed.
+
+
+নতুন Global Edition working build-এ অতিরিক্ত সুবিধা:
+- Global Travel Records: নিজের দেশ, স্থান, তারিখ ও স্মৃতি যোগ করে দেশ/স্থান/পয়েন্টের হিসাব।
+- Weather & Local Time: Open-Meteo দিয়ে শহরের বর্তমান আবহাওয়া ও স্থানীয় সময় (ইন্টারনেট প্রয়োজন)।
+- Destination & Hotel Finder: Google Maps-এ বাহ্যিক সার্চ; কোনো live hotel price বা availability দাবি করা হয় না।
+- Currency search: From ও To উভয় মুদ্রার জন্য আলাদা সার্চ; country name matching দেশ-ডেটার currency mapping-এর ওপর নির্ভরশীল।
+
+সীমাবদ্ধতা: Global Country Explorer দেশ-স্তরের; সম্পূর্ণ বিশ্বব্যাপী শহর/প্রদেশ ডেটাবেস, hotel inventory/booking, full in-app routing এবং প্রতিটি tool-এর সম্পূর্ণ অনুবাদ এখনো অন্তর্ভুক্ত নয়।
+
+
+V19: ৩০টি starter global destination, worldwide wishlist, global trip planner, hotel search date/guest filters এবং official travel-advice link hub যোগ হয়েছে। পূর্ণাঙ্গ verified world catalogue বা hotel live booking integration হিসেবে গণ্য নয়।
+
+v20 APP SHELL UPDATE:
+- Home / Explore / Tools / Profile primary navigation added.
+- Three-dot Settings menu, language choice, privacy, security, help, about, terms, share and local feedback added.
+- Existing light/dark toggle retained.
+- See README-V20-BN.txt and QA-REPORT-V20-BN.txt for scope and testing limits.

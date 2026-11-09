@@ -30,3 +30,16 @@
 - পুরোনো PWA cache: সব ট্যাব বন্ধ করে আবার খুলুন; প্রয়োজনে PWA uninstall করে নতুন deployment যাচাইয়ের পর reinstall করুন।
 - জেলা না দেখালে: Cloudflare deployment Success হয়েছে কি না দেখুন এবং browser hard refresh করুন।
 - Backup Restore করার আগে বর্তমান ডেটার Backup রাখুন।
+
+
+## v17 Hotel Search
+Hotel Finder-এ গন্তব্য লিখে accommodation type নির্বাচন করুন। এরপর Google Maps, Booking.com, Agoda অথবা Expedia-র সার্চ লিংক খুলুন। মূল্য ও availability সংশ্লিষ্ট সাইটে যাচাই করতে হবে; Anondo Bangla এগুলো live যাচাই করে না।
+
+
+## v19 আপডেটের নতুন বিষয়
+- নতুন `global-destinations.js` ফাইলটি অবশ্যই repository root-এ upload করবেন।
+- `index.html`, `global-tools.css`, `global-tools.js`, `travel-tools.js`, `sw.js` এবং release/QA notes-সহ ZIP-এর সব ফাইল একসঙ্গে upload করবেন।
+- Service Worker cache v19; deploy-এর পর Chrome-এ একবার online reload করে নতুন cache activate হতে দিন।
+- নতুন Global Destination Wishlist ও Trip Planner test করুন; backup export করে restore test করুন।
+- GitHub Pages/Cloudflare-এ root directory-তেই `index.html` থাকতে হবে; ZIP file-কে extract না করে upload করবেন না।
+- Live hotel price/availability integration এই release-এ নেই; provider API + secure backend প্রয়োজন।

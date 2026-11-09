@@ -1,11 +1,11 @@
-/* Anondo Bangla — resilient offline cache v6 */
-const CACHE_NAME = "anondo-bangla-global-v9";
+/* Anondo Bangla — resilient offline cache v20 */
+const CACHE_NAME = "anondo-bangla-global-v20";
 const CORE_ASSETS = [
   "./", "./index.html", "./manifest.json", "./install.js",
   "./premium.css", "./travel-tools.css", "./travel-tools.js",
   "./profile-section.css", "./profile-section.js",
-  "./global-tools.css", "./global-tools.js",
-  "./navigation.css", "./navigation.js",
+  "./global-tools.css", "./global-tools.js", "./global-destinations.js",
+  "./navigation.css", "./navigation.js", "./app-shell-v20.css", "./app-shell-v20.js", "./flight-search-v20.css", "./flight-search-v20.js",
   "./brand-logo.svg", "./favicon.svg",
   "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png", "./og-image.png"
 ];

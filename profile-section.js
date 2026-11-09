@@ -9,9 +9,9 @@
     const visited=Number(($("visitedStat")?.textContent||"0").replace(/[^\d]/g,""))||0;
     const points=Number(($("pointsStat")?.textContent||"0").replace(/[^\d]/g,""))||visited*10;
     const percent=Math.min(100,Math.round(visited/64*100));
-    const badges=[0,5,10,20,32,50,64].filter(n=>visited>=n).length;
+    let globalRecords=[];try{const raw=JSON.parse(localStorage.getItem("ab_global_travel_records_v1")||"[]");if(Array.isArray(raw))globalRecords=raw;}catch(e){}const globalCountries=new Set(globalRecords.map(x=>String(x.country||"").trim().toLocaleLowerCase()).filter(Boolean)).size;const globalPlaces=new Set(globalRecords.map(x=>(String(x.country||"").trim()+"|"+String(x.place||"").trim()).toLocaleLowerCase()).filter(x=>x!=="|")).size;const badges=[0,5,10,20,32,50,64].filter(n=>visited>=n).length;
     let level=visited>=50?"Legend":visited>=32?"Master Explorer":visited>=20?"Explorer III":visited>=10?"Explorer II":visited>=5?"Explorer I":"New Explorer";
-    return {visited,points,percent,badges,level,xp:visited*10};
+    return {visited,points,percent,badges,level,xp:visited*10,globalCountries,globalPlaces};
   }
   function refresh(){
     const name=$("nameInput")?.value.trim()||read("anondoBanglaNameV4","")||"Your Name";
@@ -26,7 +26,7 @@
     $("abVisitedCount").textContent=m.visited;
     $("abPointsCount").textContent=m.points.toLocaleString("en-US");
     $("abBadgeCount").textContent=m.badges;
-    $("abPercentCount").textContent=m.percent+"%";
+    $("abPercentCount").textContent=m.percent+"%";$("abGlobalCountries").textContent=m.globalCountries;$("abGlobalPlaces").textContent=m.globalPlaces;
     $("abPanelVisited").textContent=m.visited+" / 64";
     $("abPanelPoints").textContent=m.points.toLocaleString("en-US");
     $("abPanelBadge").textContent=m.level;
@@ -64,10 +64,11 @@
     });
     $("abShareProfile")?.addEventListener("click",async function(){
       const m=metrics(),name=$("nameInput")?.value.trim()||"An Anondo Bangla traveler";
-      const text=name+" — "+m.visited+"/64 districts explored on Anondo Bangla. 🇧🇩";
+      const text=name+" — "+m.visited+"/64 Bangladesh districts, "+m.globalCountries+" countries and "+m.globalPlaces+" unique places on Anondo Bangla. 🌍";
       try{if(navigator.share)await navigator.share({title:"Anondo Bangla Traveler",text,url:location.href});else if(navigator.clipboard){await navigator.clipboard.writeText(text+" "+location.href);$("abSaveNote").textContent="Profile share text copied.";}else $("abSaveNote").textContent=text;}catch(e){}
     });
     refresh();
+    window.addEventListener("ab-global-records-updated",refresh);
     const observer=new MutationObserver(refresh);
     ["visitedStat","pointsStat","percentStat"].forEach(id=>{const el=$(id);if(el)observer.observe(el,{childList:true,characterData:true,subtree:true});});
   }

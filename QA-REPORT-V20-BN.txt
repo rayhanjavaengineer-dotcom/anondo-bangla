@@ -1,0 +1,34 @@
+ANONDO BANGLA v20 — QA REPORT
+============================
+
+STATIC CHECKS RUN IN BUILD ENVIRONMENT
+- All external JavaScript files passed Node syntax checks.
+- Inline JavaScript extracted from index.html passed Node syntax check.
+- manifest.json parsed successfully.
+- HTML ID audit: 183 IDs; no duplicates.
+- Local HTML asset references: 16 checked; no missing local references.
+- Service Worker cache name is v20 and includes app-shell-v20.css/js.
+- ZIP integrity checked after packaging.
+- v19 archive entries compared against v20; no prior file removed.
+
+NOT TESTED
+- Real Android Chrome / iOS Safari / desktop browser interaction.
+- Actual PWA install, offline update lifecycle and cache refresh on devices.
+- Live API/DNS responses and external official websites availability.
+- GitHub Pages/Cloudflare deployment and post-deploy regression.
+
+KNOWN LIMITATIONS
+- Bengali/English selector updates app shell, hero/workspace and settings labels; not every legacy label,
+  data response, generated report or provider page is translated.
+- Feedback is stored locally only; there is no remote feedback service.
+- Rate action is a local feedback form until official Play Store listing URL is supplied.
+- Privacy/Security page describes local storage and external services; no cloud account or server-side
+  encryption feature is claimed.
+- External official links may change; users should verify current destination-specific requirements.
+- Hotel booking/payment is not provided in-app. Users follow hotel official/external website links.
+- API-dependent live hotel rates, flight fares, traffic ETA and live visa decisions are not represented as in-app data.
+
+RELEASE ADVICE
+Run the ZIP on the live GitHub/Cloudflare site and test the four tabs, settings modal, theme toggle,
+language selector, profile, tools, backup/restore and existing Bangladesh 64-district explorer on a real phone.
+- Flight Search basic input validation and external handoff added; actual provider results/booking are external.

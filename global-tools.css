@@ -7,3 +7,15 @@
 .global-country-card img{width:72px;height:50px;flex-basis:72px;object-fit:cover;border-radius:8px}
 .global-country-card strong{font-size:14px}.global-country-card small,.global-country-card span{font-size:11px;line-height:1.45}
 @media(max-width:700px){.global-country-results{grid-template-columns:1fr}}
+/* Worldwide destination catalogue and trip planner */
+.world-destination-layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(280px,1fr);gap:14px;align-items:start}
+.curated-destination-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+.destination-card{border:1px solid var(--line);border-radius:15px;padding:13px;background:var(--card);box-shadow:var(--shadow);min-width:0}
+.destination-card-top{display:flex;justify-content:space-between;gap:8px;color:var(--primary);font-size:10px;font-weight:700}
+.destination-card h4{font-size:17px;margin:8px 0 1px}.destination-card>strong{font-size:11px;color:var(--muted)}
+.destination-card p{font-size:12px;line-height:1.5;margin:8px 0;color:var(--text)}.destination-card>small{display:block;font-size:10px;color:var(--muted);line-height:1.45}
+.destination-card-actions{display:flex;justify-content:space-between;align-items:center;gap:7px;margin-top:11px}.destination-card-actions button,.destination-card-actions a{font-size:11px;border:1px solid var(--line);border-radius:9px;padding:7px 9px;background:var(--soft);color:var(--text);text-decoration:none;font-weight:700}
+.destination-card-actions button:hover,.destination-card-actions a:hover{border-color:var(--primary);color:var(--primary)}
+.travel-advisory-panel{margin-top:14px}.advisory-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.advisory-links a{display:grid;gap:4px;border:1px solid var(--line);border-radius:12px;padding:12px;text-decoration:none;color:var(--text);background:var(--bg)}.advisory-links a:hover{border-color:var(--primary)}.advisory-links strong{font-size:13px}.advisory-links small{font-size:11px;color:var(--muted);line-height:1.4}
+.theme-dark .destination-card-actions button,.theme-dark .destination-card-actions a{background:#111b24;color:var(--text)}
+@media(max-width:760px){.world-destination-layout{grid-template-columns:1fr}.curated-destination-grid{grid-template-columns:1fr}.advisory-links{grid-template-columns:1fr}}

@@ -29,3 +29,28 @@
  .ab-language-select{min-width:62px;max-width:66px}
  .topbar .travel-btn{padding:5px 6px;font-size:9px}
 }
+
+/* Final premium layered travel backgrounds */
+body{background:radial-gradient(ellipse at 12% 4%,rgba(76,153,178,.16),transparent 34%),radial-gradient(ellipse at 88% 22%,rgba(226,184,111,.13),transparent 32%),linear-gradient(145deg,#eaf2f4 0%,#f7f4ed 48%,#e9f0f0 100%);background-attachment:fixed}
+.app{position:relative}
+.hero-box{position:relative;isolation:isolate;overflow:hidden;color:#fff;background:linear-gradient(112deg,rgba(4,25,43,.94),rgba(8,63,82,.80) 52%,rgba(19,48,71,.76)),url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2000&q=85") center 48%/cover;border:1px solid rgba(255,255,255,.25);box-shadow:0 24px 60px rgba(8,35,52,.22);min-height:260px;display:flex;flex-direction:column;justify-content:center}
+.hero-box:after{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(circle at 82% 18%,rgba(111,208,224,.22),transparent 28%),linear-gradient(90deg,rgba(3,19,33,.15),transparent)}
+.hero-box p{color:rgba(255,255,255,.84)}.hero-box h1{color:#fff;text-shadow:0 3px 24px rgba(0,0,0,.25)}.hero-secondary{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.34);color:#fff;backdrop-filter:blur(12px)}
+.stat,.section,.map-board,.controls,.profile-box,.progress-box,.export-box,.ab-tool-tile,.global-country-card{backdrop-filter:blur(14px)}
+.currency-select-wrap{display:grid;gap:6px}.currency-search{min-height:38px;font-size:13px}
+body.theme-dark{background:radial-gradient(ellipse at 10% 0%,rgba(26,102,126,.24),transparent 35%),linear-gradient(145deg,#071521,#101f2b 55%,#0a1722);color:#e7edf2}
+body.theme-dark .hero-box{background:linear-gradient(112deg,rgba(3,17,30,.94),rgba(5,48,65,.82)),url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2000&q=85") center/cover}
+@media(max-width:600px){.hero-box{min-height:300px;padding:22px 18px;background-position:58% center}.hero-buttons>*{flex:1 1 100%}}
+/* Separate full-app travel backdrop; hero keeps its own independent artwork. */
+body{position:relative;isolation:isolate;background-color:#eaf2f4}
+body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(135deg,rgba(239,246,248,.93),rgba(247,244,237,.90)),url("https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=2200&q=80") center/cover no-repeat;opacity:1}
+body.theme-dark:before{background:linear-gradient(135deg,rgba(4,17,28,.94),rgba(8,26,36,.92)),url("https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=2200&q=80") center/cover no-repeat}
+@media(min-width:801px){.stats{grid-template-columns:repeat(4,minmax(0,1fr))}}
+/* Higher-specificity overrides because the legacy base styles are inline in index.html. */
+.app .hero .hero-box{background:linear-gradient(112deg,rgba(4,25,43,.94),rgba(8,63,82,.80) 52%,rgba(19,48,71,.76)),url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2000&q=85") center 48%/cover!important;color:#fff;border:1px solid rgba(255,255,255,.25);box-shadow:0 24px 60px rgba(8,35,52,.22);min-height:260px}
+.app .hero .hero-box h1{color:#fff;text-shadow:0 3px 24px rgba(0,0,0,.25)}
+.app .hero .hero-box p{color:rgba(255,255,255,.88)}
+.app .hero .hero-box .hero-secondary{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.34);color:#fff;backdrop-filter:blur(12px)}
+.app .hero .hero-box .hero-secondary:hover{background:rgba(255,255,255,.24);color:#fff}
+body.theme-dark .app .hero .hero-box{background:linear-gradient(112deg,rgba(3,17,30,.94),rgba(5,48,65,.82)),url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2000&q=85") center/cover!important}
+@media print{.print-stats{grid-template-columns:repeat(3,1fr)!important}}
