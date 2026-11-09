@@ -1,291 +1,32 @@
-/* ANONDO BANGLA — PREMIUM UPDATE v4
-   Add-on module: wishlist, digital passport, budget calculator,
-   district food guide and local travel photo gallery.
-   Requires the existing index.html globals: districts, visited,
-   openDistrictDetails(), escapeHTML(), setStatus().
-*/
-(function () {
-  "use strict";
-
-  const KEYS = {
-    wishlist: "ab_v4_wishlist",
-    budget: "ab_v4_budget",
-    gallery: "ab_v4_gallery"
-  };
-
-  let wishlist = [];
-  let gallery = [];
-
-  const $ = function (id) { return document.getElementById(id); };
-  const money = function (value) {
-    return "৳ " + Math.max(0, Number(value) || 0).toLocaleString("en-BD");
-  };
-
-  function read(key, fallback) {
-    try {
-      const value = localStorage.getItem(key);
-      return value ? JSON.parse(value) : fallback;
-    } catch (error) {
-      return fallback;
-    }
-  }
-
-  function write(key, value) {
-    try {
-      localStorage.setItem(key, JSON.stringify(value));
-      return true;
-    } catch (error) {
-      setStatus("Browser storage পূর্ণ। কিছু ছবি মুছে আবার চেষ্টা করুন।");
-      return false;
-    }
-  }
-
-  function districtName(id) {
-    const district = districts.find(function (item) { return item.id === id; });
-    return district ? district.bn : "অজানা জেলা";
-  }
-
-  function fillDistrictSelects() {
-    ["wishlistDistrict", "photoDistrict"].forEach(function (id) {
-      const select = $(id);
-      districts.forEach(function (district) {
-        const option = document.createElement("option");
-        option.value = district.id;
-        option.textContent = district.bn + " — " + district.division;
-        select.appendChild(option);
-      });
-    });
-  }
-
-  function renderWishlist() {
-    const host = $("wishlistList");
-    if (!wishlist.length) {
-      host.innerHTML = '<p class="tool-empty">আপনার Wishlist এখনো খালি। পছন্দের জেলা যোগ করুন।</p>';
-      return;
-    }
-
-    host.innerHTML = wishlist.map(function (id) {
-      const district = districts.find(function (item) { return item.id === id; });
-      if (!district) return "";
-      const isVisited = visited.has(id);
-      return '<div class="wishlist-item"><span><strong>' +
-        escapeHTML(district.bn) + '</strong><small>' +
-        escapeHTML(district.division) + ' বিভাগ' +
-        (isVisited ? ' · ✓ ঘোরা হয়েছে' : '') +
-        '</small></span><div class="wishlist-actions">' +
-        '<button type="button" data-wish-open="' + id + '">বিস্তারিত</button>' +
-        '<button type="button" data-wish-remove="' + id + '" aria-label="তালিকা থেকে সরান">×</button>' +
-        '</div></div>';
-    }).join("");
-
-    host.querySelectorAll("[data-wish-remove]").forEach(function (button) {
-      button.addEventListener("click", function () {
-        wishlist = wishlist.filter(function (id) { return id !== button.dataset.wishRemove; });
-        if (write(KEYS.wishlist, wishlist)) renderWishlist();
-      });
-    });
-
-    host.querySelectorAll("[data-wish-open]").forEach(function (button) {
-      button.addEventListener("click", function () {
-        openDistrictDetails(button.dataset.wishOpen);
-      });
-    });
-  }
-
-  function renderPassport() {
-    const host = $("passportStamps");
-    $("passportCount").textContent = visited.size + " / 64";
-    const completed = districts.filter(function (district) {
-      return visited.has(district.id);
-    });
-
-    host.innerHTML = completed.length ? completed.map(function (district) {
-      return '<div class="passport-stamp" title="' + escapeHTML(district.bn) +
-        '"><span>🇧🇩</span><strong>' + escapeHTML(district.bn) +
-        '</strong><small>VISITED</small></div>';
-    }).join("") : '<p class="tool-empty">প্রথম জেলা ভ্রমণ সম্পন্ন হলে আপনার Passport-এ Stamp দেখা যাবে।</p>';
-  }
-
-  function renderBudget() {
-    const ids = ["budgetTransport", "budgetStay", "budgetFood", "budgetOther"];
-    const values = ids.map(function (id) {
-      return Math.max(0, Number($(id).value) || 0);
-    });
-    $("budgetTotal").textContent = money(values.reduce(function (sum, value) {
-      return sum + value;
-    }, 0));
-
-    const saved = {};
-    ids.forEach(function (id) { saved[id] = $(id).value; });
-    write(KEYS.budget, saved);
-  }
-
-  function renderFood() {
-    const query = $("foodSearch").value.trim().toLowerCase();
-    const results = districts.filter(function (district) {
-      return (district.bn + " " + district.en + " " + district.division + " " + district.food)
-        .toLowerCase().includes(query);
-    });
-
-    $("foodResults").innerHTML = results.map(function (district) {
-      return '<button class="food-row" type="button" data-food-id="' + district.id +
-        '"><span class="food-emoji">🍽️</span><span><strong>' +
-        escapeHTML(district.bn) + '</strong><small>' +
-        escapeHTML(district.division) + ' বিভাগ</small><em>' +
-        escapeHTML(district.food) + '</em></span><span class="food-arrow">›</span></button>';
-    }).join("") || '<p class="tool-empty">কোনো ফলাফল পাওয়া যায়নি।</p>';
-
-    $("foodResults").querySelectorAll("[data-food-id]").forEach(function (button) {
-      button.addEventListener("click", function () {
-        openDistrictDetails(button.dataset.foodId);
-      });
-    });
-  }
-
-  function renderGallery() {
-    const host = $("travelGallery");
-    if (!gallery.length) {
-      host.innerHTML = '<p class="tool-empty">এখনো কোনো ছবি সংরক্ষণ করা হয়নি। আপনার ভ্রমণের প্রথম ছবিটি যোগ করুন।</p>';
-      return;
-    }
-
-    host.innerHTML = gallery.map(function (item, index) {
-      return '<figure class="gallery-item"><img src="' + item.data + '" alt="' +
-        escapeHTML(item.name) + '"><figcaption><strong>' +
-        escapeHTML(item.name) + '</strong><button type="button" data-photo-remove="' +
-        index + '">মুছুন</button></figcaption></figure>';
-    }).join("");
-
-    host.querySelectorAll("[data-photo-remove]").forEach(function (button) {
-      button.addEventListener("click", function () {
-        gallery.splice(Number(button.dataset.photoRemove), 1);
-        if (write(KEYS.gallery, gallery)) renderGallery();
-      });
-    });
-  }
-
-  function compressImage(file) {
-    return new Promise(function (resolve) {
-      const reader = new FileReader();
-      reader.onload = function () {
-        const image = new Image();
-        image.onload = function () {
-          const scale = Math.min(1, 720 / Math.max(image.width, image.height));
-          const canvas = document.createElement("canvas");
-          canvas.width = Math.max(1, Math.round(image.width * scale));
-          canvas.height = Math.max(1, Math.round(image.height * scale));
-          const context = canvas.getContext("2d");
-          if (!context) { resolve(""); return; }
-          context.drawImage(image, 0, 0, canvas.width, canvas.height);
-          resolve(canvas.toDataURL("image/jpeg", 0.68));
-        };
-        image.onerror = function () { resolve(""); };
-        image.src = String(reader.result);
-      };
-      reader.onerror = function () { resolve(""); };
-      reader.readAsDataURL(file);
-    });
-  }
-
-  function initTools() {
-    fillDistrictSelects();
-
-    wishlist = read(KEYS.wishlist, []).filter(function (id) {
-      return districts.some(function (district) { return district.id === id; });
-    });
-
-    gallery = read(KEYS.gallery, []).filter(function (item) {
-      return item && typeof item.data === "string" && typeof item.id === "string";
-    });
-
-    const budget = read(KEYS.budget, {});
-    ["budgetTransport", "budgetStay", "budgetFood", "budgetOther"].forEach(function (id) {
-      $(id).value = budget[id] || "";
-    });
-
-    renderWishlist();
-    renderPassport();
-    renderBudget();
-    renderFood();
-    renderGallery();
-
-    $("addWishlistButton").addEventListener("click", function () {
-      const id = $("wishlistDistrict").value;
-      if (!id) { setStatus("আগে একটি জেলা নির্বাচন করুন"); return; }
-      if (wishlist.includes(id)) { setStatus("জেলাটি আগে থেকেই Wishlist-এ আছে"); return; }
-      wishlist.push(id);
-      if (write(KEYS.wishlist, wishlist)) {
-        $("wishlistDistrict").value = "";
-        renderWishlist();
-        setStatus("Wishlist-এ যোগ হয়েছে ✓");
-      }
-    });
-
-    ["budgetTransport", "budgetStay", "budgetFood", "budgetOther"].forEach(function (id) {
-      $(id).addEventListener("input", renderBudget);
-    });
-
-    $("resetBudgetButton").addEventListener("click", function () {
-      ["budgetTransport", "budgetStay", "budgetFood", "budgetOther"].forEach(function (id) {
-        $(id).value = "";
-      });
-      renderBudget();
-      setStatus("খরচের হিসাব মুছে ফেলা হয়েছে");
-    });
-
-    $("foodSearch").addEventListener("input", renderFood);
-
-    $("saveTravelPhotoButton").addEventListener("click", async function () {
-      const id = $("photoDistrict").value;
-      const input = $("travelPhotoInput");
-      const file = input.files && input.files[0];
-
-      if (!id || !file) { setStatus("জেলা ও একটি ছবি নির্বাচন করুন"); return; }
-      if (!file.type.startsWith("image/")) { setStatus("শুধু ছবির ফাইল নির্বাচন করুন"); return; }
-      if (file.size > 8 * 1024 * 1024) { setStatus("ছবিটি 8MB-এর কম হতে হবে"); return; }
-
-      const data = await compressImage(file);
-      if (!data) { setStatus("ছবি পড়া যায়নি"); return; }
-
-      gallery.unshift({ id: id, name: districtName(id), data: data });
-      if (write(KEYS.gallery, gallery)) {
-        renderGallery();
-        input.value = "";
-        $("photoDistrict").value = "";
-        setStatus("ভ্রমণের ছবি সংরক্ষিত হয়েছে ✓");
-      }
-    });
-  }
-
-  // Keep the passport and wishlist status synchronized with the original tracker.
-  function hookOriginalFunctions() {
-    if (typeof window.toggleVisited === "function" && !window.toggleVisited.__v4Wrapped) {
-      const originalToggle = window.toggleVisited;
-      const wrappedToggle = function () {
-        const result = originalToggle.apply(this, arguments);
-        renderPassport();
-        renderWishlist();
-        return result;
-      };
-      wrappedToggle.__v4Wrapped = true;
-      window.toggleVisited = wrappedToggle;
-    }
-    if (typeof window.resetData === "function" && !window.resetData.__v4Wrapped) {
-      const originalReset = window.resetData;
-      const wrappedReset = function () {
-        const result = originalReset.apply(this, arguments);
-        renderPassport();
-        renderWishlist();
-        return result;
-      };
-      wrappedReset.__v4Wrapped = true;
-      window.resetData = wrappedReset;
-    }
-  }
-
-  hookOriginalFunctions();
-  window.addEventListener("DOMContentLoaded", function () {
-    initTools();
-    hookOriginalFunctions();
-  });
+/* ANONDO BANGLA — Ultimate local-first travel tools. Requires original index globals. */
+(function(){"use strict";
+ const K={wish:"ab_v4_wishlist",budget:"ab_v4_budget",gallery:"ab_v4_gallery",plan:"ab_ultimate_plan",journal:"ab_ultimate_journal"};
+ let wishlist=[],gallery=[],journal=[];const $=id=>document.getElementById(id);const safe=(v)=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+ const read=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}};const write=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){if(typeof setStatus==="function")setStatus("Browser storage পূর্ণ। কিছু ছবি বা পুরোনো ডেটা মুছে আবার চেষ্টা করুন।");return false}};
+ const msg=t=>{if(typeof setStatus==="function")setStatus(t)};const money=n=>"৳ "+Math.max(0,Number(n)||0).toLocaleString("en-BD");const name=id=>(districts.find(d=>d.id===id)||{}).bn||"অজানা জেলা";
+ function fillSelect(id){const s=$(id);if(!s)return;s.innerHTML='<option value="">জেলা নির্বাচন করুন</option>'+districts.map(d=>'<option value="'+safe(d.id)+'">'+safe(d.bn)+' — '+safe(d.division)+'</option>').join("")}
+ function renderWish(){const h=$("wishlistList");if(!h)return;if(!wishlist.length){h.innerHTML='<p class="tool-empty">আপনার Wishlist এখনো খালি।</p>';return}h.innerHTML=wishlist.map(id=>{const d=districts.find(x=>x.id===id);if(!d)return"";return '<div class="wishlist-item"><span><strong>'+safe(d.bn)+'</strong><small>'+safe(d.division)+' বিভাগ'+(visited.has(id)?' · ✓ ঘোরা হয়েছে':'')+'</small></span><span class="wishlist-actions"><button type="button" data-wopen="'+safe(id)+'">বিস্তারিত</button><button type="button" data-wdel="'+safe(id)+'" aria-label="Remove">×</button></span></div>'}).join("");h.querySelectorAll("[data-wdel]").forEach(b=>b.onclick=()=>{wishlist=wishlist.filter(x=>x!==b.dataset.wdel);write(K.wish,wishlist);renderWish()});h.querySelectorAll("[data-wopen]").forEach(b=>b.onclick=()=>openDistrictDetails(b.dataset.wopen))}
+ function renderPassport(){const h=$("passportStamps"),c=$("passportCount");if(!h||!c)return;c.textContent=visited.size+" / 64";const done=districts.filter(d=>visited.has(d.id));h.innerHTML=done.length?done.map(d=>'<div class="passport-stamp"><span>🇧🇩</span><strong>'+safe(d.bn)+'</strong><small>VISITED</small></div>').join(""):'<p class="tool-empty">প্রথম জেলা ভ্রমণ সম্পন্ন হলে Passport Stamp দেখা যাবে।</p>'}
+ function renderBudget(){const ids=["budgetTransport","budgetStay","budgetFood","budgetOther"];let total=0;const data={};ids.forEach(id=>{const el=$(id);if(!el)return;const n=Math.max(0,Number(el.value)||0);total+=n;data[id]=el.value});if($("budgetTotal"))$("budgetTotal").textContent=money(total);write(K.budget,data)}
+ function renderFood(){const h=$("foodResults"),q=($("foodSearch")?.value||"").trim().toLowerCase();if(!h)return;const found=districts.filter(d=>(d.bn+" "+d.en+" "+d.division+" "+d.food).toLowerCase().includes(q));h.innerHTML=found.map(d=>'<button class="food-row" type="button" data-food="'+safe(d.id)+'"><span>🍽️</span><span><strong>'+safe(d.bn)+'</strong><small>'+safe(d.division)+' বিভাগ</small><em>'+safe(d.food)+'</em></span><span>›</span></button>').join("")||'<p class="tool-empty">কোনো ফলাফল পাওয়া যায়নি।</p>';h.querySelectorAll("[data-food]").forEach(b=>b.onclick=()=>openDistrictDetails(b.dataset.food))}
+ function renderGallery(){const h=$("travelGallery");if(!h)return;h.innerHTML=gallery.length?gallery.map((x,i)=>'<figure class="gallery-item"><img loading="lazy" src="'+x.data+'" alt="'+safe(x.name)+'"><figcaption><strong>'+safe(x.name)+'</strong><button type="button" data-gdel="'+i+'">মুছুন</button></figcaption></figure>').join(""):'<p class="tool-empty">এখনো কোনো ছবি সংরক্ষণ করা হয়নি।</p>';h.querySelectorAll("[data-gdel]").forEach(b=>b.onclick=()=>{gallery.splice(Number(b.dataset.gdel),1);write(K.gallery,gallery);renderGallery()})}
+ function compress(file){return new Promise(resolve=>{const r=new FileReader();r.onerror=()=>resolve("");r.onload=()=>{const im=new Image();im.onerror=()=>resolve("");im.onload=()=>{const s=Math.min(1,900/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.max(1,Math.round(im.width*s));c.height=Math.max(1,Math.round(im.height*s));const x=c.getContext("2d");if(!x)return resolve("");x.drawImage(im,0,0,c.width,c.height);resolve(c.toDataURL("image/jpeg",.7))};im.src=r.result};r.readAsDataURL(file)})}
+ function renderJournal(){const h=$("journalList");if(!h)return;h.innerHTML=journal.length?journal.map((x,i)=>'<div class="journal-item"><span><strong>'+safe(x.title)+'</strong><small>'+safe(x.date)+' · '+safe(x.district||"ব্যক্তিগত স্মৃতি")+'</small><small>'+safe(x.note)+'</small></span><button type="button" data-jdel="'+i+'">মুছুন</button></div>').join(""):'<p class="tool-empty">আপনার ভ্রমণ স্মৃতি এখানে সংরক্ষিত হবে।</p>';h.querySelectorAll("[data-jdel]").forEach(b=>b.onclick=()=>{journal.splice(+b.dataset.jdel,1);write(K.journal,journal);renderJournal()})}
+ function bind(id,event,fn){const el=$(id);if(el)el.addEventListener(event,fn)}
+ function backup(){const payload={app:"Anondo Bangla",version:1,exportedAt:new Date().toISOString(),visited:Array.from(visited),name:localStorage.getItem(STORAGE_NAME)||"",photo:localStorage.getItem(STORAGE_PHOTO)||"",theme:localStorage.getItem(STORAGE_THEME)||"light",wishlist,budget:read(K.budget,{}),gallery,journal,plan:read(K.plan,{})};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="anondo-bangla-backup-"+new Date().toISOString().slice(0,10)+".json";a.click();URL.revokeObjectURL(url);msg("Backup ডাউনলোড হয়েছে ✓")}
+ function restore(file){const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(x.app!=="Anondo Bangla"||!Array.isArray(x.visited))throw Error("Invalid");const valid=x.visited.filter(id=>districts.some(d=>d.id===id));localStorage.setItem(STORAGE_VISITED,JSON.stringify(valid));if(typeof x.name==="string")localStorage.setItem(STORAGE_NAME,x.name);if(typeof x.photo==="string")localStorage.setItem(STORAGE_PHOTO,x.photo);if(["light","dark"].includes(x.theme))localStorage.setItem(STORAGE_THEME,x.theme);write(K.wish,Array.isArray(x.wishlist)?x.wishlist:[]);write(K.budget,x.budget||{});write(K.gallery,Array.isArray(x.gallery)?x.gallery:[]);write(K.journal,Array.isArray(x.journal)?x.journal:[]);write(K.plan,x.plan||{});msg("Backup Restore হয়েছে। পেজ Reload হচ্ছে…");setTimeout(()=>location.reload(),700)}catch(e){msg("Backup ফাইলটি সঠিক নয় বা পড়া যায়নি।")}};r.readAsText(file)}
+ function bindPlan(){const p=read(K.plan,{});if($("planDestination"))$("planDestination").value=p.destination||"";if($("planDate"))$("planDate").value=p.date||"";if($("planDays"))$("planDays").value=p.days||"";if($("planNotes"))$("planNotes").value=p.notes||"";bind("savePlanButton","click",()=>{const v={destination:$("planDestination").value,date:$("planDate").value,days:$("planDays").value,notes:$("planNotes").value};if(!v.destination){msg("ভ্রমণের গন্তব্য লিখুন");return}if(write(K.plan,v))msg("Travel Plan সংরক্ষিত হয়েছে ✓")})}
+ function bindJournal(){bind("addJournalButton","click",()=>{const title=$("journalTitle").value.trim(),note=$("journalNote").value.trim(),district=$("journalDistrict").value;if(!title&&!note){msg("স্মৃতির শিরোনাম বা নোট লিখুন");return}journal.unshift({title:title||"ভ্রমণের স্মৃতি",note,date:new Date().toLocaleDateString("bn-BD"),district:name(district)});if(write(K.journal,journal)){["journalTitle","journalNote"].forEach(id=>$(id).value="");$("journalDistrict").value="";renderJournal();msg("স্মৃতি সংরক্ষিত হয়েছে ✓")}})}
+ function init(){["wishlistDistrict","photoDistrict","journalDistrict"].forEach(fillSelect);wishlist=read(K.wish,[]).filter(id=>districts.some(d=>d.id===id));gallery=read(K.gallery,[]).filter(x=>x&&typeof x.data==="string");journal=read(K.journal,[]).filter(x=>x&&typeof x==="object");const b=read(K.budget,{});Object.keys(b).forEach(id=>{if($(id))$(id).value=b[id]});renderWish();renderPassport();renderBudget();renderFood();renderGallery();renderJournal();bindPlan();bindJournal();
+ bind("addWishlistButton","click",()=>{const id=$("wishlistDistrict").value;if(!id)return msg("আগে একটি জেলা নির্বাচন করুন");if(wishlist.includes(id))return msg("জেলাটি আগে থেকেই Wishlist-এ আছে");wishlist.push(id);if(write(K.wish,wishlist)){renderWish();$("wishlistDistrict").value="";msg("Wishlist-এ যোগ হয়েছে ✓")}});
+ ["budgetTransport","budgetStay","budgetFood","budgetOther"].forEach(id=>bind(id,"input",renderBudget));bind("resetBudgetButton","click",()=>{["budgetTransport","budgetStay","budgetFood","budgetOther"].forEach(id=>$(id).value="");renderBudget();msg("Budget reset হয়েছে")});bind("foodSearch","input",renderFood);
+ bind("saveTravelPhotoButton","click",async()=>{const id=$("photoDistrict").value,file=$("travelPhotoInput").files?.[0];if(!id||!file)return msg("জেলা ও ছবি নির্বাচন করুন");if(!file.type.startsWith("image/")||file.size>8*1024*1024)return msg("সঠিক ছবি নির্বাচন করুন (সর্বোচ্চ 8MB)");const data=await compress(file);if(!data)return msg("ছবি পড়া যায়নি");gallery.unshift({id,name:name(id),data});if(write(K.gallery,gallery)){renderGallery();$("travelPhotoInput").value="";msg("ছবি সংরক্ষিত হয়েছে ✓")}});
+ bind("backupButton","click",backup);bind("restoreInput","change",e=>{const f=e.target.files?.[0];if(f)restore(f);e.target.value=""});bind("printPassportButton","click",()=>window.print());
+ bind("generateQrButton","click",()=>{if(!$("qrConsent").checked)return msg("QR তৈরির আগে তথ্য পাঠানোর সম্মতি দিন");const payload=JSON.stringify({app:"Anondo Bangla",name:localStorage.getItem(STORAGE_NAME)||"Traveler",visited:visited.size,total:64,url:location.href});const target="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data="+encodeURIComponent(payload);$("qrResult").innerHTML='<img width="220" height="220" alt="QR Travel Card" loading="lazy" src="'+target+'">';});
+ bind("planDestination","input",()=>{const v=$("planDestination").value.trim();if($("routeHelpLink"))$("routeHelpLink").href="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(v||"Bangladesh");});
+ bind("generateQrButton","click",()=>{if(!$("qrConsent").checked)return msg("QR তৈরির আগে তথ্য পাঠানোর সম্মতি দিন");const payload=JSON.stringify({app:"Anondo Bangla",name:localStorage.getItem(STORAGE_NAME)||"Traveler",visited:visited.size,total:64,url:location.href});const target="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data="+encodeURIComponent(payload);$("qrResult").innerHTML='<img width="220" height="220" alt="QR Travel Card" loading="lazy" src="'+target+'"><p class="tool-footnote">QR স্ক্যান করলে আপনার Explorer Profile-এর সারাংশ ও সাইটের লিংক দেখা যাবে।</p>';});
+ bind("planDestination","input",()=>{const v=$("planDestination").value.trim();if($("routeHelpLink"))$("routeHelpLink").href="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(v||"Bangladesh");});
+ }
+ function sync(){renderPassport();renderWish()};function wrap(name){const original=window[name];if(typeof original!=="function"||original.__abWrapped)return;const wrapped=function(){const r=original.apply(this,arguments);sync();return r};wrapped.__abWrapped=true;window[name]=wrapped}
+ wrap("toggleVisited");wrap("resetData");window.addEventListener("DOMContentLoaded",()=>{init();wrap("toggleVisited");wrap("resetData")});
 })();

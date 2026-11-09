@@ -1,35 +1,32 @@
-# Anondo Bangla — Premium Update (Acode / Android)
+# Anondo Bangla — Ultimate International Edition
 
-এই আপডেটটি তোমার বর্তমান ওয়েবসাইটের নাম, ৬৪ জেলার ডেটা, JavaScript এবং localStorage key পরিবর্তন করে না।
-এটি মূলত নতুন logo + premium styling + PWA icon + cache update যোগ করে।
+## GitHub ও Cloudflare Pages-এ আপডেট
 
-## খুব গুরুত্বপূর্ণ — প্রথমে Backup
-GitHub Repository থেকে বর্তমান `index.html`, `manifest.json`, `sw.js` আলাদা করে Download/Save করে রাখবে।
-কোনো ফাইল Delete করবে না।
+1. ZIP Extract করুন।
+2. `rayhanjavaengineer-dotcom/anondo-bangla` Repository-এর Root-এ ZIP-এর সব ফাইল Upload/Replace করুন।
+3. `main` Branch-এ Commit changes করুন।
+4. Cloudflare Pages Dashboard → আপনার Anondo Bangla Project → Deployments-এ গিয়ে নতুন Deployment `Success` হয়েছে কি না দেখুন।
+5. Build command ফাঁকা এবং Build output directory `/` (Root) রাখুন।
 
-## Acode দিয়ে আপডেট
-1. ZIP Extract করো।
-2. `premium.css`, `brand-logo.svg`, `favicon.svg`, `icon-192.png`, `icon-512.png`, `icon-maskable-512.png` ফাইলগুলো তোমার বর্তমান প্রজেক্টের root folder-এ কপি করো।
-3. বর্তমান `index.html` খুলে `<head>` অংশে, `</head>`-এর ঠিক আগে এই লাইনটি যোগ করো:
+## নতুন ও বিদ্যমান সুবিধা
 
-   `<link rel="icon" type="image/svg+xml" href="favicon.svg">`
-   `<link rel="stylesheet" href="premium.css">`
+- আগের ৬৪ জেলার Explorer, Division Map, Search/Filter, Visited Tracker, Profile, Theme, Badges ও Achievement Card রাখা হয়েছে।
+- Travel Bucket List, Digital Passport, Budget Calculator, District Food Guide ও Photo Gallery।
+- Smart Travel Planner, Travel Memory Journal, Festival Calendar, Emergency 999 তথ্য।
+- QR Travel Card (ব্যবহারকারীর সম্মতি নিয়ে তৃতীয় পক্ষের QR image service)।
+- JSON Data Backup & Restore।
+- PWA/Offline cache update এবং mobile responsive refinements।
 
-4. `manifest.json` ফাইলটি এই ZIP-এর `manifest.json` দিয়ে Replace করো।
-5. `sw.js` ফাইলটি এই ZIP-এর `sw.js` দিয়ে Replace করো।
-6. `index.html`-এর বাকি কোনো কোড, জেলা ডেটা বা JavaScript মুছবে/পরিবর্তন করবে না।
-7. Acode Preview-তে পরীক্ষা করো। তারপর একই GitHub Repository-তে ফাইলগুলো Upload/Commit করো।
+## ব্যক্তিগত ডেটা
 
-## কী অপরিবর্তিত
-- নাম: Anondo Bangla | Explore Bangladesh
-- ৬৪ জেলার ডেটা, সার্চ ও বিভাগ ফিল্টার
-- ভ্রমণ তালিকা, Profile, ছবি, Points, Badges
-- Achievement Card PNG/JPG/Print
-- Dark Mode এবং আগের localStorage key
+ডেটা Browser-এর localStorage-এ থাকে। এক ডিভাইস থেকে অন্য ডিভাইসে নিতে Backup Download করে নতুন ডিভাইসে Restore করুন। Gallery-তে বেশি ছবি রাখলে Browser Storage পূর্ণ হতে পারে।
 
-## Offline/PWA
-Service Worker HTTPS-এ কাজ করে। GitHub Pages/Render deploy হওয়ার পর ওয়েবসাইট একবার Online-এ খুলে রাখবে, তারপর offline cache তৈরি হবে।
-Browser-এর পুরোনো cache থাকলে site reload বা browser cache refresh করতে হতে পারে।
+## সীমাবদ্ধতা ও সতর্কতা
 
-## নোট
-`og-image.png`-এর জন্য ZIP-এ পুরোনো ফাইল থাকলে সেটি আগের মতোই রাখবে। এই ZIP-এ সেটি নেই, কারণ আগের Social Preview image-টি অক্ষত রাখা উচিত।
+এটি Static, local-first সংস্করণ। User login, cloud synchronization, community review/upload, live booking, live hotel/transport pricing, live weather ও live distance calculation-এর জন্য পরবর্তী Backend/API integration প্রয়োজন। কোনো live service চালু আছে বলে এখানে দাবি করা হয়নি। ধর্মীয় চন্দ্রভিত্তিক উৎসবের তারিখ প্রতিবছর সরকারি ঘোষণা অনুযায়ী যাচাই করতে হবে।
+
+## Troubleshooting
+
+- পুরোনো PWA cache: সব ট্যাব বন্ধ করে আবার খুলুন; প্রয়োজনে PWA uninstall করে নতুন deployment যাচাইয়ের পর reinstall করুন।
+- জেলা না দেখালে: Cloudflare deployment Success হয়েছে কি না দেখুন এবং browser hard refresh করুন।
+- Backup Restore করার আগে বর্তমান ডেটার Backup রাখুন।

@@ -1,52 +1,57 @@
-ANONDO BANGLA — PREMIUM UPDATE v4
-=================================
+ANONDO BANGLA — ULTIMATE INTERNATIONAL EDITION
+==============================================
 
-This is an add-on update. It does NOT replace your existing index.html,
-district dataset, profile, visited tracker, achievement card, or theme logic.
+IMPORTANT: This ZIP is a complete root-level site update. Keep the existing
+repository and Cloudflare Pages Git integration. Do not create a new project.
 
-FILES
------
-1. travel-tools.js
-2. travel-tools.css
-3. sw.js
+GITHUB REPOSITORY
+-----------------
+rayhanjavaengineer-dotcom/anondo-bangla
+Branch: main
 
-GITHUB INSTALLATION
--------------------
-A) Upload travel-tools.js and travel-tools.css to the ROOT of:
-   rayhanjavaengineer-dotcom/anondo-bangla
+INSTALL
+-------
+1. Download and extract this ZIP on your computer.
+2. Open the existing GitHub repository.
+3. Upload/replace the files from this ZIP in the repository ROOT.
+4. Keep every file in the ZIP. Do not upload the ZIP itself as the website.
+5. Commit the changes to main.
+6. Cloudflare Pages should automatically start a deployment from the connected
+   GitHub repository. Wait until the deployment status is Success.
 
-B) Open the existing index.html on GitHub and click the pencil (Edit).
-   In the <head>, immediately after the existing premium.css link, add:
+CLOUDFLARE PAGES SETTINGS
+-------------------------
+Framework preset: None (or existing setting)
+Build command: leave empty
+Build output directory: / (repository root)
+Root directory: / (repository root)
+Environment variables: none required for this static edition
 
-   <link rel="stylesheet" href="travel-tools.css">
+Do not add Workers, D1, KV, or a custom domain for this release.
+The included _headers file is read automatically by Cloudflare Pages.
 
-   Near the bottom, immediately before </body>, add:
+AFTER DEPLOYMENT
+----------------
+1. Open the Cloudflare Pages production URL.
+2. Test on both laptop and Android mobile browser.
+3. If an installed PWA shows an old version, close all tabs of the site and
+   reopen it. If necessary, uninstall and reinstall the PWA after confirming
+   the new deployment is successful.
 
-   <script src="travel-tools.js"></script>
+PRIVACY & DATA
+--------------
+Profile, visited districts, Wishlist, Budget, Gallery, Planner and Journal
+are stored locally in the browser. They do not automatically synchronize
+between devices. Use Data Backup & Restore to transfer personal data.
+QR Travel Card calls a third-party QR image service only after the user checks
+the consent box. The QR payload contains the chosen display name, visited
+count and public website URL.
 
-   Keep all existing code. Do not replace or delete the current HTML/JavaScript.
-
-C) Replace the existing root sw.js with the sw.js file in this ZIP.
-   This updates the offline cache to v4.
-
-D) Commit changes to the main branch. Wait 1–3 minutes, then open:
-   https://rayhanjavaengineer-dotcom.github.io/anondo-bangla/
-
-E) If an older version remains visible, close the installed PWA/browser tab
-   and reopen the site. The service worker should refresh the cache.
-
-NEW FEATURES
-------------
-- My Travel Bucket List
-- Digital Travel Passport stamps (synchronized with visited districts)
-- Travel Budget Calculator (BDT)
-- District Food Guide (uses the existing 64-district food information)
-- Travel Photo Gallery (compressed photos stored locally in this browser)
-
-IMPORTANT
----------
-- Existing website name, creator credit, 64-district data and old features stay.
-- New personal data is stored in this browser using localStorage.
-- Gallery photos use browser storage, which is limited. Keep original photos
-  separately and remove old gallery photos if browser storage becomes full.
-- These features do not require a backend or paid API.
+SCOPE NOTES
+-----------
+This is a static, local-first web app. Real user accounts, cloud sync, public
+community uploads/reviews, live booking, live weather, live route distance,
+and live hotel/transport prices require trusted live data sources and/or a
+backend. They are not represented as working live services in this edition.
+National fixed-date observances are shown; lunar festival dates must be
+verified against official announcements each year.
