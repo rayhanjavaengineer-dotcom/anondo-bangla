@@ -400,3 +400,36 @@ body{background:radial-gradient(ellipse at 8% 0%,rgba(36,120,116,.09),transparen
 .hero-box h1{letter-spacing:-1.1px}.hero-primary{background:linear-gradient(135deg,#c9a65d,#9a7537)!important;border-color:#c9a65d!important;color:#132b35!important}
 .theme-dark{--bg:#07131d;--card:#102331;--text:#edf5f7;--muted:#a6b9c2;--primary:#5bc3b1;--primary2:#2c9b8c;--accent:#e1bd73;--line:#263e4b;--soft:#153b3a;--shadow:0 14px 38px rgba(0,0,0,.24)}
 @media print{.print-sheet{background:linear-gradient(135deg,#071827,#103b4b)!important;color:#fff!important;border:3px solid #c9a65d!important;border-radius:18px!important;min-height:250mm;box-sizing:border-box}.print-title{color:#e5c783!important;font-size:25px!important;letter-spacing:1px!important}.print-profile{background:rgba(255,255,255,.08)!important;border:1px solid rgba(229,199,131,.55)!important;color:#fff!important}.print-name{color:#fff!important}.print-badge{color:#e5c783!important}.print-stat{background:rgba(255,255,255,.08)!important;border:1px solid rgba(229,199,131,.4)!important;color:#fff!important}.print-stat strong{color:#e5c783!important}.print-list{border:1px solid rgba(229,199,131,.4)!important;color:#fff!important;background:rgba(255,255,255,.06)!important}.print-footer{color:#e5c783!important}}
+
+
+/* HEADER BRAND FIX: keep "Anondo Bangla" on one line */
+body .logo {
+  display: flex;
+  flex-wrap: nowrap !important;
+  align-items: center;
+  white-space: nowrap;
+  position: relative;
+  padding-bottom: 10px;
+}
+body .logo > span:not(.brand-tagline) {
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+body .logo .brand-tagline {
+  position: absolute;
+  left: 54px;
+  bottom: 0;
+  display: block;
+  flex: 0 0 auto;
+  white-space: nowrap;
+  margin-top: 0;
+}
+@media (max-width: 380px) {
+  body .logo { font-size: 18px; gap: 7px; }
+  body .logo:before {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+  }
+  body .logo .brand-tagline { left: 41px; }
+}
