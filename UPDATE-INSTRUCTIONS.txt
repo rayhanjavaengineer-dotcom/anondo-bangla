@@ -1,58 +1,28 @@
 ANONDO BANGLA — GLOBAL EDITION UPDATE
-=====================================
+====================================
 
-This is a complete root-level replacement package for the existing repository.
-Repository: rayhanjavaengineer-dotcom/anondo-bangla
-Branch: main
-Hosting: existing Cloudflare Pages Git integration
+This is a complete replacement package for the existing Cloudflare Pages site.
 
 UPLOAD
-------
-1. Extract this ZIP.
-2. Upload/replace ALL files inside the extracted folder in the repository ROOT.
-3. Do not upload the ZIP file itself. Do not delete existing repository settings.
-4. Commit to main. Cloudflare Pages should deploy automatically.
+1. Extract the ZIP file.
+2. Upload ALL files in this folder to the ROOT of the existing GitHub repository.
+3. Replace files with matching names. Do not upload the ZIP itself.
+4. Keep all assets in the repository root; do not move them into a subfolder.
+5. Commit the changes. Cloudflare Pages should deploy from the connected main branch.
 
-CLOUDFLARE PAGES
-----------------
-Framework preset: None
-Build command: blank
-Build output directory: / (root)
-Root directory: / (root)
-No environment variables are required for this static build.
+IMPORTANT PRESERVATION
+- Original Anondo Bangla brand and Bangladesh 64-district dataset are retained.
+- Existing LocalStorage keys and travel tools are retained.
+- New navigation.js and navigation.css create a dedicated tool-view experience.
+- global-tools.js uses countries.dev (keyless country data) and falls back to the older REST Countries endpoint; successfully loaded country data is cached locally.
+- Currency conversion continues to use Frankfurter daily reference rates, not bank cash buy/sell rates.
+- Service worker cache version is bumped to refresh updated files.
 
-FEATURES PRESERVED
-------------------
-- Original Anondo Bangla branding and creator credit.
-- Bangladesh's existing 64-district dataset and Division Explorer.
-- Existing profile name/photo, visited districts, theme and LocalStorage keys.
-- Existing travel tools: Wishlist, Passport, Budget, Food Guide, Photo Gallery,
-  Planner, Journal, QR Travel Card, Festival Calendar, Emergency info, Backup/Restore.
-- Existing achievement card downloads, print, district details and PWA/offline shell.
-- Premium Travel Identity profile integrated into the existing profile location.
+LANGUAGES
+The interface language selector currently provides Bangla, English, Japanese, Chinese, Arabic, French, Spanish and Hindi for the main landing/dashboard navigation. Country names, native names and official languages are shown where supplied by the country dataset. This is a multilingual foundation, not yet a complete translation of every tool or every world language.
 
-GLOBAL FEATURES
----------------
-- Global Country Explorer loads country names, flags, capital, region, currencies,
-  languages and time zones from REST Countries v3.1 when online; a 7-day local cache
-  supports previously loaded reference data offline.
-- Currency Converter uses Frankfurter daily reference rates (no API key); rates are
-  cached locally for up to 6 hours. The shown date is the provider's rate date.
-- Rates are indicative reference rates, NOT bank cash/card/remittance buy-sell rates.
+DATA LIMITS
+The Bangladesh explorer and its 64-district achievement metrics remain Bangladesh-specific. The Global Country Explorer shows country-level reference data; it does not claim to provide every country's local administrative levels, visa rules, safety advice, hotels or live bookings. Verify travel-critical information with official sources.
 
-IMPORTANT LIMITATIONS
---------------------
-This is still a static website. The Global Country Explorer is a country reference
-directory; it does NOT yet provide verified subnational administrative boundaries
-for every country, live hotels/restaurants/transport bookings, visas, emergency
-contacts for every country, user accounts, cloud sync or server-side exchange-rate
-history/charts. Those require additional verified datasets and/or a backend.
-Currency and country data require an internet connection for first load and updates.
-
-VALIDATION
-----------
-JavaScript syntax checks were run for the inline application script and all JS
-assets. HTML structural checks, duplicate-ID checks, local asset references, 64
-district record count and legacy storage-key checks were run on this package.
-A live browser/Cloudflare deployment test is not possible from this ZIP build;
-please wait for Cloudflare deployment Success before replacing an installed PWA.
+TESTING
+JavaScript syntax and package integrity are checked before release. After deployment, test the site on mobile and desktop, test the country search with Japan/Canada/Bangladesh, change interface language, open each tool from the dashboard, and test currency conversion.

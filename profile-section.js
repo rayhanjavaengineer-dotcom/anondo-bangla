@@ -15,9 +15,9 @@
   }
   function refresh(){
     const name=$("nameInput")?.value.trim()||read("anondoBanglaNameV4","")||"Your Name";
-    const title=$("abTravelTitle")?.value.trim()||read(KEY_TITLE,"Bangladesh Explorer");
+    const title=$("abTravelTitle")?.value.trim()||read(KEY_TITLE,"Global Traveler");
     const favorite=$("abFavoritePlace")?.value.trim()||read(KEY_FAVORITE,"আপনার পরবর্তী গন্তব্য");
-    const motto=$("abMotto")?.value.trim()||read(KEY_MOTTO,"Discover the beauty of Bangladesh");
+    const motto=$("abMotto")?.value.trim()||read(KEY_MOTTO,"Explore the world, collect memories");
     const m=metrics();
     $("abDisplayName").textContent=name;
     $("abDisplayTitle").textContent=title+" • Travel Lover";
@@ -42,14 +42,14 @@
   function hashCode(s){let h=0;for(let i=0;i<s.length;i++)h=((h<<5)-h)+s.charCodeAt(i)|0;return h;}
   function init(){
     if(!$("abTravelTitle"))return;
-    $("abTravelTitle").value=read(KEY_TITLE,"Bangladesh Explorer");
+    $("abTravelTitle").value=read(KEY_TITLE,"Global Traveler");
     $("abFavoritePlace").value=read(KEY_FAVORITE,"");
-    $("abMotto").value=read(KEY_MOTTO,"Discover the beauty of Bangladesh");
+    $("abMotto").value=read(KEY_MOTTO,"Explore the world, collect memories");
     ["nameInput","abTravelTitle","abFavoritePlace","abMotto"].forEach(id=>$(id)?.addEventListener("input",refresh));
     $("saveProfileButton")?.addEventListener("click",function(){
-      safe(KEY_TITLE,$("abTravelTitle").value.trim()||"Bangladesh Explorer");
+      safe(KEY_TITLE,$("abTravelTitle").value.trim()||"Global Traveler");
       safe(KEY_FAVORITE,$("abFavoritePlace").value.trim());
-      safe(KEY_MOTTO,$("abMotto").value.trim()||"Discover the beauty of Bangladesh");
+      safe(KEY_MOTTO,$("abMotto").value.trim()||"Explore the world, collect memories");
       refresh();
       $("abSaveNote").textContent="✓ আপনার Travel Identity সংরক্ষিত হয়েছে।";
     });

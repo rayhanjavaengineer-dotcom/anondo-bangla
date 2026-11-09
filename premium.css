@@ -391,3 +391,12 @@ body.theme-dark .hero-secondary {
     animation: none !important;
   }
 }
+/* Global Edition theme refinement */
+:root{--bg:#edf2f4;--primary:#11665f;--primary2:#0b4d49;--accent:#c49a4a;--soft:#e7f1ef;--shadow:0 12px 34px rgba(7,28,43,.09)}
+body{background:radial-gradient(ellipse at 8% 0%,rgba(36,120,116,.09),transparent 34%),radial-gradient(ellipse at 92% 12%,rgba(196,154,74,.10),transparent 28%),var(--bg)}
+.logo{display:flex;align-items:center;gap:0;flex-wrap:wrap}.brand-tagline{display:block;flex-basis:100%;font-size:8px;letter-spacing:2.2px;color:var(--muted);font-weight:800;margin-top:-3px}
+.hero-box{background:linear-gradient(118deg,rgba(5,25,42,.97),rgba(13,76,77,.94) 58%,rgba(130,100,48,.9))!important;border:1px solid rgba(196,154,74,.42)!important;position:relative;overflow:hidden;isolation:isolate}
+.hero-box:after{content:"";position:absolute;width:380px;height:380px;border:1px solid rgba(255,255,255,.13);border-radius:50%;right:-70px;top:-170px;box-shadow:0 0 0 28px rgba(255,255,255,.025),0 0 0 60px rgba(255,255,255,.02),0 0 0 100px rgba(255,255,255,.018);z-index:-1}
+.hero-box h1{letter-spacing:-1.1px}.hero-primary{background:linear-gradient(135deg,#c9a65d,#9a7537)!important;border-color:#c9a65d!important;color:#132b35!important}
+.theme-dark{--bg:#07131d;--card:#102331;--text:#edf5f7;--muted:#a6b9c2;--primary:#5bc3b1;--primary2:#2c9b8c;--accent:#e1bd73;--line:#263e4b;--soft:#153b3a;--shadow:0 14px 38px rgba(0,0,0,.24)}
+@media print{.print-sheet{background:linear-gradient(135deg,#071827,#103b4b)!important;color:#fff!important;border:3px solid #c9a65d!important;border-radius:18px!important;min-height:250mm;box-sizing:border-box}.print-title{color:#e5c783!important;font-size:25px!important;letter-spacing:1px!important}.print-profile{background:rgba(255,255,255,.08)!important;border:1px solid rgba(229,199,131,.55)!important;color:#fff!important}.print-name{color:#fff!important}.print-badge{color:#e5c783!important}.print-stat{background:rgba(255,255,255,.08)!important;border:1px solid rgba(229,199,131,.4)!important;color:#fff!important}.print-stat strong{color:#e5c783!important}.print-list{border:1px solid rgba(229,199,131,.4)!important;color:#fff!important;background:rgba(255,255,255,.06)!important}.print-footer{color:#e5c783!important}}

@@ -1,14 +1,14 @@
 {
-  "name": "Anondo Bangla | Explore Bangladesh",
+  "name": "Anondo Bangla | Explore the World",
   "short_name": "Anondo Bangla",
-  "description": "বাংলাদেশের ৬৪ জেলা Explorer, Global Country Explorer, Travel Tools ও Currency Converter।",
+  "description": "Explore the world. Collect memories. A global travel companion.",
   "lang": "bn-BD",
   "dir": "ltr",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f3f7f5",
-  "theme_color": "#087f5b",
+  "background_color": "#071827",
+  "theme_color": "#0b2638",
   "icons": [
     {
       "src": "icon-192.png",

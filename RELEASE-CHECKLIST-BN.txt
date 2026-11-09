@@ -1,19 +1,30 @@
-Anondo Bangla Global Edition — Release Verification
+ANONDO BANGLA GLOBAL EDITION — RELEASE CHECKLIST
 
-পরীক্ষিত বিষয়:
-[OK] মূল index.html এবং brand title সংরক্ষিত
-[OK] districts dataset-এ ৬৪টি D(...) record আছে
-[OK] LocalStorage keys: anondoBanglaVisitedV4, anondoBanglaNameV4, anondoBanglaPhotoV4, anondoBanglaThemeV4 অক্ষত
-[OK] travel-tools.js ও travel-tools.css অক্ষত
-[OK] profile patch একই profileSection-এ integrate করা হয়েছে
-[OK] profile photo remove action মূল profilePhoto variable ও storage উভয় আপডেট করে
-[OK] Global Explorer ও Currency Converter আলাদা assets-এ যোগ করা হয়েছে
-[OK] Service worker cache version bump এবং নতুন assets precache তালিকায় আছে
-[OK] প্রতিটি local asset path package-এ আছে
-[OK] JavaScript syntax, duplicate HTML IDs, local link targets যাচাই করা হয়েছে
+[✓] Original brand name retained
+[✓] Bangladesh 64-district dataset retained
+[✓] Existing storage keys retained
+[✓] Existing travel tools and IDs retained
+[✓] Country API changed to keyless countries.dev with legacy fallback
+[✓] Country data local cache and retry control added
+[✓] Separate dashboard menu and dedicated tool views added
+[✓] World travel slogan and premium global theme updated
+[✓] Achievement card redesigned in premium global style
+[✓] Main dashboard language selector: Bangla, English, Japanese, Chinese, Arabic, French, Spanish, Hindi
+[✓] Service worker cache version updated
+[✓] Currency converter preserved
 
-সীমা:
-[INFO] লাইভ browser/device test এবং Cloudflare deployment test করা হয়নি।
-[INFO] Country Explorer-এর দেশভিত্তিক প্রশাসনিক subdivision সব দেশের জন্য নেই।
-[INFO] Currency data daily reference rate; ব্যাংকের buy/sell rate নয়।
-[INFO] Existing localStorage data একই browser-এ থাকে; ZIP update করলে নিজে থেকে মুছে যায় না।
+IMPORTANT
+- The selected language currently translates the main landing/dashboard controls, not every label inside every tool.
+- The 64-district counter and district achievement data remain Bangladesh-specific.
+- Global Country Explorer is country-level reference data, not a complete worldwide local-administration or visa/hotel database.
+- Country and exchange-rate APIs require an internet connection on first load. Successfully loaded country data is cached on the device.
+
+POST-DEPLOYMENT MANUAL TEST
+1. Open the site in mobile and desktop browsers.
+2. Search Japan, Canada and Bangladesh in Global Explorer.
+3. Try each available language from the header selector.
+4. Open each item from the tool dashboard; confirm Back/Home works.
+5. Test profile photo/name save and refresh.
+6. Test currency conversion.
+7. Test Wishlist, Passport, Budget, Food Guide, Gallery, Planner, Journal, QR, Festival, Emergency and Backup/Restore.
+8. Confirm all 64 Bangladesh districts and previous saved data remain.
