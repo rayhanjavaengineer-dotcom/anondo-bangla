@@ -1,5 +1,5 @@
 /* Anondo Bangla — resilient offline cache v5 */
-const CACHE_NAME = "anondo-bangla-global-v7";
+const CACHE_NAME = "anondo-bangla-global-v8";
 const CORE_ASSETS = ["./", "./index.html", "./manifest.json", "./premium.css", "./travel-tools.css", "./travel-tools.js", "./profile-section.css", "./profile-section.js", "./global-tools.css", "./global-tools.js", "./navigation.css", "./navigation.js", "./brand-logo.svg", "./favicon.svg", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png", "./og-image.png"];
 self.addEventListener("install", event => {
   event.waitUntil((async () => {
