@@ -1,0 +1,18 @@
+ANONDO BANGLA v22 — Firebase Login Setup
+
+এই সংস্করণে Profile-এর Travel Identity ঐচ্ছিক। Login ছাড়াও ব্যবহার করা যাবে।
+Email/Password এবং Google/Gmail Sign-in চালু করতে নিজের Firebase project config প্রয়োজন।
+
+১) https://console.firebase.google.com/ এ গিয়ে একটি Firebase project তৈরি করুন।
+২) Project settings > General > Your apps > Web app তৈরি করে Firebase config কপি করুন।
+৩) firebase-config.js ফাইলে YOUR_ দিয়ে শুরু হওয়া placeholder-গুলো নিজের config দিয়ে বদলান।
+৪) Firebase Console > Authentication > Sign-in method থেকে Email/Password এবং Google Enable করুন।
+৫) Authentication > Settings > Authorized domains-এ rayhanjavaengineer-dotcom.github.io যোগ করুন (আপনার GitHub Pages domain আলাদা হলে সেটি দিন)।
+৬) সব ফাইল GitHub Pages-এ commit করে সাইট reload করুন।
+
+নিরাপত্তা:
+- Firebase Web config public client configuration; এটি Firebase Admin private key নয়।
+- Service account JSON, private key বা Admin SDK credential কখনো GitHub-এ দেবেন না।
+- এই v22 login Firebase Authentication দিয়ে পরিচয় যাচাই করে। Travel Identity-এর profile fields ও travel records এখনো device-local storage-এ থাকে; cloud sync এই সংস্করণে নেই।
+- Google login-এর জন্য Google provider enable এবং Authorized domain সঠিক থাকা বাধ্যতামূলক।
+- বাস্তব account sign-in পরীক্ষা করতে Firebase config বসিয়ে deployment করতে হবে।

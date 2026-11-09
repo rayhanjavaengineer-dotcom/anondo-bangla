@@ -1,0 +1,14 @@
+Anondo Bangla v22 — Explore Navigation & Optional Account Login
+
+- Fixed bottom Explore tab: it now opens the complete Global Explorer workspace.
+- Navigation exposes safe openTool/goHome handlers for the app shell.
+- Added premium optional account panel inside Travel Identity.
+- Added Firebase Email/Password registration and sign-in.
+- Added Google account sign-in, password reset, sign-out and email verification request.
+- Travel Identity remains available without login.
+- Added Firebase configuration template and Bengali setup guide.
+- Existing profile editor, photos, travel records, destinations and assets retained.
+
+Important: Online authentication is not active until the owner configures Firebase,
+enables Email/Password and Google providers, and authorizes the GitHub Pages domain.
+No real authentication or live deployment test has been performed in this package.

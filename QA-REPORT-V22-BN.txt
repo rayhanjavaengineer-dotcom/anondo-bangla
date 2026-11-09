@@ -1,0 +1,15 @@
+Anondo Bangla v22 — Static QA Report
+
+Checked:
+- Bottom navigation Explore now calls the navigation controller directly.
+- Explore route maps to globalExplorerSection and displays all global panels.
+- Existing Profile editor remains in place; optional authentication panel is added above it.
+- Firebase auth code includes Email/Password, Google, password reset and sign-out.
+- Authentication controls remain disabled until valid Firebase Web config is supplied.
+- Existing travel/profile localStorage keys are not intentionally deleted or renamed.
+- Existing image/logo/icon assets retained from v21 archive.
+
+Not tested:
+- Real Firebase login, because project config/credentials are not supplied.
+- GitHub Pages deployment, Android Chrome runtime, Google OAuth domain verification.
+- Cross-device cloud sync (not implemented; profile and travel data remain local).

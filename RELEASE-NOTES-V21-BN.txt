@@ -1,0 +1,33 @@
+ANONDO BANGLA v21 — RELEASE NOTES
+=================================
+
+1. Global-first Dashboard
+   - Main dashboard now displays Countries Explored, Unique Places Visited,
+     Global Travel Points and Global Explorer Level.
+   - Bangladesh's 64-district statistics are no longer presented as the
+     identity of the worldwide travel platform.
+
+2. Global achievement logic
+   - Explorer level and achievement milestones use unique global places.
+   - Achievement and printable cards use global travel records.
+   - Global Passport stamps are generated from unique country/place records.
+
+3. Bangladesh Explorer retained
+   - The 64-district explorer and its saved district progress remain available
+     as a separate Bangladesh-specific module.
+
+4. Language controls
+   - The standalone header language selector was removed.
+   - Change language is available inside the top-right three-dot Settings menu.
+   - Bengali/English selection is persisted on the device.
+   - A bilingual UI dictionary and dynamic-content translation observer were
+     added for the app's interface labels and common messages.
+
+5. Global branding
+   - Removed the Bangladesh remittance/district footer note.
+   - Updated the footer and identity card for global travel branding.
+
+6. PWA cache
+   - Service Worker cache name advanced to anondo-bangla-global-v21.
+
+No live travel, hotel, airline, visa, payment or booking integration is claimed.

@@ -68,7 +68,7 @@ files are packaged for integration; the live GitHub site has NOT been changed.
 
 V19: ৩০টি starter global destination, worldwide wishlist, global trip planner, hotel search date/guest filters এবং official travel-advice link hub যোগ হয়েছে। পূর্ণাঙ্গ verified world catalogue বা hotel live booking integration হিসেবে গণ্য নয়।
 
-v20 APP SHELL UPDATE:
+v21 APP SHELL UPDATE:
 - Home / Explore / Tools / Profile primary navigation added.
 - Three-dot Settings menu, language choice, privacy, security, help, about, terms, share and local feedback added.
 - Existing light/dark toggle retained.

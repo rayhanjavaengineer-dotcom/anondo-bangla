@@ -1,0 +1,37 @@
+ANONDO BANGLA v21 — STATIC QA REPORT
+====================================
+
+Scope
+- Updated from the v20 ZIP supplied in the working conversation.
+- All 38 v20 project files retained; 3 v21 documentation files added.
+- Existing icon assets, logos, photos and other supplied project assets retained.
+
+Checks performed
+- ZIP archive integrity: verified after final packaging.
+- JavaScript syntax: checked with Node.js for all standalone JS files and the
+  inline application script extracted from index.html; all passed.
+- Main Dashboard IDs: checked for obsolete Bangladesh-only stat references.
+- Language selector: checked that abLanguageSelect is no longer injected by
+  navigation.js; language choice is available in the three-dot Settings menu.
+- Global stats: checked that records use unique country names and unique
+  country + place pairs; points are 10 per unique place.
+- Bangladesh district progress remains in its separate explorer module.
+- Service Worker cache key updated to v21.
+
+Not performed / not claimed
+- No production GitHub Pages deployment test.
+- No real Android Chrome/PWA installation test on a physical device.
+- No live API/provider availability test.
+- No real hotel/flight booking, payment, visa or safety verification.
+
+Localization note
+- Bengali/English interface mapping covers the main app UI and common dynamic
+  labels/messages. User-entered content, proper names, some district-specific
+  descriptions and third-party provider content may remain in their original
+  language; this is not machine translation of every free-text record.
+
+Final packaging
+- v20 baseline entries preserved: 38/38.
+- v21 archive entries: 41 files (38 retained + 3 v21 documentation files).
+- ZIP test: no errors detected.
+- Existing branding/icon asset hashes match the v20 baseline.
