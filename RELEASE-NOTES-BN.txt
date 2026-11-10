@@ -88,3 +88,11 @@ Feedback is stored on the current device only. Play Store rating cannot be linke
 Real-device, live API and deployment tests remain pending.
 - API-free Global Flight Search form added (origin/destination/date/passengers), with Google Flights,
   Skyscanner and selected airline official website links; no in-app fare or ticket booking claims.
+
+
+V23 STAGE 3 — FIREBASE SECURITY FOUNDATION
+- Firebase Web App config restored from the previously supplied configured package for project anondo-bangla-87c40; existing firebase-auth.js left unchanged.
+- Added firestore.rules and storage.rules as deployment-ready security-rule drafts.
+- Added FIREBASE-SECURITY-FOUNDATION-BN.txt with deployment and testing limitations.
+- Service Worker cache version updated to v23-stage3.
+- Rules are not yet deployed or emulator-tested; Firestore/Storage social UI and trusted analytics backend remain unfinished.

@@ -1,0 +1,22 @@
+ANONDO BANGLA — v23 Stage 1 Change Notes
+
+এই Stage-এ করা হয়েছে:
+1. Home-এর Hero Section থেকে Explore the World / My Profile / Share App shortcut সরানো হয়েছে।
+2. Header-এ Install App এবং Share App action যুক্ত করা হয়েছে।
+3. Install button এখন floating button নয়; header-এর ভেতরে থাকে।
+4. Android/desktop native beforeinstallprompt, iOS Safari Add to Home Screen guidance এবং installed-state handling রাখা হয়েছে।
+5. Bottom navigation এখন Explore, Tools, Profile — তিনটি primary tab।
+6. Footer credit পরিবর্তন: Crafted with passion by Rayhan Imtiaz
+7. Service Worker cache version v23-stage1 করা হয়েছে, যাতে পুরোনো cached shell নতুন build-এর সঙ্গে সংঘর্ষ না করে।
+
+যা এখনো করা হয়নি:
+- Exit confirmation flow (web/PWA browser exit সীমাবদ্ধতা যাচাইসহ)
+- Destination data intelligence ও trip planner integration
+- Social community / Firestore / Storage
+- Creator analytics ও server-side admin authorization
+- Full device/browser/Firebase runtime regression test
+
+গুরুত্বপূর্ণ:
+- বিদ্যমান LocalStorage keys ও travel data reset করা হয়নি।
+- Firebase config/auth files অপরিবর্তিত রাখা হয়েছে।
+- এই ZIP হলো v23 Stage 1 working build; সম্পূর্ণ v23 final নয়।

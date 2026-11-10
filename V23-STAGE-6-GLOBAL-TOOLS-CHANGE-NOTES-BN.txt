@@ -1,0 +1,35 @@
+ANONDO BANGLA V23 — STAGE 6 GLOBAL TOOLS UPDATE
+তারিখ: ১০ নভেম্বর ২০২৬
+
+১) District Food Guide → World Food Guide
+- Bangladesh district food list সরিয়ে country/cuisine selector, country search, dish-name search এবং meal image cards যুক্ত হয়েছে।
+- TheMealDB area list থেকে country name + cuisine area একসঙ্গে নেওয়া হয়; provider dataset-এ Bangladesh/Bangladeshi area-ও আছে।
+- API: https://www.themealdb.com/api/json/v1/1/list.php?a=list এবং filter.php?a=...
+- Coverage provider dataset-এর ওপর নির্ভরশীল; সব দেশের প্রতিটি জনপ্রিয় খাবার থাকার নিশ্চয়তা নেই। Free key 1 development/testing key; public release-এর আগে provider-এর production/supporter terms/key নিতে হবে।
+
+২) Bangladesh Festival Calendar → World Festival & Holiday Calendar
+- Country search, ISO country selector, year input এবং country/year অনুযায়ী public holiday list যুক্ত হয়েছে।
+- API: https://date.nager.at/api/v3/PublicHolidays/{year}/{countryCode}
+- Nager.Date 200+ country coverage দাবি করে; API-তে কোনো দেশের তথ্য না থাকলে error/fallback দেখানো হবে। এটি সব সাংস্কৃতিক/ধর্মীয় উৎসব নয়; public-holiday dataset। Lunar dates স্থানীয় ঘোষণায় বদলাতে পারে।
+
+৩) Travel Safety & Emergency → Global Travel Safety & Emergency
+- Country search ও ISO code অনুযায়ী country-level general emergency number lookup এবং tel: tap-to-call যুক্ত হয়েছে।
+- Data: https://cdn.jsdelivr.net/gh/fernando-195/emergency-and-helplines-api@main/data/countries/{ISO}.json
+- Dataset 245 country/territory coverage দাবি করে; Wikipedia-derived এবং officially verified নয়। Missing number কখনো guess করা হয় না; UI-তে source caveat ও local authority verification reminder আছে।
+- This dataset supplies a general emergency number; it does not reliably provide separate police/fire/ambulance numbers for every country.
+
+৪) Global Travel Budget Calculator
+- BDT-only budget replaced with international currency selector and Transport, Accommodation, Food & drinks, Other expenses fields.
+- Total is calculated in the selected currency; this calculator does not perform currency conversion.
+- New data key: ab_global_private_budget_v1. Data remains in this browser's localStorage on this device; it is not sent to Firebase, Community or other users.
+- Existing legacy BDT budget values are retained and loaded as BDT if no new budget exists.
+- Manual backup export may include the private budget; protect backup files. Local browser storage is not a password-protected vault against someone with access to this device/browser.
+
+৫) Expense Tracker
+- New expenses inherit selected budget currency; older entries without a currency remain BDT. Totals are grouped by currency and are not incorrectly summed across unlike currencies.
+
+৬) Data and release notes
+- Food area list and emergency records are cached locally; public holiday records are cached for 24 hours; emergency records for 12 hours.
+- Service Worker cache: anondo-bangla-global-v23-stage6-global-tools.
+- Static checks: JavaScript syntax, HTML duplicate IDs, local asset references, JSON and service-worker precache checks passed in the working copy.
+- Live PWA/browser/device test, actual API calls from deployed origin, Firebase emulator/deployment and end-to-end user test are not performed in this stage.

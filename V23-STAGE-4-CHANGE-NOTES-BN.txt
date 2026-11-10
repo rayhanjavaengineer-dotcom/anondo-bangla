@@ -1,0 +1,11 @@
+ANONDO BANGLA v23 — STAGE 4 CHANGE NOTES
+=======================================
+1. Added Firebase Firestore/Storage compat SDK loading without changing existing Firebase Auth implementation.
+2. Added authenticated Travel Community UI in the existing Profile view.
+3. Added public feed, owner-only private posts, image/video upload, public 24-hour stories, comments, likes, delete-own-post and report-post actions.
+4. Added firestore.indexes.json for feed and story queries.
+5. Updated Firestore rules allowed fields to match client payloads and limited public user profile listing to public profiles.
+6. Updated Service Worker cache and precache assets.
+7. Preserved all existing LocalStorage keys, Travel Identity, navigation and Firebase Auth source.
+
+Not completed: follow/unfollow UI, full profile editor, notifications, creator analytics backend, admin claim provisioning, Firebase deployment and live runtime tests. This remains a development stage, not the final release.

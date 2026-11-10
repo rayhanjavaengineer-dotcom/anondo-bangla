@@ -1,0 +1,47 @@
+ANONDO BANGLA v23 — FINAL SOURCE PACKAGE QA REPORT
+তারিখ: ১০ নভেম্বর ২০২৬
+
+Release package: Anondo-Bangla-Global-Travel-v23-FINAL.zip
+Source folder: v23_work (এই রিপোর্টের সঙ্গে একই package-এ অন্তর্ভুক্ত)
+
+পরীক্ষার সারাংশ (এই final packaging run):
+- Root JavaScript: 12 files — `node --check` PASS.
+- Cloud Functions JavaScript: 2 files — `node --check` PASS.
+- JSON parse: manifest.json, firebase.json, firestore.indexes.json, functions/package.json — 4/4 PASS.
+- HTML IDs: 292; duplicate IDs: 0.
+- HTML local src/href references: 44 scanned; missing: 0.
+- CSS local url() assets: missing: 0.
+- Service Worker precache: 28 assets; missing: 0.
+- Firestore composite indexes declared: 5.
+- Firebase config contains no YOUR_/CHANGE_ME/REPLACE_ME placeholders; project configuration points to anondo-bangla-87c40.
+- Source package files before ZIP: 78.
+
+Stage 12 Community & Analytics:
+- Public traveler search and follow/unfollow.
+- Public profile photo upload.
+- Text edit and owner/admin post delete.
+- Saved posts and own saved-posts list.
+- Public feed pagination in 25-item pages.
+- Admin-only report queue; trusted moderation callable removes a post, owned media and nested comments/likes.
+- Owner-only delete callable validates auth UID and recursively removes post subcollections/media.
+- Public/private 24-hour stories; private story query is restricted to owner.
+- Creator Analytics: registrations, posts, stories, reports, DAU/WAU/MAU, returning-user daily tracking, popular destination/feature counters.
+- Analytics trigger counters use processed-event markers for retry idempotency.
+
+Security and data notes:
+- Firestore and Storage rules are source drafts included in this package; they have not been compiled by Firebase Emulator or deployed.
+- Firebase Auth source is retained. The live website's working login/logout has not been re-tested from this environment.
+- Public profile photo URLs are intentionally public.
+- Firebase Storage download URLs are bearer links; a recipient of a leaked URL may access that media. Highly confidential private media needs authenticated proxy delivery.
+- Browser-local Global Travel Budget remains in localStorage and is not uploaded to Firebase; same-device/browser access remains possible.
+- Existing Bangladesh district data and local storage keys are preserved in source; no migration/reset script was introduced.
+
+Not performed / release owner actions:
+- No Firebase Emulator test, Rules compiler test, Cloud Functions dependency install/build, Firebase deploy, GitHub push, production deploy, real Android Chrome test, iOS test, live API provider test, or browser end-to-end test was possible/performed in this run.
+- Cloud Functions require Node.js 20 and dependency installation; deployment may require Firebase Blaze billing. Deploy Rules, indexes, Storage Rules and Functions using README instructions after testing in a non-production project.
+- Community moderation, saved posts, traveler search, private stories, and callable-based owner/admin deletion require the included Firebase Rules/Indexes/Functions to be deployed.
+- Anonymous visitor analytics, profile media replacement, private media authenticated proxy, historical analytics backfill and moderation for non-post report types are not implemented.
+- External food, holiday, emergency, hotel, transport and destination coverage depends on providers and is not guaranteed for every country.
+
+Release assessment:
+Static source QA and ZIP integrity are checked. This is a final source package, NOT a production-tested deployment. Do not claim live Firebase or Android functionality until the owner completes the listed deployment and device tests.

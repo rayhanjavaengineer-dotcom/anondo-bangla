@@ -73,3 +73,45 @@ v21 APP SHELL UPDATE:
 - Three-dot Settings menu, language choice, privacy, security, help, about, terms, share and local feedback added.
 - Existing light/dark toggle retained.
 - See README-V20-BN.txt and QA-REPORT-V20-BN.txt for scope and testing limits.
+
+
+V23 STAGE 3 — FIREBASE SECURITY FOUNDATION
+- Firebase Web App config restored from the previously supplied configured package for project anondo-bangla-87c40; existing firebase-auth.js left unchanged.
+- Added firestore.rules and storage.rules as deployment-ready security-rule drafts.
+- Added FIREBASE-SECURITY-FOUNDATION-BN.txt with deployment and testing limitations.
+- Service Worker cache version updated to v23-stage3.
+- Rules are not yet deployed or emulator-tested; Firestore/Storage social UI and trusted analytics backend remain unfinished.
+
+V23 STAGE 6 — GLOBAL TRAVEL TOOLS
+- District Food Guide replaced with World Food Guide (country/cuisine search and meals via TheMealDB; provider coverage limits apply).
+- Bangladesh Festival Calendar replaced with World Festival & Holiday Calendar (country/year public holidays via Nager.Date; not a complete cultural festival directory).
+- Travel Safety & Emergency now supports searchable country-level general emergency numbers via a Wikipedia-derived dataset; verify locally and do not treat as official guaranteed data.
+- Travel Budget Calculator now supports multiple currencies and private local-only persistence. The calculator totals in the selected currency; it does not convert currencies. New budget is not uploaded to Firebase/Community.
+- Expense Tracker stores the currency used for each new expense and groups totals by currency.
+- See V23-STAGE-6-GLOBAL-TOOLS-CHANGE-NOTES-BN.txt for sources, limitations and QA scope.
+
+
+V23 STAGE 7 — DESTINATION HIERARCHY
+- Added a searchable global hierarchy: Country → Region/State/Province → City → Attraction/Landmark. It uses countries.dev / GeoNames data; coverage depends on available country subdivisions and populated-place records. It is a geographic directory, not a complete official tourism database.
+- Attraction search results can open Maps or populate the Global Trip Planner.
+- GeoNames attribution: CC BY 4.0. Details: V23-STAGE-7-DESTINATION-HIERARCHY-CHANGE-NOTES-BN.txt.
+
+
+V23 STAGE 8 — EXIT CONFIRMATION
+- In-app Android/PWA Back from a tool returns Home; Back from Home opens the custom “Leaving Anondo Bangla?” confirmation with Stay and Exit App actions.
+- A web page cannot guarantee that it can close its own browser/PWA window or intercept every OS/app-switcher/tab-close action. If the browser blocks window.close(), the dialog explains how to close it using device/browser controls.
+- See V23-STAGE-8-EXIT-CONFIRMATION-CHANGE-NOTES-BN.txt.
+
+
+V23 STAGE 9 — PERFORMANCE / REGRESSION
+- Feed remains bounded and media is lazy-loaded; redundant per-post follow reads were removed. See V23-STAGE-9-PERFORMANCE-CHANGE-NOTES-BN.txt for what was and was not tested.
+
+- Global Transport & Airport Finder provides geographic airport references and external route comparison/search links. It does not supply verified live timetables or fares.
+
+### Global travel companion coverage notes
+- World Food Guide searches all countries/territories; direct recipes are available only for cuisines represented in TheMealDB. Other countries get a country-specific research fallback.
+- World Festival & Holiday Calendar uses Nager.Date where supported. Cultural/religious events and unsupported-country holidays may be missing; verify with official organizers/government.
+- Global Emergency Contacts uses a community-maintained open dataset and shows dispatch/police/fire/ambulance numbers only where listed. Data may be incomplete/outdated; confirm locally and do not rely on it as the sole emergency source.
+- Global Travel Budget is local-only on the current device/browser. It is not uploaded to Firebase or visible to other app users. Device/browser access still means access to the saved budget.
+- Legacy Bangladesh district progress remains a separate Bangladesh-specific explorer; global records, wishlist, gallery and journal support worldwide places.
+- Transport and airport tools provide geographic references and external route links, not guaranteed live schedules, fares or availability.

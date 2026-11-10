@@ -1,0 +1,30 @@
+ANONDO BANGLA v23 — STAGE 5 STATIC QA REPORT
+===========================================
+Scope: v23 working copy after Firebase Community + Creator Analytics foundation.
+
+PASS
+- JavaScript syntax: 14 files passed Node.js --check (12 root JS + 2 Functions JS).
+- JSON parse: manifest.json, firebase.json, firestore.indexes.json, functions/package.json.
+- HTML duplicate IDs: none (237 IDs scanned).
+- Missing local HTML src/href references: none.
+- CSS url(...) local asset references: none missing.
+- Service Worker precache: 27 local entries; no missing local asset.
+- Firebase Auth source SHA-256 remains identical to Stage 2: 88677189941f5586312f03541c4f999422ff6502f99f058bf1e8c4f89617a5a2.
+- Firebase public project config contains project ID anondo-bangla-87c40; no YOUR_ placeholders.
+- Existing LocalStorage literal keys detected in Stage 2 remain present; no LocalStorage key migration or deletion added.
+- Firestore/Storage rules, Firestore indexes, Firebase Functions source and admin-claim helper present.
+
+NOT TESTED / NOT CLAIMED
+- Firebase CLI is not installed in this environment; no Firebase deploy was performed.
+- Firebase Emulator rules/index test not run.
+- Cloud Functions dependency installation/build/deploy not run.
+- Live Firestore/Storage/Auth/Functions runtime test not run.
+- Android Chrome/iOS/Desktop PWA, offline, visual and full end-to-end tests not run.
+- Firestore/Storage rules are not live until the project owner deploys them.
+
+KNOWN GAPS
+- No anonymous visitor analytics, destination popularity, returning-user cohorts, moderation dashboard, push notifications, or follow discovery/search yet.
+- Private media download URLs are bearer links; do not share them. A server-side authenticated media proxy is recommended before exposing private media sharing.
+- Functions deployment may require Blaze billing.
+
+Release state: WORK IN PROGRESS — NOT FINAL ZIP.

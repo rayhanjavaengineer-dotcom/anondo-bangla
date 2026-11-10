@@ -1,0 +1,21 @@
+ANONDO BANGLA v23 — STAGE 11: WORLD FOOD REFERENCE UPDATE
+
+তারিখ: ১০ নভেম্বর ২০২৬
+
+আপডেট:
+1. World Food Guide-এ National & Traditional Dishes এবং Popular Local Cuisine/Recipes আলাদা ধারণা হিসেবে উপস্থাপন করা হয়েছে।
+2. ব্যবহারকারী-প্রদত্ত বাংলা উইকিপিডিয়ার “জাতীয় খাবার” নিবন্ধকে দেশভিত্তিক জাতীয় খাবারের রেফারেন্স লিংক হিসেবে যুক্ত করা হয়েছে:
+   https://bn.wikipedia.org/wiki/জাতীয়_খাবার#বিভিন্ন_দেশের_জাতীয়_খাবার
+3. TheMealDB আগের মতোই সমর্থিত cuisine-area-র recipe ও image source হিসেবে রাখা হয়েছে। সব দেশের জন্য TheMealDB-তে সরাসরি recipe data আছে—এমন দাবি করা হয়নি।
+4. দেশভিত্তিক fallback এবং সরাসরি cuisine result—উভয় অবস্থাতেই National & Traditional Dishes reference link দেখা যাবে।
+5. উইকিপিডিয়ার তথ্য community-edited, official/exhaustive নয় এবং কোনো খাবারকে “জাতীয় খাবার” বলা নিয়ে মতভেদ থাকতে পারে—এই সতর্কতা UI-তে যোগ হয়েছে।
+
+ডেটা ও লাইসেন্স সংক্রান্ত সিদ্ধান্ত:
+- এই সংস্করণে উইকিপিডিয়ার তালিকাটি কপি করে নিজস্ব ডেটাবেসে পুনঃপ্রকাশ করা হয়নি; সরাসরি মূল নিবন্ধে লিংক দেওয়া হয়েছে। এতে attribution ও share-alike শর্ত ভুলভাবে প্রয়োগের ঝুঁকি এড়ানো হয়েছে।
+- ভবিষ্যতে তালিকাটি অ্যাপের ভেতরে কপি/রূপান্তর করে দেখাতে চাইলে Wikipedia-এর প্রযোজ্য Creative Commons লাইসেন্স, attribution, revision/source attribution এবং share-alike শর্ত অনুসরণ করতে হবে।
+- জাতীয় খাবারের তালিকা জনপ্রিয় স্থানীয় খাবারের পূর্ণ তালিকা নয়। দুই ধরনের তথ্যকে এক করে দেখানো হবে না।
+
+পরীক্ষা:
+- travel-tools.js Node syntax check: PASS
+- পূর্ণ ZIP static QA: আলাদা QA রিপোর্টে ফলাফল দেখুন।
+- Browser/live API test: এই পরিবর্তনের জন্য করা হয়নি।

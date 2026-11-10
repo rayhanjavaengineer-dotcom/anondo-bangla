@@ -1,0 +1,40 @@
+ANONDO BANGLA v23 — FIREBASE SECURITY & COMMUNITY IMPLEMENTATION
+=================================================================
+Project: anondo-bangla-87c40
+
+STAGE 3 — FIREBASE CONFIGURATION / SECURITY FOUNDATION
+- Firebase Web App public config restored from the separately supplied v22.1 Firebase-configured package. Existing firebase-auth.js was kept unchanged.
+- Firestore and Storage rules added. Analytics writes are denied to clients and admin reads require the Firebase custom claim admin=true.
+- Rules are source files only until deployed.
+
+STAGE 4 — SOCIAL COMMUNITY CLIENT
+- Firebase compat Firestore, Storage and Functions SDKs loaded using the existing 10.14.1 SDK family.
+- Authenticated public feed, owner-only private posts, image/video upload, 24-hour public stories, comments, likes, post deletion and report-post actions.
+- Public Traveler Profile edit and follow/unfollow controls.
+- Firestore composite indexes added for public feed, private posts and stories.
+- Service Worker cache is anondo-bangla-global-v23-stage4-community and precaches the new community CSS/JS.
+
+STAGE 5 — CREATOR ANALYTICS BACKEND
+- Cloud Functions v2 callable endpoints: trackUserActivity and getCreatorAnalytics.
+- Firestore create triggers count registrations, posts, stories and reports.
+- Authenticated activity records are deduplicated per user/day; analytics computes DAU, 7-day unique WAU and 30-day unique MAU.
+- Analytics data is written by Admin SDK only. getCreatorAnalytics requires custom claim admin=true.
+- Creator Analytics panel is hidden unless the signed-in Firebase ID token has admin=true.
+- set-admin-claim.js provisions the custom claim from a trusted workstation using Application Default Credentials. Never commit service-account keys.
+
+DEPLOYMENT (REQUIRES PROJECT OWNER ACTION)
+1. Install Firebase CLI and authenticate with the owner account.
+2. From this folder, run: firebase use anondo-bangla-87c40
+3. Run: firebase deploy --only firestore:rules,firestore:indexes,storage,functions
+4. Functions deployment may require the Firebase project to be on the Blaze billing plan and billing enabled.
+5. In a trusted terminal with GOOGLE_APPLICATION_CREDENTIALS pointing to a protected service-account file, run from functions/: node set-admin-claim.js FIREBASE_AUTH_UID
+6. The admin must sign out and sign in again to refresh the ID token.
+7. Confirm Firestore and Storage are provisioned; enable Email/Password and/or Google Auth; authorize the GitHub Pages domain.
+
+IMPORTANT LIMITATIONS / NOT TESTED
+- Firebase rules, indexes and Functions have NOT been deployed to the live project or tested in Firebase Emulator. Do not assume live security is changed yet.
+- No browser/device runtime test was possible in this environment.
+- Analytics counts registered profile documents, posts, stories, reports and signed-in active users; it does not yet measure anonymous visitors, popular destinations/features, returning-user cohorts or revenue.
+- Moderation dashboard, follow discovery/search, push notifications, profile photo upload, and edit-post flow remain future work.
+- Private post media download URLs are bearer URLs. Do not share a private media URL; a server-side authenticated media proxy would be stronger.
+- No service-account private key is included in this public web package.

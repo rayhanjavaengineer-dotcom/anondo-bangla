@@ -1,0 +1,11 @@
+ANONDO BANGLA V23 — STAGE 9 PERFORMANCE & REGRESSION PASS
+তারিখ: ১০ নভেম্বর ২০২৬
+
+- Social public/private feed query limits remain 25 posts; Stories limit 30. This bounds initial DOM and Firestore snapshot payload.
+- Feed image/story images use loading=lazy and decoding=async; video elements use preload=metadata.
+- Removed the per-post initial Follow-state Firestore read on every feed render (N+1 reads); Follow status is resolved only when the user acts on the button.
+- Feed listeners are unsubscribed on sign-out and replaced before refresh/resubscribe; no additional recurring timers or global polling loops added.
+- Country/city/attraction queries are user-triggered and bounded to 100/30/20 result records; food cards limited to 30 and destination cards to the curated catalogue.
+- Emergency and holiday API caches have explicit TTLs; global country list cache has 30-day TTL.
+- Static QA: JavaScript syntax, HTML duplicate IDs, local refs, CSS URLs, JSON and SW precache validation executed after changes.
+- Browser Lighthouse, Android Chrome touch/scroll, Firebase emulator, live auth/feed, Storage upload and full device regression are not verified in this container. Headless Chromium attempt did not complete; no browser runtime pass is claimed.

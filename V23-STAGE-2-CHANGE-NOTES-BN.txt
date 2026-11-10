@@ -1,0 +1,13 @@
+ANONDO BANGLA — v23 Stage 2 Change Notes
+
+1. Global Trip Planner-এর JSON loader সংশোধন: এখন Array এবং Object উভয় ধরনের LocalStorage data সঠিকভাবে পড়তে পারে। পুরোনো ab_global_trip_plan_v1 key রাখা হয়েছে।
+2. Planner-এ estimated total budget, currency এবং travel style যোগ হয়েছে।
+3. যাত্রা ও ফেরার তারিখ থেকে সর্বোচ্চ ৯০ দিনের editable draft itinerary তৈরি হয়।
+4. Destination card থেকে Plan this trip চাপলে গন্তব্য Planner-এ বসে যায়।
+5. সংরক্ষিত পরিকল্পনা reload-এর পর পুনরায় দেখানো হয়; আগের trip fields/key অক্ষত।
+6. Budget, date, traveller count ও itinerary length validation যোগ হয়েছে।
+7. Cache version v23-stage2 করা হয়েছে।
+
+সীমাবদ্ধতা: দিনভিত্তিক itinerary একটি editable planning outline; এটি live transport, attraction opening hours, visa, safety বা hotel reservation যাচাই করে না। Curated destination catalogue এখনো editorial starter dataset; পূর্ণাঙ্গ বিশ্ব পর্যটন ডেটাবেস নয়।
+
+Firebase/Auth files অপরিবর্তিত। Social Community, Firestore/Storage এবং Creator Analytics এখনো পরবর্তী ধাপ।

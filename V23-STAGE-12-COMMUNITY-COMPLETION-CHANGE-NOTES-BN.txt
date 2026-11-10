@@ -1,0 +1,22 @@
+ANONDO BANGLA v23 — STAGE 12 CHANGE NOTES (COMMUNITY COMPLETION)
+তারিখ: ১০ নভেম্বর ২০২৬
+
+এই ধাপে Community-র পূর্বে অসম্পূর্ণ কয়েকটি ব্যবহারযোগ্য ফিচার যুক্ত করা হয়েছে:
+- Public Traveler Profile-এ JPG/PNG/WebP avatar upload এবং photoURL save.
+- Public Traveler Search: নামের prefix দিয়ে public profile খোঁজা; signed-in user follow/unfollow করতে পারে.
+- Public ও নিজের Private post-এ Edit action (text edit), Delete action.
+- Post bookmark/save এবং My Saved Posts panel.
+- Public feed-এর Load More Posts (২৫টি করে cursor pagination).
+- Admin-only Community Moderation queue: reports দেখা, dismiss করা, reported post remove করা.
+- Firestore rules-এ savedPosts owner-only access এবং admin post deletion.
+- Public traveler search এবং Private Stories query-এর Firestore composite indexes.
+- Creator Analytics-এ Returning Users Today, Popular Destinations ও Popular Features tracking foundation; একই account-এর একই দিনের একই event একবারই গণনা হয়.
+- Admin post removal-এর trusted Cloud Function media file ও nested comments/likes পরিষ্কার করে.
+- Service Worker cache version Stage 12-এ bump.
+
+নিরাপত্তা/সীমাবদ্ধতা:
+- Admin moderation শুধু custom claim admin=true থাকা account-এ দৃশ্যমান; Firebase Rules deploy না করলে live access কাজ করবে না.
+- Avatar public profile-এর অংশ, তাই public profile photo URL প্রকাশিত হতে পারে.
+- Firebase Storage download URL bearer URL; URL ফাঁস হলে private media link-ধারী ব্যক্তি access পেতে পারে. Highly confidential private media-র জন্য authenticated proxy delivery প্রয়োজন.
+- Post edit বর্তমানে text-only; media replacement/edit নেই.
+- Live Firebase Emulator, Android device, Rules deploy বা production test করা হয়নি. Headless Chromium browser smoke test চেষ্টা করা হয়েছিল, কিন্তু এই container-এর browser process DBus/zygote runtime error-এ চালু হয়নি; তাই browser test ফলাফল নেই.

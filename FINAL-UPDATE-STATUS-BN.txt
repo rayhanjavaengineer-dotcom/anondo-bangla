@@ -90,3 +90,20 @@ v17 Hotel Explorer
 - Live hotel inventory/rates/availability/direct booking-এর জন্য provider partner/API credentials এবং secure backend প্রয়োজন; static GitHub Pages-এ secret API key রাখা নিরাপদ নয়।
 - Road/flight routing, traffic ETA, offline maps, country-specific visa rules database, local emergency directory এবং full multilingual translation এখনও নেই।
 - Real browser/device, live API, deployment ও end-to-end regression tests এখনও release blocker।
+
+
+V23 STAGE 3 — FIREBASE SECURITY FOUNDATION
+- Firebase Web App config restored from the previously supplied configured package for project anondo-bangla-87c40; existing firebase-auth.js left unchanged.
+- Added firestore.rules and storage.rules as deployment-ready security-rule drafts.
+- Added FIREBASE-SECURITY-FOUNDATION-BN.txt with deployment and testing limitations.
+- Service Worker cache version updated to v23-stage3.
+- Rules are not yet deployed or emulator-tested; Firestore/Storage social UI and trusted analytics backend remain unfinished.
+
+
+V23 GLOBAL TOOLS CHANGE (১০ নভেম্বর ২০২৬)
+1. District Food Guide → World Food Guide: country/cuisine area selection, live dish search, meal photos and recipe references. TheMealDB coverage is provider-limited; not every country's food is guaranteed.
+2. Bangladesh Festival Calendar → World Festival & Holiday Calendar: country search, year selection, public holiday results from Nager.Date. Religious/cultural festivals outside its public-holiday dataset may be absent; lunar dates may change.
+3. Travel Safety & Emergency: searchable country list, country-level general emergency number and tap-to-call. Data source is Wikipedia-derived and not officially verified; missing data is shown as unavailable, never guessed.
+4. Travel Budget Calculator: international currency selector, four expense categories, live total, persistent private local browser storage. New budget is not sent to Firebase/Community. Same-device/browser access is not a secure account vault; manual backups can contain budget data.
+5. Expense Tracker uses selected budget currency for new entries; older entries without currency remain BDT.
+6. Service Worker cache bumped to v23-stage6-global-tools.

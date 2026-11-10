@@ -1,0 +1,41 @@
+ANONDO BANGLA v23 — STAGE 10
+Global Travel Companion Localization & Coverage
+
+1. World Food Guide
+- Replaced district-oriented food selection with a world-country/territory selector.
+- TheMealDB cuisine areas show direct meal records where supported.
+- Countries without direct cuisine records receive country-specific food research and cuisine overview links. The app does not invent a list of dishes.
+
+2. World Festival & Holiday Calendar
+- Country and year selection uses Nager.Date public-holiday records where supported.
+- Unsupported country/year combinations show search links for official government holidays and cultural festivals.
+- Not every cultural, religious or lunar-calendar event is included; official organizer confirmation is required.
+
+3. Global Emergency Contacts
+- Country/territory search now loads dispatch, police, fire and ambulance categories where listed in EmergencyNumberAPI's country dataset.
+- Unknown values are not guessed. Missing records show a country-specific official-information search fallback.
+- Community-maintained data may be incomplete or outdated. Verify locally before relying on a number.
+- Source: https://github.com/EmergencyNumberAPI/data (Open Database Licence).
+
+4. Global Travel Budget
+- New users default to USD; existing saved BDT budgets are preserved.
+- Currency list combines live currency metadata and country currency metadata, with common-currency fallback for offline use.
+- Currency/country search is available.
+- Budget values and currency are auto-saved to ab_global_private_budget_v1 in the current browser's localStorage. No Firebase/public feed upload is used for this budget.
+- Existing legacy budget key is retained for migration/fallback. Reset and backup/restore include the new private budget key.
+
+5. Global Companion Modules
+- Global Wishlist, Travel Photo Gallery and Travel Memory Journal accept country/city/attraction text instead of requiring a Bangladesh district selection.
+- Old Bangladesh district wishlist items, gallery items and journal entries remain readable.
+- The Bangladesh 64-district Explorer remains a separate country-specific feature and is not used as the global destination count.
+- QR travel profile copy now distinguishes Bangladesh district progress from global country/place records.
+
+6. Transport & Nearby Attractions
+- Added Global Transport & Airport Finder: airport geographic search, map directions and external transport comparison/search links.
+- Destination hierarchy attraction lookup now tries OpenStreetMap Overpass nearby attraction data using selected city coordinates, caches results locally, and falls back to GeoNames or map search if needed.
+- No live timetable, fare, ticket, terminal or reservation availability is claimed.
+
+7. Verification
+- `node --check` passed for travel-tools.js, global-tools.js, navigation.js and app-shell-v20.js after this stage.
+- Browser-init smoke tests for travel-tools.js and global-tools.js passed with offline network stubs.
+- Live provider requests, Android Chrome device interaction, Firebase Emulator and production deployment were not performed in this environment.

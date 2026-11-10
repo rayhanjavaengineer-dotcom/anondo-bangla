@@ -1,34 +1,18 @@
-ANONDO BANGLA v22.1 — FIREBASE AUTHENTICATION SETUP
+ANONDO BANGLA v22 — Firebase Login Setup
 
-Firebase Web App configuration is now populated in firebase-config.js for project:
-- Project ID: anondo-bangla-87c40
-- Auth domain: anondo-bangla-87c40.firebaseapp.com
+এই সংস্করণে Profile-এর Travel Identity ঐচ্ছিক। Login ছাড়াও ব্যবহার করা যাবে।
+Email/Password এবং Google/Gmail Sign-in চালু করতে নিজের Firebase project config প্রয়োজন।
 
-OWNER ACTIONS REQUIRED IN FIREBASE CONSOLE
-1) Open Firebase Console > Authentication > Sign-in method (or Providers).
-2) Enable Email/Password. Email link sign-in is not required by this app.
-3) Enable Google provider and select the project support email.
-4) Open Authentication > Settings > Authorized domains.
-5) Add the exact domain used by the deployed Anondo Bangla website (for example,
-   rayhanjavaengineer-dotcom.github.io only if that is the actual hosting domain).
-   Keep anondo-bangla-87c40.firebaseapp.com in the authorized list.
-6) Upload/replace all 47 files from this ZIP in the hosting root and deploy.
-7) Open Profile > Travel Identity and test account creation, sign-in, password reset,
-   Google sign-in and sign-out on the deployed HTTPS site.
+১) https://console.firebase.google.com/ এ গিয়ে একটি Firebase project তৈরি করুন।
+২) Project settings > General > Your apps > Web app তৈরি করে Firebase config কপি করুন।
+৩) firebase-config.js ফাইলে YOUR_ দিয়ে শুরু হওয়া placeholder-গুলো নিজের config দিয়ে বদলান।
+৪) Firebase Console > Authentication > Sign-in method থেকে Email/Password এবং Google Enable করুন।
+৫) Authentication > Settings > Authorized domains-এ rayhanjavaengineer-dotcom.github.io যোগ করুন (আপনার GitHub Pages domain আলাদা হলে সেটি দিন)।
+৬) সব ফাইল GitHub Pages-এ commit করে সাইট reload করুন।
 
-IMPORTANT BEHAVIOUR
-- Travel Identity remains usable without signing in.
-- Email/password registration requests email verification.
-- Firebase Authentication verifies account identity. Profile fields, photos and travel
-  records remain in this browser's local storage; this release does not add cloud sync.
-- Existing local data is not intentionally deleted, migrated or renamed by this update.
-
-SECURITY
-- Firebase Web config is public client configuration and is expected in the website.
-- Never publish Service Account JSON, private keys, Admin SDK credentials or passwords.
-- Do not share a user's password or verification/reset link.
-
-TEST STATUS
-- Configuration file populated and static code checks can be performed locally.
-- Real account operations and Google OAuth cannot be confirmed until the updated site
-  is deployed and the provider/domain settings above are enabled in Firebase Console.
+নিরাপত্তা:
+- Firebase Web config public client configuration; এটি Firebase Admin private key নয়।
+- Service account JSON, private key বা Admin SDK credential কখনো GitHub-এ দেবেন না।
+- এই v22 login Firebase Authentication দিয়ে পরিচয় যাচাই করে। Travel Identity-এর profile fields ও travel records এখনো device-local storage-এ থাকে; cloud sync এই সংস্করণে নেই।
+- Google login-এর জন্য Google provider enable এবং Authorized domain সঠিক থাকা বাধ্যতামূলক।
+- বাস্তব account sign-in পরীক্ষা করতে Firebase config বসিয়ে deployment করতে হবে।

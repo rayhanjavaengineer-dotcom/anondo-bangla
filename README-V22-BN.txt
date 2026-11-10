@@ -1,24 +1,19 @@
-Anondo Bangla v22.1 — Global Explore, Travel Identity & Firebase Configured
+Anondo Bangla v22 — Global Explore & Travel Identity Account
 
-This release contains the same 47 project files from the supplied v22 archive.
-Firebase Web App config has been populated for project anondo-bangla-87c40.
+এই ZIP v21-এর সব ফাইল ও asset রেখে তৈরি করা হয়েছে। নতুন ফাইল:
+- firebase-config.js: নিজের Firebase Web App config বসানোর template
+- firebase-auth.js: optional Email/Password ও Google sign-in
+- FIREBASE-SETUP-BN.txt: Firebase login চালুর বাংলা নির্দেশনা
+- RELEASE-NOTES-V22-BN.txt এবং QA-REPORT-V22-BN.txt
 
-Included authentication code:
-- Email/Password account registration and sign-in
-- Google sign-in
-- Password reset email
-- Email verification request after registration
-- Sign-out and signed-in account display
+মূল পরিবর্তন:
+1. Bottom Explore এখন সম্পূর্ণ Global Explorer workspace খোলে।
+2. Home-এর Explore the World বাটনও Bangladesh District Explorer নয়, Global Explorer খোলে।
+3. Profile-এ optional Email/Password account, Google sign-in, account create, password reset ও sign-out যোগ হয়েছে।
+4. Login না করেও পুরোনো Travel Identity/Profile editor ব্যবহার করা যাবে।
 
-Travel Identity remains optional. Existing profile editor, photos, travel records,
-features, local-storage keys, logos and image assets are retained. No cloud sync is
-implemented: profile and travel data remain on the current device/browser.
+গুরুত্বপূর্ণ:
+Firebase config না বসালে online login চালু হবে না। Firebase Console-এ Email/Password ও Google provider enable করে GitHub Pages domain authorize করতে হবে। নির্দেশনা FIREBASE-SETUP-BN.txt-এ আছে।
+Travel Identity ও ভ্রমণ রেকর্ড এখনো device-local; cloud sync এই সংস্করণে নেই।
 
-BEFORE TESTING ONLINE AUTHENTICATION
-1. In Firebase Console > Authentication, enable Email/Password and Google providers.
-2. Add the exact deployed website hostname to Authentication > Settings > Authorized domains.
-3. Deploy all 47 files to the hosting root.
-4. Open Profile > Travel Identity and test registration, sign-in, reset, Google and logout.
-
-See FIREBASE-SETUP-BN.txt for the full Bengali checklist. Real Firebase sign-in and
-hosting runtime still require deployment and owner-side Firebase provider/domain settings.
+বাস্তব Firebase account sign-in এবং GitHub Pages runtime পরীক্ষা config ছাড়া করা সম্ভব হয়নি।

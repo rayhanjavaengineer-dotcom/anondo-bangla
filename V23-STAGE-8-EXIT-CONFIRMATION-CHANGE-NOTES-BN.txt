@@ -1,0 +1,11 @@
+ANONDO BANGLA V23 — STAGE 8 EXIT CONFIRMATION
+তারিখ: ১০ নভেম্বর ২০২৬
+
+- Android/PWA in-app Back flow এখন tool view থেকে Home-এ ফেরে; Home থেকে Back করলে custom exit dialog দেখায়।
+- Exact copy: “Leaving Anondo Bangla?”, “Are you sure you want to exit the app?”, “Stay”, “Exit App”.
+- Stay dialog বন্ধ করে app-এ রাখে। Exit App button browser window.close() চেষ্টা করে; browser/PWA যদি script-কে window বন্ধ করতে না দেয়, স্পষ্টভাবে device/browser controls দিয়ে close করার নির্দেশ দেখায়।
+- Direct #tool-* deep links-এও Home guard state তৈরি হয় যাতে প্রথম Back Home-এ ফেরে।
+- Browser tab/window close, অন্য origin-এ history exit, OS force-stop বা app switcher বন্ধ করা web app নির্ভরযোগ্যভাবে আটকাতে পারে না; browser-এর native beforeunload prompt-এর text নিয়ন্ত্রণ করা যায় না। তাই কোনো misleading close guarantee দেওয়া হয়নি।
+- No beforeunload hijack added; standard browser close behavior is preserved.
+- Service Worker cache bumped to anondo-bangla-global-v23-stage8-exit-confirmation.
+- JavaScript syntax static check passed. Real Android device Back behavior and browser close behavior still require device testing.

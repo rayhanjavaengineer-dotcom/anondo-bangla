@@ -1,0 +1,128 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function isOwner(uid) { return signedIn() && request.auth.uid == uid; }
+    function isAdmin() { return signedIn() && request.auth.token.admin == true; }
+    function validText(value, max) { return value is string && value.size() <= max; }
+    function validProfile(data) {
+      return data.displayName is string && data.displayName.size() > 0 && data.displayName.size() <= 80
+        && data.bio is string && data.bio.size() <= 300
+        && data.photoURL is string && data.photoURL.size() <= 2048
+        && data.profileVisibility in ['public','private'];
+    }
+    function canReadPost(post) {
+      return post.visibility == 'public' || (signedIn() && post.authorUid == request.auth.uid);
+    }
+
+    match /users/{uid} {
+      allow get: if isOwner(uid) || (resource.data.profileVisibility == 'public');
+      allow list: if resource.data.profileVisibility == 'public';
+      allow create: if isOwner(uid)
+        && request.resource.data.uid == uid
+        && request.resource.data.keys().hasOnly(['uid','displayName','photoURL','bio','profileVisibility','createdAt','updatedAt'])
+        && validProfile(request.resource.data);
+      allow update: if isOwner(uid)
+        && request.resource.data.uid == resource.data.uid
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['displayName','photoURL','bio','profileVisibility','updatedAt'])
+        && validProfile(request.resource.data);
+      allow delete: if false;
+
+      match /savedPosts/{postId} {
+        allow get, list: if isOwner(uid);
+        allow create: if isOwner(uid) && request.resource.data.keys().hasOnly(['postId','savedAt']) && request.resource.data.postId == postId;
+        allow delete: if isOwner(uid);
+        allow update: if false;
+      }
+
+      match /following/{targetUid} {
+        allow read: if isOwner(uid);
+        allow create: if isOwner(uid) && targetUid != uid
+          && request.resource.data.keys().hasOnly(['createdAt']);
+        allow delete: if isOwner(uid);
+        allow update: if false;
+      }
+    }
+
+    match /posts/{postId} {
+      allow get, list: if canReadPost(resource.data);
+      allow create: if signedIn()
+        && request.resource.data.authorUid == request.auth.uid
+        && request.resource.data.visibility in ['public','private']
+        && validText(request.resource.data.text, 5000)
+        && validText(request.resource.data.authorName, 80)
+        && validText(request.resource.data.authorPhotoURL, 2048)
+        && validText(request.resource.data.mediaPath, 512)
+        && validText(request.resource.data.mediaUrl, 2048)
+        && validText(request.resource.data.mediaType, 80)
+        && request.resource.data.keys().hasOnly(['authorUid','authorName','authorPhotoURL','text','mediaPath','mediaUrl','mediaType','visibility','createdAt','updatedAt']);
+      allow update: if signedIn() && resource.data.authorUid == request.auth.uid
+        && request.resource.data.authorUid == resource.data.authorUid
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['text','mediaPath','mediaUrl','mediaType','visibility','updatedAt'])
+        && validText(request.resource.data.text, 5000)
+        && validText(request.resource.data.mediaPath, 512)
+        && validText(request.resource.data.mediaUrl, 2048)
+        && validText(request.resource.data.mediaType, 80)
+        && request.resource.data.visibility in ['public','private'];
+      allow delete: if signedIn() && (resource.data.authorUid == request.auth.uid || isAdmin());
+
+      match /comments/{commentId} {
+        function parentPost() { return get(/databases/$(database)/documents/posts/$(postId)).data; }
+        allow get, list: if canReadPost(parentPost());
+        allow create: if signedIn() && canReadPost(parentPost())
+          && request.resource.data.authorUid == request.auth.uid
+          && validText(request.resource.data.text, 2000)
+          && validText(request.resource.data.authorName, 80)
+          && request.resource.data.keys().hasOnly(['authorUid','authorName','text','createdAt']);
+        allow update: if false;
+        allow delete: if signedIn() && (resource.data.authorUid == request.auth.uid || parentPost().authorUid == request.auth.uid);
+      }
+
+      match /likes/{likerUid} {
+        allow get, list: if canReadPost(get(/databases/$(database)/documents/posts/$(postId)).data);
+        allow create: if isOwner(likerUid)
+          && canReadPost(get(/databases/$(database)/documents/posts/$(postId)).data)
+          && request.resource.data.keys().hasOnly(['createdAt']);
+        allow delete: if isOwner(likerUid);
+        allow update: if false;
+      }
+    }
+
+    match /stories/{storyId} {
+      allow get, list: if resource.data.visibility == 'public'
+        || (signedIn() && resource.data.authorUid == request.auth.uid);
+      allow create: if signedIn()
+        && request.resource.data.authorUid == request.auth.uid
+        && request.resource.data.visibility in ['public','private']
+        && validText(request.resource.data.authorName, 80)
+        && validText(request.resource.data.mediaPath, 512)
+        && validText(request.resource.data.mediaUrl, 2048)
+        && validText(request.resource.data.mediaType, 80)
+        && validText(request.resource.data.caption, 300)
+        && request.resource.data.keys().hasOnly(['authorUid','authorName','authorPhotoURL','mediaPath','mediaUrl','mediaType','caption','visibility','createdAt','expiresAt']);
+      allow update: if signedIn() && resource.data.authorUid == request.auth.uid
+        && request.resource.data.authorUid == resource.data.authorUid
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['caption','visibility'])
+        && validText(request.resource.data.caption, 300)
+        && request.resource.data.visibility in ['public','private'];
+      allow delete: if signedIn() && resource.data.authorUid == request.auth.uid;
+    }
+
+    // Creator analytics must be written by trusted server code (Admin SDK).
+    match /creator_analytics/{document=**} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
+    match /reports/{reportId} {
+      allow create: if signedIn()
+        && request.resource.data.reporterUid == request.auth.uid
+        && request.resource.data.keys().hasOnly(['reporterUid','targetType','targetId','reason','createdAt'])
+        && request.resource.data.reason is string
+        && request.resource.data.reason.size() <= 500
+        && request.resource.data.targetType is string && request.resource.data.targetType.size() <= 40
+        && request.resource.data.targetId is string && request.resource.data.targetId.size() <= 128;
+      allow read, update, delete: if isAdmin();
+    }
+  }
+}

@@ -1,22 +1,15 @@
-ANONDO BANGLA v22.1 — STATIC QA REPORT
+Anondo Bangla v22 — Static QA Report
 
-Package:
-- Source archive: Anondo-Bangla-Global-Travel-v22(1).zip
-- Files retained: 47 (no files added or removed)
-- Firebase project config populated for anondo-bangla-87c40.
+Checked:
+- Bottom navigation Explore now calls the navigation controller directly.
+- Explore route maps to globalExplorerSection and displays all global panels.
+- Existing Profile editor remains in place; optional authentication panel is added above it.
+- Firebase auth code includes Email/Password, Google, password reset and sign-out.
+- Authentication controls remain disabled until valid Firebase Web config is supplied.
+- Existing travel/profile localStorage keys are not intentionally deleted or renamed.
+- Existing image/logo/icon assets retained from v21 archive.
 
-Static checks performed for this update:
-- Firebase config placeholders replaced with supplied Web App config.
-- firebase-auth.js uses Firebase compat SDK loaded by index.html before auth script.
-- Auth UI IDs referenced by firebase-auth.js are present in index.html.
-- Existing Travel Identity/local profile code and storage implementation left unchanged.
-- JavaScript syntax and manifest JSON are checked in the delivered package.
-
-NOT VERIFIED IN THIS ENVIRONMENT:
-- Firebase Email/Password provider enabled in Console.
-- Google provider and OAuth authorized domain configuration.
-- Real account registration, verification email, login, password reset and logout.
-- GitHub Pages/Cloudflare deployment and Android Chrome runtime.
-- Cross-device cloud sync (not implemented in this release).
-
-Manual live test is required after deploying all 47 files and enabling providers/domains.
+Not tested:
+- Real Firebase login, because project config/credentials are not supplied.
+- GitHub Pages deployment, Android Chrome runtime, Google OAuth domain verification.
+- Cross-device cloud sync (not implemented; profile and travel data remain local).

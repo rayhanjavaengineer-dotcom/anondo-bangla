@@ -1,0 +1,48 @@
+ANONDO BANGLA v23 — RELEASE CHECKLIST
+
+A. Static QA (completed in source workspace)
+[✓] JavaScript syntax checks
+[✓] JSON validation
+[✓] Duplicate HTML ID scan
+[✓] Local HTML asset/script references
+[✓] CSS url() local asset scan
+[✓] Service Worker precache asset scan
+[✓] Travel Tools offline-init smoke test
+[✓] Global Tools offline-init smoke test
+[✓] Navigation offline-init smoke test
+[✓] Firebase Auth source preserved
+[✓] No service-account JSON/private key included
+
+B. Before production deployment (not performed here)
+[ ] Review firebase-config.js against the known working live Firebase project; do not replace working credentials.
+[ ] Deploy Firestore rules and indexes to a test project/emulator.
+[ ] Deploy Storage rules to a test project/emulator.
+[ ] Install Functions dependencies and run local tests.
+[ ] Confirm billing/Blaze requirements before Cloud Functions deployment.
+[ ] Deploy Cloud Functions to test project.
+[ ] Assign admin custom claim only to the intended owner UID.
+[ ] Test email/password login, Google login, logout and auth persistence.
+[ ] Test public feed read while signed out.
+[ ] Test post/story creation (public/private), media upload, likes, comments, follow/unfollow, report and deletion.
+[ ] Verify private post/story read isolation between two separate accounts.
+[ ] Test profile avatar upload, public profile search, saved posts, text editing and 25-item cursor pagination.
+[ ] Test admin moderation: report dismiss and trusted post-removal callable including media/subcollection cleanup.
+[ ] Test analytics event deduplication, returning-user counts and popular destination/feature rankings after deployment.
+[ ] Verify Storage private-path access isolation and public media behavior.
+[ ] Verify admin analytics is hidden for normal accounts and callable only by admin claim.
+[ ] Test country, region, city, nearby attraction, food, festival, emergency and currency provider fallbacks.
+[ ] Test global budget save/reload, reset, backup/restore, and ensure no Firestore write occurs.
+[ ] Test install/share prompts on Android Chrome and iOS Safari.
+[ ] Test browser Back, Android Back and exit dialog.
+[ ] Test offline shell, SW update, cache refresh and slow-network behavior.
+[ ] Test on Android Chrome, desktop Chrome, Safari and Firefox where available.
+[ ] Review privacy notice, provider terms, data retention and content moderation process.
+
+C. Known limitations
+- Media replacement/edit is not included; post text edit is available.
+- Analytics does not include anonymous visitors or revenue. Returning-user/popularity tracking starts only after new Functions deployment and has no historical backfill.
+- Private media uses Firebase download-token URLs; treat them as bearer links and do not share them.
+- Live external API coverage and all third-party data are not guaranteed.
+- Browser/device, Firebase Emulator and production deployment tests remain owner-side tasks.
+
+Release status: Static source QA passed. Production release is pending section B.

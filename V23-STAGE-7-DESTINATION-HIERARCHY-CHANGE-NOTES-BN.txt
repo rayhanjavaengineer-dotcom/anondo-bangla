@@ -1,0 +1,24 @@
+ANONDO BANGLA V23 — STAGE 7 GLOBAL DESTINATION HIERARCHY
+তারিখ: ১০ নভেম্বর ২০২৬
+
+- Global Explorer-এ Country → Region/State/Province → City → Attraction/landmark hierarchy panel যোগ হয়েছে।
+- Country list existing countries.dev country dataset থেকে আসে। Country selection অনুযায়ী GeoNames/countries.dev geographic data দিয়ে প্রথম-স্তরের administrative region ও populated city list আনা হয়।
+- City selection-এর পর attraction/landmark query করা যায়; ফলাফল GeoNames geographic records, not verified tourist recommendations। Google Maps link এবং Global Trip Planner-এ place যোগ করার action আছে।
+- Provider endpoints: https://countries.dev/cities?country=XX&limit=100 এবং https://countries.dev/places?country=XX&class=A&limit=100 / places?q=...&country=XX . API supports city search (~34k cities) and full place gazetteer (~12M features), but this UI loads up to 100 city/region records per selected country and is not a complete administrative-boundary database.
+- GeoNames data attribution: CC BY 4.0. API docs: https://countries.dev/docs/api/cities and https://countries.dev/docs/api/places
+- Some countries do not have a clear first-level region mapping or sufficient city data in this provider; UI falls back to available codes/empty-state rather than inventing regions. Attraction matches are name-based, not guaranteed to lie within city boundaries.
+- Service Worker cache bumped to anondo-bangla-global-v23-stage7-destination-hierarchy.
+- Static JavaScript syntax checks passed after implementation. Live API/browser testing remains pending.
+
+- Dedicated navigation dashboard item added for Destination Hierarchy; Global Travel Records, Weather, Destination/Hotel Finder and Currency Converter panel indexes updated to preserve correct navigation targets.
+
+- Global Transport & Airport Finder panel added: GeoNames airport records (country/city search), Google Maps route directions, Rome2Rio multimodal comparisons, plus Google Flights/Trainline/Busbud external links where relevant. Live schedules/fares are not claimed; users must confirm with operators.
+
+## Global travel companion localization update
+- District Food Guide replaced by World Food Guide. Country selector now lists world countries/territories; TheMealDB direct recipes appear where its cuisine dataset has coverage, and unsupported countries receive country-specific cuisine research links rather than fabricated dishes.
+- Bangladesh Festival Calendar replaced by World Festival & Holiday Calendar. Country/year public holidays use Nager.Date where supported; missing coverage links to official-holiday and cultural-festival research. This is not a complete calendar of every religious/cultural event.
+- Travel Safety & Emergency now searches country/territory emergency contacts and separates dispatch, police, fire and ambulance numbers where the community-maintained EmergencyNumberAPI dataset lists them. Unknown numbers are not guessed; official-source search fallback and safety warnings are shown.
+- Travel Budget Calculator now supports a global currency list, defaults to USD for new users, retains legacy BDT budgets, auto-saves the selected currency and category totals in a private browser-local key, and never sends this budget to Firebase or the public community feed.
+- Other district-only companion tools were globalized: wishlist, photo gallery and travel journal now accept country/city/attraction names while preserving older Bangladesh-district entries and existing LocalStorage keys.
+- The Bangladesh 64-district explorer remains clearly labeled as a separate Bangladesh-specific module; it is not used as the global travel count.
+- Added Global Transport & Airport Finder with airport geographic references and external route/search links. Timetables, fares, IATA/ICAO codes and live availability must be confirmed with the official airport/operator.

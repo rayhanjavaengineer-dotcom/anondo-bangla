@@ -9,3 +9,7 @@ body.theme-dark .global-record-stats>div{background:#102b30;border-color:var(--l
 .packing-checklist{display:grid;gap:7px;margin-top:10px}.packing-row{display:flex;align-items:center;gap:10px;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:var(--soft);font-size:13px}.packing-row input{width:18px;height:18px;accent-color:var(--primary)}.packing-row input:checked+span{text-decoration:line-through;color:var(--muted)}
 #placesResults .journal-item a{align-self:center;color:var(--primary);font-weight:800;font-size:12px;white-space:nowrap}
 .tool-divider{height:1px;background:var(--line);margin:16px 0}.global-panel h4{margin:8px 0 0;font-size:15px}
+
+/* Global travel tools v23 */
+.food-row{align-items:center}.food-row img{flex:0 0 64px}.food-row a{color:var(--primary);font-weight:800;text-decoration:none}.emergency-links{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0}.emergency-number{font-size:18px!important;display:inline-flex;align-items:center;text-decoration:none}.event-row small{display:block;line-height:1.55;margin-top:5px}#globalBudgetPanel{border-color:rgba(8,123,83,.28)}#budgetPrivacyNote{padding:10px 12px;border-radius:10px;background:var(--soft)}
+.emergency-category{margin-top:10px;padding-top:8px;border-top:1px solid var(--line,#dce5e8)}.emergency-category>small{display:block;margin-bottom:6px;font-weight:800;color:var(--muted)}.emergency-links{display:flex;flex-wrap:wrap;gap:8px}.emergency-warning{display:block;margin-top:10px;color:#a65a16;font-weight:700}
