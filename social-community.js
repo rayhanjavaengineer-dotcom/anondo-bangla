@@ -7,8 +7,17 @@
 
   const $ = (id) => document.getElementById(id);
 
+  const bind = (id, event, handler) => {
+    const el = $(id);
+    if (!el) return false;
+    el.addEventListener(event, handler);
+    return true;
+  };
+
   const state = {
     user: null,
+    currentUid: null,
+    feedRefreshPending: false,
     postsUnsub: null,
     privateUnsub: null,
     storiesUnsub: null,
@@ -52,57 +61,50 @@
   }
 
   function setSignedIn(user) {
-    state.user = user || null;
+    const nextUid = user ? user.uid : null;
+    const accountChanged = state.currentUid !== nextUid;
 
+    if (accountChanged) {
+      ['postsUnsub', 'privateUnsub', 'storiesUnsub', 'privateStoriesUnsub']
+        .forEach(key => {
+          if (state[key]) state[key]();
+          state[key] = null;
+        });
+      state.profileName = '';
+      state.profilePhoto = '';
+      state.publicCursor = null;
+      state.publicHasMore = false;
+      state.publicLoadingMore = false;
+      state.currentUid = nextUid;
+    }
+
+    state.user = user || null;
     const signed = !!user;
 
-    [
-      'abCommunityProfile',
-      'abCommunityComposer',
-      'abStoryComposer'
-    ].forEach(id => {
-      const el = $(id);
-      if (el) el.hidden = !signed;
-    });
+    ['abCommunityProfile', 'abCommunityComposer', 'abStoryComposer']
+      .forEach(id => { const el = $(id); if (el) el.hidden = !signed; });
 
     const signedOut = $('abCommunitySignedOut');
     if (signedOut) signedOut.hidden = signed;
-
     const savedPanel = $('abCommunitySavedPanel');
     if (savedPanel) savedPanel.hidden = !signed;
 
     if (!signed) {
-      if (state.privateUnsub) state.privateUnsub();
-      state.privateUnsub = null;
-
-      if (state.postsUnsub) state.postsUnsub();
-      if (state.storiesUnsub) state.storiesUnsub();
-      if (state.privateStoriesUnsub) state.privateStoriesUnsub();
-
-      state.postsUnsub = null;
-      state.storiesUnsub = null;
-      state.privateStoriesUnsub = null;
-
-      renderMessage(
-        'abCommunityPrivateFeed',
-        'Private পোস্ট দেখতে সাইন ইন করুন।'
-      );
-
-      renderMessage(
-        'abCommunityPrivateStories',
-        'Private Stories দেখতে সাইন ইন করুন।'
-      );
-
-      renderMessage(
-        'abCommunitySavedPosts',
-        'Saved Posts দেখতে সাইন ইন করুন।'
-      );
-
+      state.profileName = '';
+      state.profilePhoto = '';
+      renderMessage('abCommunityPrivateFeed', 'Private পোস্ট দেখতে সাইন ইন করুন।');
+      renderMessage('abCommunityPrivateStories', 'Private Stories দেখতে সাইন ইন করুন।');
+      renderMessage('abCommunitySavedPosts', 'Saved Posts দেখতে সাইন ইন করুন।');
       subscribePosts();
       subscribeStories();
       return;
     }
 
+    if (accountChanged) {
+      renderMessage('abCommunityPrivateFeed', 'Private পোস্ট লোড হচ্ছে…');
+      renderMessage('abCommunityPrivateStories', 'Private Stories লোড হচ্ছে…');
+      renderMessage('abCommunitySavedPosts', 'Saved Posts দেখতে সাইন ইন করুন।');
+    }
     loadOwnProfile();
     subscribePosts();
     subscribePrivatePosts();
@@ -377,13 +379,16 @@
 
   async function loadOwnProfile() {
     if (!state.user) return;
+    const profileUser = state.user;
+    const profileUid = profileUser.uid;
 
     const ref = firebase.firestore()
       .collection('users')
-      .doc(state.user.uid);
+      .doc(profileUid);
 
     try {
       const snap = await ref.get();
+      if (!state.user || state.user.uid !== profileUid) return;
       const d = snap.exists ? snap.data() : {};
 
       state.profileName =
@@ -409,9 +414,9 @@
 
       if (!snap.exists) {
         await ref.set({
-          uid: state.user.uid,
-          displayName: state.profileName || state.user.displayName || 'Anondo Traveler',
-          photoURL: state.user.photoURL || '',
+          uid: profileUid,
+          displayName: state.profileName || profileUser.displayName || 'Anondo Traveler',
+          photoURL: profileUser.photoURL || '',
           bio: '',
           profileVisibility: 'public',
           createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -420,6 +425,7 @@
       }
 
     } catch (e) {
+      if (!state.user || state.user.uid !== profileUid) return;
       status(
         'প্রোফাইল লোড করা যায়নি। Firestore Rules পরীক্ষা করুন।',
         'error'
@@ -494,13 +500,16 @@
     }
   }
 
-  // Public Feed: refresh status is cleared after every successful snapshot.
+  // Public Feed is readable by guests; only a manual refresh reports success.
   function subscribePosts() {
-    if (state.postsUnsub) {
-      state.postsUnsub();
-    }
+    if (state.postsUnsub) state.postsUnsub();
+    state.postsUnsub = null;
 
     const feed = $('abCommunityFeed');
+    state.publicCursor = null;
+    state.publicHasMore = false;
+    const more = $('abCommunityLoadMore');
+    if (more) more.hidden = true;
 
     state.postsUnsub = firebase.firestore()
       .collection('posts')
@@ -508,58 +517,27 @@
       .orderBy('createdAt', 'desc')
       .limit(25)
       .onSnapshot(snapshot => {
-
-        // FIX: Clear loading status even when the feed is empty.
-        status('Community Feed আপডেট হয়েছে।', 'success');
-
+        if (state.feedRefreshPending) {
+          state.feedRefreshPending = false;
+          status('Community Feed আপডেট হয়েছে।', 'success');
+        }
         if (!feed) return;
-
         feed.replaceChildren();
-
         if (snapshot.empty) {
-          renderMessage(
-            'abCommunityFeed',
-            'এখনো কোনো Public travel story নেই। প্রথম পোস্টটি আপনি করতে পারেন।'
-          );
-
+          renderMessage('abCommunityFeed', 'এখনো কোনো Public travel story নেই। প্রথম পোস্টটি আপনি করতে পারেন।');
           state.publicCursor = null;
           state.publicHasMore = false;
-
-          const more = $('abCommunityLoadMore');
           if (more) more.hidden = true;
-
           return;
         }
-
-        snapshot.forEach(doc => {
-          feed.append(postCard(doc));
-        });
-
-        state.publicCursor = snapshot.docs.length
-          ? snapshot.docs[snapshot.docs.length - 1]
-          : null;
-
+        snapshot.forEach(doc => feed.append(postCard(doc)));
+        state.publicCursor = snapshot.docs.length ? snapshot.docs[snapshot.docs.length - 1] : null;
         state.publicHasMore = snapshot.size === 25;
-
-        const more = $('abCommunityLoadMore');
-
-        if (more) {
-          more.hidden = !state.publicHasMore;
-        }
-
+        if (more) more.hidden = !state.publicHasMore;
       }, error => {
-
-        renderMessage(
-          'abCommunityFeed',
-          'Feed লোড করা যায়নি। Firestore Rules ও প্রয়োজনীয় index পরীক্ষা করুন।'
-        );
-
-        status(
-          'Community feed error: ' +
-          (error.code || error.message || 'unknown'),
-          'error'
-        );
-
+        state.feedRefreshPending = false;
+        renderMessage('abCommunityFeed', 'Feed লোড করা যায়নি। Firestore Rules ও প্রয়োজনীয় index পরীক্ষা করুন।');
+        status('Community feed error: ' + (error.code || error.message || 'unknown'), 'error');
       });
   }
 
@@ -840,15 +818,13 @@
 
     const ref = firebase.storage().ref().child(path);
 
-    await ref.put(file, {
-      contentType: file.type
-    });
-
-    return {
-      path,
-      url: await ref.getDownloadURL(),
-      type: file.type
-    };
+    await ref.put(file, { contentType: file.type });
+    try {
+      return { path, url: await ref.getDownloadURL(), type: file.type };
+    } catch (error) {
+      await ref.delete().catch(() => {});
+      throw error;
+    }
   }
 
   async function createPost() {
@@ -870,6 +846,7 @@
     $('abCommunityPublish').disabled = true;
 
     let uploaded = null;
+    let postCreated = false;
 
     try {
       uploaded = await uploadMedia(file, 'posts', visibility);
@@ -888,6 +865,7 @@
           createdAt: firebase.firestore.FieldValue.serverTimestamp(),
           updatedAt: firebase.firestore.FieldValue.serverTimestamp()
         });
+      postCreated = true;
 
       $('abCommunityPostText').value = '';
       $('abCommunityPostFile').value = '';
@@ -933,10 +911,12 @@
     state.busy = true;
     $('abCommunityStoryPublish').disabled = true;
 
+    let uploaded = null;
+    let storyCreated = false;
     try {
       const visibility = $('abCommunityStoryVisibility').value;
 
-      const uploaded = await uploadMedia(
+      uploaded = await uploadMedia(
         file,
         'stories',
         visibility
@@ -960,6 +940,7 @@
             now.toMillis() + 24 * 60 * 60 * 1000
           )
         });
+      storyCreated = true;
 
       $('abCommunityStoryFile').value = '';
       $('abCommunityStoryCaption').value = '';
@@ -972,6 +953,9 @@
       );
 
     } catch (e) {
+      if (!storyCreated && uploaded && uploaded.path) {
+        await firebase.storage().ref().child(uploaded.path).delete().catch(() => {});
+      }
       status(e.message || 'Story প্রকাশ করা যায়নি।', 'error');
 
     } finally {
@@ -1169,6 +1153,8 @@
     }
 
     const button = $('abCommunityLoadMore');
+    const feed = $('abCommunityFeed');
+    if (!button || !feed) return;
 
     state.publicLoadingMore = true;
     button.disabled = true;
@@ -1184,7 +1170,7 @@
         .get();
 
       snap.forEach(doc => {
-        $('abCommunityFeed').append(postCard(doc));
+        feed.append(postCard(doc));
       });
 
       if (snap.docs.length) {
@@ -1636,68 +1622,28 @@
       status('Firebase Authentication পাওয়া যায়নি।', 'error');
     }
 
-    $('abCommunityPublish').addEventListener(
-      'click',
-      createPost
-    );
+    bind('abCommunityPublish', 'click', createPost);
+    bind('abCommunityProfileSave', 'click', saveOwnProfile);
+    bind('abCreatorAnalyticsRefresh', 'click', refreshCreatorAnalytics);
+    bind('abCommunityStoryPublish', 'click', createStory);
 
-    $('abCommunityProfileSave').addEventListener(
-      'click',
-      saveOwnProfile
-    );
-
-    $('abCreatorAnalyticsRefresh').addEventListener(
-      'click',
-      refreshCreatorAnalytics
-    );
-
-    $('abCommunityStoryPublish').addEventListener(
-      'click',
-      createStory
-    );
-
-    // FIX: Set loading status BEFORE restarting listeners.
-    $('abCommunityRefresh').addEventListener('click', () => {
-
-      if (!state.user) {
-        return status(
-          'Feed refresh করতে সাইন ইন করুন।',
-          'info'
-        );
-      }
-
+    bind('abCommunityRefresh', 'click', () => {
+      state.feedRefreshPending = true;
       status('Feed refresh করা হচ্ছে…', 'info');
-
       subscribePosts();
-      subscribePrivatePosts();
       subscribeStories();
-      subscribePrivateStories();
-
+      if (state.user) {
+        subscribePrivatePosts();
+        subscribePrivateStories();
+      }
     });
 
-    $('abCommunityUserSearchButton').addEventListener(
-      'click',
-      searchTravelers
-    );
-
-    $('abCommunitySavedToggle').addEventListener(
-      'click',
-      loadSavedPosts
-    );
-
-    $('abCommunityLoadMore').addEventListener(
-      'click',
-      loadMorePublicPosts
-    );
-
-    $('abCommunityUserSearch').addEventListener(
-      'keydown',
-      e => {
-        if (e.key === 'Enter') {
-          searchTravelers();
-        }
-      }
-    );
+    bind('abCommunityUserSearchButton', 'click', searchTravelers);
+    bind('abCommunitySavedToggle', 'click', loadSavedPosts);
+    bind('abCommunityLoadMore', 'click', loadMorePublicPosts);
+    bind('abCommunityUserSearch', 'keydown', e => {
+      if (e.key === 'Enter') searchTravelers();
+    });
 
     if ($('abCommunitySavedPanel')) {
       $('abCommunitySavedPanel').hidden = !state.user;

@@ -1,0 +1,26 @@
+ANONDO BANGLA — COMMUNITY MODULE PATCH
+GitHub upload package
+
+এই ZIP-এ শুধু social-community.js পরিবর্তিত ফাইলটি আছে। Firebase config, Authentication, HTML, CSS, Firestore Rules, Storage Rules বা Cloud Functions পরিবর্তন করা হয়নি।
+
+GitHub-এ আপলোড:
+1. ZIP Extract করুন।
+2. Extract করা social-community.js ফাইলটি আপনার GitHub repository-এর root-এ থাকা পুরোনো social-community.js-এর জায়গায় আপলোড/Replace করুন।
+3. Commit summary:
+   Fix community feed refresh, account switching and upload cleanup
+4. GitHub Pages deploy শেষ হলে browser cache refresh করে পরীক্ষা করুন।
+
+এই প্যাচে:
+- Realtime snapshot-এ অপ্রয়োজনীয় success status বন্ধ; manual refresh-এ status দেখাবে।
+- Guest অবস্থায় Public Feed refresh করা যাবে।
+- Account বদলালে আগের account-এর listeners ও profile state reset হবে।
+- পুরোনো account-এর দেরিতে আসা profile response নতুন account-এর profile overwrite করতে পারবে না।
+- Media upload-এর download URL পেতে ব্যর্থ হলে Storage file cleanup হবে।
+- Post/Story Firestore save ব্যর্থ হলে আপলোড করা media cleanup হবে।
+- Init-এর DOM event binding guard করা হয়েছে এবং Load More-এ DOM guard যোগ হয়েছে।
+
+পরীক্ষার সীমা:
+- JavaScript syntax ও package integrity স্থানীয়ভাবে পরীক্ষা করা হয়েছে।
+- Live Firebase Authentication, Firestore Rules, Storage Rules, real-device upload এবং deployed site পরীক্ষা এই ZIP থেকে করা সম্ভব নয়।
+- Firestore Rules/Storage Rules/Cloud Functions এই প্যাচে পরিবর্তন করা হয়নি।
+- Firebase Email/Google Login configuration এই প্যাচে স্পর্শ করা হয়নি।
