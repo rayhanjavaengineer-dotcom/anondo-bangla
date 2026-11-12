@@ -54,3 +54,35 @@ body.theme-dark .ab-community-comment-form input:focus{
   outline-offset:2px;
   border-color:#45c5a6 !important;
 }
+
+
+/* v2.4 — force readable form controls; light theme defaults */
+.ab-community-composer input:not([type="checkbox"]),
+.ab-community-composer textarea,
+.ab-community-composer select,
+.ab-community-comment-form input{
+  box-sizing:border-box;
+  background:#fff;
+  color:#182b30;
+  -webkit-text-fill-color:#182b30;
+}
+.ab-community-composer input::placeholder,
+.ab-community-composer textarea::placeholder,
+.ab-community-comment-form input::placeholder{color:#687b7b;opacity:1;-webkit-text-fill-color:#687b7b}
+.ab-community-composer select option{background:#fff;color:#182b30}
+/* Explicit body class matches the app's theme toggle implementation. */
+body.theme-dark .ab-community-composer input:not([type="checkbox"]),
+body.theme-dark .ab-community-composer textarea,
+body.theme-dark .ab-community-composer select,
+body.theme-dark .ab-community-comment-form input{
+  background:#101d23 !important;color:#f2f7f4 !important;
+  -webkit-text-fill-color:#f2f7f4 !important;border:1px solid #526b68 !important;
+}
+body.theme-dark .ab-community-composer input::placeholder,
+body.theme-dark .ab-community-composer textarea::placeholder,
+body.theme-dark .ab-community-comment-form input::placeholder{
+  color:#b7c8c2 !important;-webkit-text-fill-color:#b7c8c2 !important;opacity:1 !important;
+}
+body.theme-dark .ab-community-composer select option{background:#101d23 !important;color:#f2f7f4 !important}
+body.theme-dark .ab-community-composer input[type="file"]{color:#e6f0eb !important;-webkit-text-fill-color:#e6f0eb !important}
+body.theme-dark .ab-community-composer input[type="file"]::file-selector-button{background:#08764e;color:#fff;border:1px solid #5a8a7c;border-radius:8px;padding:8px 12px}

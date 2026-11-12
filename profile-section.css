@@ -301,3 +301,51 @@
   }
   #abCoverArea > .ab-cover-remove{right:10px !important;bottom:52px !important}
 }
+
+
+/* v2.4 FIX — restore cover as a real layout block; keep avatar inside the card */
+#abCoverArea{
+  position:relative !important;
+  inset:auto !important;
+  display:block;
+  width:auto;
+  height:clamp(180px,25vw,255px);
+  margin:0 -24px;
+  z-index:0 !important;
+  overflow:hidden;
+  border-radius:21px 21px 0 0;
+  pointer-events:none;
+}
+#abCoverArea > .ab-cover-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 48%;z-index:0}
+#abCoverArea > .ab-cover-change,
+#abCoverArea > .ab-cover-remove{pointer-events:auto !important}
+.ab-card-topline{position:absolute !important;z-index:5 !important;top:18px;left:24px;right:24px;pointer-events:none}
+.ab-identity-main{position:relative;z-index:3;min-width:0;margin-top:-72px;padding-top:0}
+.ab-stat-strip,.ab-card-bottom{position:relative;z-index:2}
+.ab-cover-change{right:14px !important;bottom:14px !important;left:auto !important;top:auto !important;max-width:calc(100% - 28px);white-space:nowrap}
+#abCoverArea > .ab-cover-remove{right:14px !important;bottom:58px !important;left:auto !important;top:auto !important}
+@media(max-width:680px){
+  #abCoverArea{height:160px;margin:0 -12px;border-radius:18px 18px 0 0}
+  .ab-card-topline{top:12px;left:13px;right:13px;gap:7px}
+  .ab-identity-main{margin-top:-48px;gap:10px;padding:0 2px 12px;align-items:flex-end;flex-wrap:nowrap}
+  .ab-avatar-wrap,.ab-avatar-ring{width:96px;height:96px;flex:0 0 96px}
+  .ab-avatar-ring{padding:5px}
+  .ab-camera-action{right:0;bottom:2px;width:29px;height:29px}
+  .ab-identity-copy{min-width:0;padding:0 0 3px}
+  .ab-identity-copy h3{font-size:clamp(18px,5vw,22px);line-height:1.12;overflow-wrap:anywhere}
+  .ab-cover-change{right:10px !important;bottom:10px !important;min-height:34px;padding:7px 10px !important;font-size:11px}
+  #abCoverArea > .ab-cover-remove{right:10px !important;bottom:52px !important}
+}
+@media(max-width:390px){
+  .ab-identity-main{align-items:flex-end;flex-wrap:nowrap;margin-top:-42px;gap:8px}
+  .ab-avatar-wrap,.ab-avatar-ring{width:84px;height:84px;flex-basis:84px}
+  .ab-identity-copy h3{font-size:18px}
+}
+
+/* v2.4 — readable profile editor and account controls in both themes */
+.ab-field input,.ab-auth-fields input{box-sizing:border-box;color:#183c38;background:#fff}
+.ab-field input::placeholder,.ab-auth-fields input::placeholder{color:#71817b;opacity:1}
+body.theme-dark .ab-field input,
+body.theme-dark .ab-auth-fields input{background:#101d23 !important;color:#f2f7f4 !important;-webkit-text-fill-color:#f2f7f4 !important;border-color:#526b68 !important;}
+body.theme-dark .ab-field input::placeholder,
+body.theme-dark .ab-auth-fields input::placeholder{color:#b7c8c2 !important;-webkit-text-fill-color:#b7c8c2 !important;opacity:1 !important;}

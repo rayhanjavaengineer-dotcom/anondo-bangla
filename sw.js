@@ -1,5 +1,5 @@
 /* Anondo Bangla — resilient offline cache v21 */
-const CACHE_NAME = "anondo-bangla-global-v23-stage12-community-completion-uihotfix23";
+const CACHE_NAME = "anondo-bangla-global-v23-stage12-travelidentity-uihotfix24";
 const CORE_ASSETS = [
   "./", "./index.html", "./manifest.json", "./install.js",
   "./premium.css", "./travel-tools.css", "./travel-tools.js", "./social-community.css", "./social-community.js",

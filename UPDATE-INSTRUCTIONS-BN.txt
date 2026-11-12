@@ -1,17 +1,19 @@
-Anondo Bangla — UI / Dark Mode / Cover Control Hotfix 2.3
+Anondo Bangla — Travel Identity UI Fix 2.4
 
 GitHub main branch-এ নিচের ৩টি ফাইলের path ও নাম ঠিক রেখে Replace করুন:
 1. profile-section.css
 2. social-community.css
 3. sw.js
 
-কেন:
-- Cover Photo control-কে cover area-র ডান-নিচে স্থির করা, যাতে brand title-এর সঙ্গে overlap না হয়।
-- Dark Mode-এ Community Profile form-এর input, file picker, select, textarea ও placeholder-এর contrast ঠিক করা।
-- Service Worker cache version bump করা হয়েছে, যাতে নতুন CSS পুরোনো cache থেকে না আসে।
-- profile-cover.js-কে core cache list-এ যুক্ত করা হয়েছে।
+এই আপডেটে যা ঠিক করা হয়েছে:
+- Cover area-কে absolute full-card overlay না রেখে নির্দিষ্ট height-এর layout block করা হয়েছে।
+- Cover-এর নিচে avatar overlap থাকবে, কিন্তু avatar আর Account panel-এর পেছনে/কার্ডের বাইরে উঠে যাবে না।
+- Cover Change/Remove control cover-এর ডান-নিচে থাকবে এবং brand title-এর সঙ্গে overlap করবে না।
+- Traveler Profile-এর spacing ও mobile avatar sizing স্থিতিশীল করা হয়েছে।
+- Community profile form, file picker, textarea, select, placeholder এবং profile editor inputs-এর Light/Dark contrast নির্দিষ্ট করা হয়েছে।
+- Service Worker cache version bump করা হয়েছে যাতে পুরোনো CSS পুনরায় লোড না হয়।
 
-অন্য কোনো ফাইল মুছবেন না বা Firebase config/auth পরিবর্তন করবেন না।
-Deploy হওয়ার পর সাইট একবার reload করুন। প্রয়োজনে browser/PWA-তে পুরোনো cache পরিষ্কার করে আবার খুলুন।
+গুরুত্বপূর্ণ: এই ZIP-এ Firebase config/auth বা user data পরিবর্তন করা হয়নি। অন্য কোনো ফাইল মুছবেন না।
+Deploy হওয়ার পর একবার reload করুন। PWA পুরোনো CSS দেখালে browser site data/cache clear করে পুনরায় খুলুন।
 
-নোট: ZIP-এর ফাইলগুলো static source checks-এর জন্য প্রস্তুত; বাস্তব Live Android rendering পরীক্ষা deploy-এর পর করতে হবে।
+পরীক্ষা: CSS brace balance, JS syntax (sw.js), ZIP integrity এবং cache version পরীক্ষা করা হয়েছে। বাস্তব Android rendering deploy-এর পর যাচাই করতে হবে।
