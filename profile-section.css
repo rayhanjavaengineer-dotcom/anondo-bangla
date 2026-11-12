@@ -219,3 +219,29 @@
  .ab-identity-copy blockquote{font-size:8px}
  .ab-level-pill{font-size:7px}
 }
+
+
+/* Travel Identity 2.2 — editable cover image and precise mobile avatar alignment */
+.ab-card-scenery{position:relative}
+.ab-cover-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 48%;z-index:0}
+.ab-card-scenery:has(.ab-cover-image:not([hidden])):before{z-index:1;opacity:.34}
+.ab-card-scenery:has(.ab-cover-image:not([hidden])):after{z-index:1;opacity:.42}
+.ab-scenery-sun,.ab-scenery-river,.ab-scenery-landmark{z-index:2;pointer-events:none}
+.ab-cover-change{position:absolute;z-index:4;right:16px;bottom:14px;display:inline-flex;align-items:center;gap:7px;padding:9px 13px;border:1px solid #ffffff85;border-radius:999px;background:#071f25c9;color:#fff;font-size:11px;font-weight:850;cursor:pointer;box-shadow:0 5px 18px #001a1a35;backdrop-filter:blur(8px)}
+.ab-cover-change:hover{background:#087b59}
+.ab-cover-remove{position:absolute;z-index:4;right:16px;bottom:58px;border:1px solid #ffffff80;border-radius:999px;padding:7px 11px;background:#071f25c9;color:#fff;font-size:10px;font-weight:800;cursor:pointer}
+.ab-cover-change:focus-visible,.ab-cover-remove:focus-visible,.ab-camera-action:focus-visible{outline:3px solid #f5d27d;outline-offset:3px}
+@media(max-width:560px){
+ .ab-card-scenery{height:clamp(150px,43vw,205px);margin-left:-13px;margin-right:-13px;border-radius:17px 17px 0 0}
+ .ab-card-topline{top:13px;left:14px;right:14px}
+ .ab-identity-main{align-items:flex-end;gap:10px;margin-top:-49px;padding:0 3px 13px}
+ .ab-avatar-wrap{width:108px;height:108px;flex:0 0 108px}
+ .ab-avatar-ring{width:108px;height:108px;padding:5px}
+ .ab-camera-action{width:31px;height:31px;right:0;bottom:3px;font-size:12px}
+ .ab-identity-copy{padding-bottom:2px}
+ .ab-identity-copy h3{font-size:clamp(19px,5.4vw,23px);line-height:1.12}
+ .ab-level-line{gap:5px}
+ .ab-cover-change{right:10px;bottom:10px;padding:7px 10px;font-size:9px}
+ .ab-cover-remove{right:10px;bottom:48px;padding:6px 9px;font-size:9px}
+}
+@media(max-width:370px){.ab-identity-main{gap:8px}.ab-avatar-wrap{width:92px;height:92px;flex-basis:92px}.ab-avatar-ring{width:92px;height:92px}.ab-identity-copy h3{font-size:18px}.ab-cover-change span{display:none}}
