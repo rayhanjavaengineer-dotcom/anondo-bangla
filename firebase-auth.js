@@ -6,8 +6,11 @@
   const cfg=window.ANONDO_FIREBASE_CONFIG||{};
   const configured=!!(cfg.apiKey&&cfg.authDomain&&cfg.projectId&&cfg.appId&&!String(cfg.apiKey).includes('YOUR_')&&!String(cfg.projectId).includes('YOUR_')&&!String(cfg.appId).includes('YOUR_'));
   const status=(message,type='info')=>{const el=$('abAuthStatus');if(el){el.textContent=message;el.dataset.state=type;}};
+  const rememberSignIn=()=>{try{sessionStorage.setItem('ab_auth_signin_pending','1');}catch(e){}};
+  const clearSignInIntent=()=>{try{sessionStorage.removeItem('ab_auth_signin_pending');}catch(e){}};
+  function celebrateSignIn(){const card=$('abAuthCard');if(!card)return;window.setTimeout(()=>{card.scrollIntoView({behavior:'smooth',block:'end'});},180);}
   const setBusy=busy=>['abEmailSignIn','abEmailCreate','abGoogleSignIn','abPasswordReset','abAuthSignOut'].forEach(id=>{const b=$(id);if(b)b.disabled=busy;});
-  function renderUser(user){const out=$('abAuthSignedOut'),inside=$('abAuthSignedIn');if(!out||!inside)return;out.hidden=!!user;inside.hidden=!user;if(user){$('abAuthUserName').textContent=user.displayName||'Anondo Bangla Traveler';$('abAuthUserEmail').textContent=user.email||'';$('abAuthProvider').textContent=(user.providerData||[]).map(p=>p.providerId==='google.com'?'Google Account':p.providerId==='password'?'Email Account':p.providerId).join(' · ');$('abAuthAvatar').textContent=(user.displayName||user.email||'T').trim().charAt(0).toUpperCase();if(!$('nameInput').value.trim()&&user.displayName){$('nameInput').value=user.displayName;$('nameInput').dispatchEvent(new Event('input',{bubbles:true}));}}}
+  function renderUser(user){const out=$('abAuthSignedOut'),inside=$('abAuthSignedIn'),card=$('abAuthCard'),top=$('abAuthTopSlot'),bottom=$('abAccountFooterContent'),footer=$('abAccountFooter');if(!out||!inside)return;out.hidden=!!user;inside.hidden=!user;if(card&&top&&bottom&&footer){if(user){bottom.appendChild(card);footer.hidden=false;}else{top.appendChild(card);footer.hidden=true;}}if(user){$('abAuthUserName').textContent=user.displayName||'Anondo Bangla Traveler';$('abAuthUserEmail').textContent=user.email||'';$('abAuthProvider').textContent=(user.providerData||[]).map(p=>p.providerId==='google.com'?'Google Account':p.providerId==='password'?'Email Account':p.providerId).join(' · ');$('abAuthAvatar').textContent=(user.displayName||user.email||'T').trim().charAt(0).toUpperCase();if(!$('nameInput').value.trim()&&user.displayName){$('nameInput').value=user.displayName;$('nameInput').dispatchEvent(new Event('input',{bubbles:true}));}}}
   function init(){
     const signIn=$('abEmailSignIn');if(!signIn)return;
     if(!configured||!window.firebase||!firebase.initializeApp||!firebase.auth){
@@ -16,11 +19,26 @@
     }
     try{if(!firebase.apps.length)firebase.initializeApp(cfg);}catch(e){status('Firebase configuration যাচাই করুন।','error');return;}
     const auth=firebase.auth();
-    auth.onAuthStateChanged(user=>{renderUser(user);status(user?'সফলভাবে সাইন ইন হয়েছে। আপনার Travel Identity এই ডিভাইসে আগের মতোই থাকবে।':'আপনি এখনো সাইন ইন করেননি। চাইলে Google অথবা Email দিয়ে সাইন ইন করুন।',user?'success':'info');});
+    let authInitialized=false;
+    let previousUid=null;
+    auth.onAuthStateChanged(user=>{
+      renderUser(user);
+      const pending=(()=>{try{return sessionStorage.getItem('ab_auth_signin_pending')==='1';}catch(e){return false;}})();
+      const signedInNow=!!user && (pending || (authInitialized && previousUid!==user.uid));
+      previousUid=user?user.uid:null;
+      authInitialized=true;
+      if(user){
+        status('সফলভাবে সাইন ইন হয়েছে! আপনার Travel Identity প্রস্তুত। Account ও Sign Out এখন পৃষ্ঠার একদম নিচে।','success');
+        if(signedInNow){clearSignInIntent();celebrateSignIn();}
+      }else{
+        clearSignInIntent();
+        status('আপনি এখনো সাইন ইন করেননি। চাইলে Google অথবা Email দিয়ে সাইন ইন করুন।','info');
+      }
+    });
     const credentials=()=>({email:$('abAuthEmail').value.trim(),password:$('abAuthPassword').value});
-    $('abEmailSignIn').addEventListener('click',async()=>{const c=credentials();if(!c.email||!c.password)return status('Email ও Password লিখুন।','error');setBusy(true);try{await auth.signInWithEmailAndPassword(c.email,c.password);}catch(e){status(friendly(e),'error');}finally{setBusy(false);}});
+    $('abEmailSignIn').addEventListener('click',async()=>{const c=credentials();if(!c.email||!c.password)return status('Email ও Password লিখুন।','error');rememberSignIn();setBusy(true);try{await auth.signInWithEmailAndPassword(c.email,c.password);}catch(e){clearSignInIntent();status(friendly(e),'error');}finally{setBusy(false);}});
     $('abEmailCreate').addEventListener('click',async()=>{const c=credentials();if(!c.email||c.password.length<6)return status('সঠিক Email এবং কমপক্ষে ৬ অক্ষরের Password দিন।','error');setBusy(true);try{const result=await auth.createUserWithEmailAndPassword(c.email,c.password);try{await result.user.sendEmailVerification();status('অ্যাকাউন্ট তৈরি হয়েছে। Email inbox থেকে verification সম্পন্ন করুন।','success');}catch(_){status('অ্যাকাউন্ট তৈরি হয়েছে। Email verification পরে করতে পারবেন।','success');}}catch(e){status(friendly(e),'error');}finally{setBusy(false);}});
-    $('abGoogleSignIn').addEventListener('click',async()=>{setBusy(true);try{const provider=new firebase.auth.GoogleAuthProvider();provider.setCustomParameters({prompt:'select_account'});await auth.signInWithPopup(provider);}catch(e){if(e.code==='auth/popup-blocked'||e.code==='auth/popup-closed-by-user'){try{await auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider());}catch(err){status(friendly(err),'error');}}else status(friendly(e),'error');}finally{setBusy(false);}});
+    $('abGoogleSignIn').addEventListener('click',async()=>{rememberSignIn();setBusy(true);try{const provider=new firebase.auth.GoogleAuthProvider();provider.setCustomParameters({prompt:'select_account'});await auth.signInWithPopup(provider);}catch(e){if(e.code==='auth/popup-blocked'||e.code==='auth/popup-closed-by-user'){try{await auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider());}catch(err){status(friendly(err),'error');}}else{clearSignInIntent();status(friendly(e),'error');}}finally{setBusy(false);}});
     $('abPasswordReset').addEventListener('click',async()=>{const email=$('abAuthEmail').value.trim();if(!email)return status('Password reset link পেতে আগে Email address লিখুন।','error');setBusy(true);try{await auth.sendPasswordResetEmail(email);status('Password reset link আপনার Email-এ পাঠানো হয়েছে।','success');}catch(e){status(friendly(e),'error');}finally{setBusy(false);}});
     $('abAuthSignOut').addEventListener('click',async()=>{setBusy(true);try{await auth.signOut();}catch(e){status(friendly(e),'error');}finally{setBusy(false);}});
     auth.getRedirectResult().catch(e=>status(friendly(e),'error'));

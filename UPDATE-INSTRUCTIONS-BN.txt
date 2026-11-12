@@ -1,26 +1,18 @@
-ANONDO BANGLA — COMMUNITY MODULE PATCH
-GitHub upload package
+ANONDO BANGLA — TRAVEL IDENTITY 2.0
 
-এই ZIP-এ শুধু social-community.js পরিবর্তিত ফাইলটি আছে। Firebase config, Authentication, HTML, CSS, Firestore Rules, Storage Rules বা Cloud Functions পরিবর্তন করা হয়নি।
+এই ZIP-এ শুধু প্রয়োজনীয় পরিবর্তিত ফাইল আছে। GitHub main branch-এ একই path-এ Replace/Upload করুন:
 
-GitHub-এ আপলোড:
-1. ZIP Extract করুন।
-2. Extract করা social-community.js ফাইলটি আপনার GitHub repository-এর root-এ থাকা পুরোনো social-community.js-এর জায়গায় আপলোড/Replace করুন।
-3. Commit summary:
-   Fix community feed refresh, account switching and upload cleanup
-4. GitHub Pages deploy শেষ হলে browser cache refresh করে পরীক্ষা করুন।
+1. index.html
+2. profile-section.css
+3. navigation.js
+4. firebase-auth.js
 
-এই প্যাচে:
-- Realtime snapshot-এ অপ্রয়োজনীয় success status বন্ধ; manual refresh-এ status দেখাবে।
-- Guest অবস্থায় Public Feed refresh করা যাবে।
-- Account বদলালে আগের account-এর listeners ও profile state reset হবে।
-- পুরোনো account-এর দেরিতে আসা profile response নতুন account-এর profile overwrite করতে পারবে না।
-- Media upload-এর download URL পেতে ব্যর্থ হলে Storage file cleanup হবে।
-- Post/Story Firestore save ব্যর্থ হলে আপলোড করা media cleanup হবে।
-- Init-এর DOM event binding guard করা হয়েছে এবং Load More-এ DOM guard যোগ হয়েছে।
+পরিবর্তন:
+- Login না করা অবস্থায় Email/Google Account panel উপরে থাকবে; Login সফল হলে এটি স্বয়ংক্রিয়ভাবে পৃষ্ঠার একদম নিচে চলে যাবে। Logout করলে আবার উপরে ফিরে আসবে।
+- Login সফল হলে success message দেখায় এবং account/sign-out অংশে scroll করে।
+- Traveler Profile-এ Facebook-inspired cover + overlapping avatar + profile details layout।
+- পুরোনো Travel Identity data, IDs, editor, photo, statistics ও Community markup রাখা হয়েছে।
+- Profile page refresh করলে আগের route ও scroll position restore হয়।
+- Profile open করলে name field-এ auto-focus করে editor-এ scroll হওয়ার bug সরানো হয়েছে।
 
-পরীক্ষার সীমা:
-- JavaScript syntax ও package integrity স্থানীয়ভাবে পরীক্ষা করা হয়েছে।
-- Live Firebase Authentication, Firestore Rules, Storage Rules, real-device upload এবং deployed site পরীক্ষা এই ZIP থেকে করা সম্ভব নয়।
-- Firestore Rules/Storage Rules/Cloud Functions এই প্যাচে পরিবর্তন করা হয়নি।
-- Firebase Email/Google Login configuration এই প্যাচে স্পর্শ করা হয়নি।
+গুরুত্বপূর্ণ: Firebase credentials/configuration পরিবর্তন করা হয়নি। Live testing GitHub deploy-এর পর করতে হবে।

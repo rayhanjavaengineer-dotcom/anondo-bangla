@@ -72,7 +72,8 @@
     <button class="ab-share-profile" id="abShareProfile" type="button">↗ <span>Share Profile</span></button>
   </div>
 
-  <section class="ab-auth-card" aria-labelledby="abAuthTitle">
+  <div id="abAuthTopSlot">
+  <section class="ab-auth-card ab-auth-card-bottom" id="abAuthCard" aria-labelledby="abAuthTitle">
     <div class="ab-auth-top"><div><span class="ab-auth-kicker">ANONDO BANGLA ACCOUNT</span><h3 id="abAuthTitle">আপনার Travel Identity-তে সাইন ইন করুন</h3><p>ইচ্ছা হলে Email/Password অথবা Google Account দিয়ে সাইন ইন করুন। লগইন বাধ্যতামূলক নয়—অ্যাকাউন্ট ছাড়াও Travel Identity ব্যবহার করা যাবে।</p></div><span class="ab-auth-shield">✦</span></div>
     <div id="abAuthSignedOut" class="ab-auth-signed-out">
       <div class="ab-auth-fields"><label>ইমেইল ঠিকানা<input id="abAuthEmail" type="email" autocomplete="email" placeholder="you@example.com"></label><label>পাসওয়ার্ড<input id="abAuthPassword" type="password" autocomplete="current-password" minlength="6" placeholder="কমপক্ষে ৬ অক্ষর"></label></div>
@@ -82,6 +83,7 @@
     <div id="abAuthSignedIn" class="ab-auth-signed-in" hidden><div class="ab-auth-user"><span id="abAuthAvatar">✓</span><div><strong id="abAuthUserName">Traveler</strong><small id="abAuthUserEmail"></small><small id="abAuthProvider"></small></div></div><button type="button" id="abAuthSignOut" class="ab-auth-secondary">সাইন আউট</button></div>
     <p id="abAuthStatus" class="ab-auth-status" role="status" aria-live="polite">Account sign-in is optional. Firebase setup is required to activate online sign-in.</p>
   </section>
+  </div>
 
   <article class="ab-identity-card" aria-label="Travel identity card">
     <div class="ab-card-scenery" aria-hidden="true">
@@ -172,6 +174,11 @@
     <h4>📰 Public Travel Feed</h4><div class="ab-community-feed" id="abCommunityFeed"><p class="ab-community-empty">Feed লোড হচ্ছে…</p></div><button class="ab-community-refresh" id="abCommunityLoadMore" type="button" hidden>Load More Posts</button><h4>🔒 My Private Posts</h4><div class="ab-community-feed" id="abCommunityPrivateFeed"><p class="ab-community-empty">আপনার Private পোস্ট এখানে থাকবে।</p></div>
     <section class="ab-community-composer" id="abCommunityModeration" hidden aria-label="Community moderation"><h4>🛡️ Community Moderation</h4><p>শুধু admin custom claim থাকা অ্যাকাউন্টে রিপোর্ট দেখা যাবে।</p><div id="abCommunityReports" class="ab-community-feed"></div></section><section class="ab-community-composer" id="abCreatorAnalytics" hidden aria-label="Creator analytics"><div class="ab-community-heading"><div><h4>📊 Creator Analytics</h4><p>শুধু Firebase admin custom claim থাকা অ্যাকাউন্টে দৃশ্যমান।</p></div><button class="ab-community-refresh" id="abCreatorAnalyticsRefresh" type="button">↻ Update</button></div><div class="ab-analytics-grid"><div><small>Registrations</small><strong id="abMetricRegistrations">—</strong></div><div><small>Posts</small><strong id="abMetricPosts">—</strong></div><div><small>Stories</small><strong id="abMetricStories">—</strong></div><div><small>Reports</small><strong id="abMetricReports">—</strong></div><div><small>DAU</small><strong id="abMetricDau">—</strong></div><div><small>Returning Users Today</small><strong id="abMetricReturning">—</strong></div><div><small>WAU</small><strong id="abMetricWau">—</strong></div><div><small>MAU</small><strong id="abMetricMau">—</strong></div></div><div class="ab-analytics-grid ab-analytics-lists"><div><small>Most Planned Destinations</small><ol id="abMetricPopularDestinations"><li>—</li></ol></div><div><small>Popular Features</small><ol id="abMetricPopularFeatures"><li>—</li></ol></div></div><p id="abCreatorAnalyticsStatus" class="ab-community-empty">Admin analytics লোড হয়নি।</p></section>
   </section>
+
+  <div class="ab-account-footer" id="abAccountFooter" aria-label="Anondo Bangla account settings" hidden>
+    <div class="ab-account-footer-heading"><span>ANONDO BANGLA ACCOUNT</span><strong>Account & Sign Out</strong><small>আপনার অ্যাকাউন্ট নিয়ন্ত্রণ ও সাইন আউট এখানে পাবেন।</small></div>
+    <div id="abAccountFooterContent"></div>
+  </div>
 </section>
 
 <section class="section" id="explorerSection"><div class="section-title"><h2>🇧🇩 Bangladesh District Explorer</h2><p>যেসব জেলা ঘুরেছেন সেগুলো চিহ্নিত করুন। কোনো জেলা বা Feature Locked নয়।</p></div>
