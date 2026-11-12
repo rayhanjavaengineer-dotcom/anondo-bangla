@@ -1,40 +1,84 @@
-/* Anondo Bangla — Traveler Cover Photo Manager v2.2
-   Uses device-local storage, matching the existing local Travel Identity editor. */
-(function(){
-  "use strict";
-  const KEY="ab_traveler_cover_photo_v1";
-  const MAX_FILE=8*1024*1024;
-  const $=id=>document.getElementById(id);
-  function note(message){const el=$("abSaveNote");if(el)el.textContent=message;}
-  function read(){try{return localStorage.getItem(KEY)||"";}catch(e){return "";}}
-  function save(value){try{localStorage.setItem(KEY,value);return true;}catch(e){note("কভার ছবি সংরক্ষণ করা যায়নি—ছবিটি ছোট করে আবার চেষ্টা করুন।");return false;}}
-  function render(value){const img=$("abCoverPreview"),remove=$("abCoverRemove");if(!img)return;if(value){img.src=value;img.hidden=false;if(remove)remove.hidden=false;}else{img.removeAttribute("src");img.hidden=true;if(remove)remove.hidden=true;}}
-  function makeCover(file){return new Promise((resolve,reject)=>{
-    const url=URL.createObjectURL(file),image=new Image();
-    image.onload=()=>{try{
-      const canvas=document.createElement("canvas"),ctx=canvas.getContext("2d");
-      const maxW=1600,maxH=650,scale=Math.min(1,maxW/image.naturalWidth,maxH/image.naturalHeight);
-      const sw=Math.max(1,Math.round(image.naturalWidth*scale)),sh=Math.max(1,Math.round(image.naturalHeight*scale));
-      canvas.width=sw;canvas.height=sh;ctx.drawImage(image,0,0,sw,sh);
-      let data=canvas.toDataURL("image/jpeg",.82);
-      if(data.length>1200000)data=canvas.toDataURL("image/jpeg",.68);
-      URL.revokeObjectURL(url);resolve(data);
-    }catch(e){URL.revokeObjectURL(url);reject(e);}};
-    image.onerror=()=>{URL.revokeObjectURL(url);reject(new Error("ছবি পড়া যায়নি"));};image.src=url;
-  });}
-  function init(){
-    const input=$("abCoverInput"),remove=$("abCoverRemove");
-    if(!input||!$("abCoverPreview"))return;
-    render(read());
-    input.addEventListener("change",async()=>{
-      const file=input.files&&input.files[0];if(!file)return;
-      if(!/^image\/(jpeg|png|webp)$/.test(file.type)){note("JPG, PNG অথবা WebP ছবি নির্বাচন করুন।");input.value="";return;}
-      if(file.size>MAX_FILE){note("কভার ছবিটি ৮ MB-এর কম হতে হবে।");input.value="";return;}
-      try{const data=await makeCover(file);if(save(data)){render(data);note("✓ কভার ছবি এই ডিভাইসে সংরক্ষিত হয়েছে।");}}
-      catch(e){note("কভার ছবি প্রস্তুত করা যায়নি। অন্য ছবি চেষ্টা করুন।");}
-      input.value="";
-    });
-    remove?.addEventListener("click",()=>{try{localStorage.removeItem(KEY);}catch(e){}render("");note("কভার ছবি সরানো হয়েছে। ডিফল্ট ডিজাইন দেখানো হচ্ছে।");});
+/* Anondo Bangla — Cover photo controls, v2.9
+   Device-local cover image; does not modify Firebase authentication or profile data. */
+(function () {
+  'use strict';
+  const KEY = 'ab_traveler_cover_photo_v1';
+  const MAX_FILE_BYTES = 8 * 1024 * 1024;
+  const MAX_EDGE = 1800;
+  const QUALITY = 0.82;
+  const $ = id => document.getElementById(id);
+  const read = () => { try { return localStorage.getItem(KEY) || ''; } catch (_) { return ''; } };
+  const save = value => {
+    try { localStorage.setItem(KEY, value); return true; }
+    catch (_) { window.alert('Cover Photo সংরক্ষণ করা যায়নি। ছোট ছবি ব্যবহার করুন বা Browser Storage খালি করুন।'); return false; }
+  };
+  function menuOpen(open) {
+    const menu = $('abCoverMenu'), button = $('abCoverMenuButton');
+    if (!menu || !button) return;
+    menu.hidden = !open;
+    button.setAttribute('aria-expanded', String(open));
   }
-  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();
+  function sync(data) {
+    const img = $('abCoverPreview');
+    const upload = $('abCoverUploadAction'), change = $('abCoverChangeAction'), remove = $('abCoverRemoveAction');
+    if (!img || !upload || !change || !remove) return;
+    if (data) {
+      img.src = data; img.hidden = false;
+      upload.hidden = true; change.hidden = false; remove.hidden = false;
+    } else {
+      img.removeAttribute('src'); img.hidden = true;
+      upload.hidden = false; change.hidden = true; remove.hidden = true;
+    }
+  }
+  function compress(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onerror = () => reject(new Error('ছবি পড়া যায়নি।'));
+      reader.onload = () => {
+        const image = new Image();
+        image.onerror = () => reject(new Error('ছবির ফরম্যাট পড়া যায়নি।'));
+        image.onload = () => {
+          const ratio = Math.min(1, MAX_EDGE / Math.max(image.naturalWidth, image.naturalHeight));
+          const canvas = document.createElement('canvas');
+          canvas.width = Math.max(1, Math.round(image.naturalWidth * ratio));
+          canvas.height = Math.max(1, Math.round(image.naturalHeight * ratio));
+          const context = canvas.getContext('2d');
+          if (!context) return reject(new Error('ছবি প্রস্তুত করা যায়নি।'));
+          context.drawImage(image, 0, 0, canvas.width, canvas.height);
+          resolve(canvas.toDataURL('image/jpeg', QUALITY));
+        };
+        image.src = String(reader.result || '');
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+  function init() {
+    const button = $('abCoverMenuButton'), menu = $('abCoverMenu'), wrap = $('abCoverMenuWrap');
+    const input = $('abCoverInput'), upload = $('abCoverUploadAction'), change = $('abCoverChangeAction'), remove = $('abCoverRemoveAction');
+    if (![button, menu, wrap, input, upload, change, remove].every(Boolean)) return;
+    sync(read());
+    button.addEventListener('click', event => { event.preventDefault(); event.stopPropagation(); menuOpen(menu.hidden); });
+    const choose = () => { menuOpen(false); input.click(); };
+    upload.addEventListener('click', choose);
+    change.addEventListener('click', choose);
+    remove.addEventListener('click', () => {
+      menuOpen(false);
+      if (!read() || !window.confirm('আপনার Cover Photo সরিয়ে ফেলবেন?')) return;
+      try { localStorage.removeItem(KEY); } catch (_) {}
+      sync('');
+    });
+    input.addEventListener('change', async () => {
+      const file = input.files && input.files[0];
+      if (!file) return;
+      if (!/^image\/(jpeg|png|webp)$/.test(file.type)) { window.alert('শুধু JPG, PNG অথবা WebP ছবি ব্যবহার করুন।'); input.value = ''; return; }
+      if (file.size > MAX_FILE_BYTES) { window.alert('ছবির সাইজ ৮ MB-এর মধ্যে রাখুন।'); input.value = ''; return; }
+      try { const data = await compress(file); if (save(data)) sync(data); }
+      catch (error) { window.alert(error && error.message ? error.message : 'Cover Photo আপলোড করা যায়নি।'); }
+      finally { input.value = ''; }
+    });
+    document.addEventListener('click', event => { if (!wrap.contains(event.target)) menuOpen(false); });
+    document.addEventListener('keydown', event => { if (event.key === 'Escape') menuOpen(false); });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
+  else init();
 })();

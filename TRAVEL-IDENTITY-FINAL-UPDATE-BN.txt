@@ -1,0 +1,25 @@
+ANONDO BANGLA — TRAVEL IDENTITY FINAL UPDATE (v2.9)
+
+এই প্যাকেজটি আপনার দেওয়া পূর্ণ Anondo Bangla project ZIP-এর ওপর সরাসরি update করা হয়েছে।
+
+যে পরিবর্তন হয়েছে:
+1. ANONDO BANGLA branding আগের মতো Cover-এর বাম-উপরের অবস্থানে রাখা হয়েছে।
+2. TRAVELER PROFILE label Cover-এর ডান-নিচের দিকে সরানো হয়েছে।
+3. WORLD watermark element সম্পূর্ণ সরানো হয়েছে।
+4. Cover-এর ডান-উপরের three-dot menu-তে Upload / Change / Remove কাজ করে।
+5. Cover image resize/compress হয়ে এই device-এর localStorage-এ থাকে।
+6. Profile photo, name, level, XP, motto-কে একই horizontal identity row-তে রাখা হয়েছে; avatar ও copy-র gap/height mobile-এ responsive।
+7. Statistics 3-column x 2-row responsive layout-এ সাজানো হয়েছে।
+8. Light/Dark mode-এর identity text ও cover menu contrast ঠিক করা হয়েছে।
+9. Service Worker cache version bump এবং নতুন CSS/JS assets cache list-এ যোগ করা হয়েছে।
+
+গুরুত্বপূর্ণ সীমাবদ্ধতা:
+- Cover Photo device-local; Firebase Storage বা অন্য device-এ sync হয় না।
+- Firebase config, authentication, Firestore rules, community data ও existing travel data পরিবর্তন করা হয়নি।
+- Profile photo-এর নিজস্ব ছবির মধ্যে সাদা background থাকলে এই layout সেটি কাটে না; object-fit: cover দিয়ে circle crop করা হয়।
+
+GitHub upload:
+- এই ZIP-এর সম্পূর্ণ project root contents repository root-এ upload/replace করুন।
+- বিশেষ করে index.html, profile-section.css, profile-cover.css, profile-cover.js, sw.js নিশ্চিত করুন।
+- অন্যান্য project files অপরিবর্তিত রাখা হয়েছে।
+- Deploy শেষে browser/site data clear না করে hard refresh করুন; service worker নতুন cache নেবে।
