@@ -1,0 +1,27 @@
+ANONDO BANGLA — TRAVEL IDENTITY HOTFIX 3.0
+==========================================
+
+এই আপডেটে দুটি নির্দিষ্ট সমস্যা সংশোধন করা হয়েছে:
+1) Cover Photo-এর Three-dot menu ক্লিক না হওয়ার কারণ ছিল .ab-card-scenery-এর pointer-events:none; interactive menu-তে pointer-events:auto ও উপযুক্ত stacking যোগ করা হয়েছে।
+2) Firebase sign-in সফল হলে ANONDO BANGLA ACCOUNT কার্ডটি এখন profileSection-এর একদম শেষে যাবে। Sign out করলে কার্ডটি আগের উপরের অবস্থানে ফিরে আসবে।
+
+GitHub-এ আপলোড করার ফাইল:
+- index.html (Replace)
+- profile-cover.css (Replace)
+- profile-cover.js (Replace / নিশ্চিত করুন ফাইলটি আছে)
+- firebase-auth.js (Replace)
+- sw.js (Replace)
+
+গুরুত্বপূর্ণ:
+- firebase-config.js আপলোড/Replace করবেন না। আপনার লাইভ Firebase configuration অক্ষত রাখুন।
+- অন্য কোনো Backend, Firestore Rules, Storage Rules বা Functions ফাইল পরিবর্তন করা হয়নি।
+- GitHub-এ একই ফাইলের নাম হুবহু রাখতে হবে।
+- Commit করার পর সাইট একবার Reload করুন। পুরোনো PWA cache থাকলে Chrome > Site settings > Storage থেকে শুধু Anondo Bangla site data clear করে আবার খুলুন; এতে local profile/cover data মুছে যেতে পারে, তাই আগে প্রয়োজন হলে backup নিন।
+
+পরীক্ষা:
+- JavaScript syntax checks: PASS
+- CSS parse check: PASS
+- HTML duplicate ID check: PASS
+- Cover menu required element IDs: PASS
+- Authentication card move/restore unit test (mock Firebase): PASS
+- Live Firebase / production Android browser test: এই পরিবেশে করা সম্ভব হয়নি; Deploy-এর পর বাস্তব অ্যাকাউন্টে যাচাই করতে হবে।
