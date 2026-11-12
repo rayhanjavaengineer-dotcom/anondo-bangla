@@ -381,3 +381,92 @@ body.theme-dark .ab-auth-fields input::placeholder{color:#b7c8c2 !important;-web
   #abCoverArea > .ab-cover-change{top:54px !important}
   #abCoverArea > .ab-cover-remove{top:94px !important}
 }
+
+
+/* Anondo Bangla Travel Identity 2.7 — balanced avatar + identity column */
+#abCoverArea{
+  position:relative!important;
+  isolation:isolate!important;
+  overflow:visible!important;
+}
+#abCoverArea .ab-cover-image{border-radius:inherit!important}
+.ab-cover-menu-wrap{
+  position:absolute!important;z-index:30!important;top:12px!important;right:14px!important;
+  pointer-events:auto!important;
+}
+.ab-cover-menu-button{
+  width:40px!important;height:40px!important;display:grid!important;place-items:center!important;
+  border:1px solid rgba(255,255,255,.78)!important;border-radius:50%!important;
+  background:rgba(5,29,32,.82)!important;color:#fff!important;font-size:25px!important;
+  line-height:1!important;box-shadow:0 4px 14px #001b1b40!important;
+  backdrop-filter:blur(8px);cursor:pointer!important;
+}
+.ab-cover-menu-button:hover,.ab-cover-menu-button[aria-expanded="true"]{background:#087b59!important}
+.ab-cover-menu{
+  position:absolute!important;top:46px!important;right:0!important;width:max-content!important;min-width:190px!important;
+  padding:6px!important;border:1px solid #dce7e2!important;border-radius:14px!important;
+  background:#fff!important;color:#183c38!important;box-shadow:0 12px 32px #001b1b35!important;z-index:40!important;
+}
+.ab-cover-menu[hidden]{display:none!important}
+.ab-cover-menu button{
+  display:flex!important;width:100%!important;align-items:center!important;gap:9px!important;
+  border:0!important;border-radius:9px!important;background:transparent!important;color:inherit!important;
+  text-align:left!important;padding:11px 12px!important;font-size:13px!important;font-weight:700!important;cursor:pointer!important;
+}
+.ab-cover-menu button:hover,.ab-cover-menu button:focus-visible{background:#edf7f2!important;outline:none!important}
+.ab-cover-menu button.is-danger{color:#b42318!important}
+.ab-cover-menu button.is-danger:hover{background:#fff0ee!important}
+body.theme-dark .ab-cover-menu{background:#142522!important;color:#edf7f2!important;border-color:#3c5b52!important}
+body.theme-dark .ab-cover-menu button:hover,body.theme-dark .ab-cover-menu button:focus-visible{background:#24443b!important}
+body.theme-dark .ab-cover-menu button.is-danger{color:#ffaaa0!important}
+
+/* Keep the avatar overlapping the cover while the complete identity stack occupies
+   the available column to its right, below the cover's bottom edge. */
+.ab-identity-main{
+  position:relative!important;z-index:3!important;display:flex!important;flex-wrap:nowrap!important;
+  align-items:flex-start!important;gap:16px!important;min-width:0!important;
+  margin-top:-48px!important;padding:0 8px 16px!important;
+}
+.ab-avatar-wrap{
+  position:relative!important;z-index:5!important;transform:none!important;margin:0!important;
+  width:116px!important;height:116px!important;flex:0 0 116px!important;
+}
+.ab-avatar-ring{width:116px!important;height:116px!important;flex:0 0 116px!important;padding:6px!important}
+.ab-identity-copy{
+  position:relative!important;z-index:4!important;flex:1 1 auto!important;min-width:0!important;
+  padding:54px 0 0!important;margin:0!important;overflow-wrap:anywhere!important;
+}
+.ab-identity-copy .ab-level-line{display:flex!important;align-items:center!important;gap:7px!important;flex-wrap:wrap!important}
+.ab-level-pill{font-size:10px!important;padding:6px 10px!important}
+.ab-xp-label{font-size:10px!important;white-space:normal!important}
+.ab-xp-track{width:100%!important;max-width:none!important;margin:8px 0 10px!important;height:6px!important}
+.ab-identity-copy h3{margin:0 0 4px!important;font-size:clamp(22px,3vw,32px)!important;line-height:1.14!important;overflow-wrap:anywhere!important}
+.ab-identity-copy>p{font-size:12px!important;line-height:1.4!important}
+.ab-identity-copy blockquote{margin:7px 0 0!important;font-size:12px!important;line-height:1.4!important}
+.ab-stat-strip,.ab-card-bottom{position:relative!important;z-index:2!important}
+
+@media(max-width:680px){
+  #abCoverArea{height:165px!important}
+  .ab-cover-menu-wrap{top:10px!important;right:10px!important}
+  .ab-cover-menu-button{width:36px!important;height:36px!important;font-size:23px!important}
+  .ab-identity-main{gap:11px!important;margin-top:-43px!important;padding:0 3px 13px!important;align-items:flex-start!important}
+  .ab-avatar-wrap{width:100px!important;height:100px!important;flex-basis:100px!important}
+  .ab-avatar-ring{width:100px!important;height:100px!important;flex-basis:100px!important;padding:5px!important}
+  .ab-camera-action{right:0!important;bottom:2px!important;width:30px!important;height:30px!important}
+  .ab-identity-copy{padding-top:49px!important}
+  .ab-level-pill{font-size:8px!important;padding:5px 8px!important}
+  .ab-xp-label{font-size:8px!important}
+  .ab-xp-track{height:5px!important;margin:6px 0 8px!important}
+  .ab-identity-copy h3{font-size:clamp(19px,5.2vw,23px)!important;line-height:1.14!important}
+  .ab-identity-copy>p{font-size:10px!important}
+  .ab-identity-copy blockquote{font-size:9px!important;margin-top:5px!important}
+}
+@media(max-width:390px){
+  #abCoverArea{height:150px!important}
+  .ab-identity-main{gap:9px!important;margin-top:-38px!important}
+  .ab-avatar-wrap,.ab-avatar-ring{width:88px!important;height:88px!important;flex-basis:88px!important}
+  .ab-identity-copy{padding-top:44px!important}
+  .ab-identity-copy h3{font-size:18px!important}
+  .ab-identity-copy>p{font-size:9px!important}
+  .ab-identity-copy blockquote{font-size:8px!important}
+}

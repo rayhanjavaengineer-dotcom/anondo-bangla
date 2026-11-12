@@ -90,9 +90,15 @@
       <img id="abCoverPreview" class="ab-cover-image" alt="Traveler cover photo" hidden>
       <span class="ab-scenery-sun"></span><span class="ab-scenery-river"></span>
       <span class="ab-scenery-landmark">WORLD</span>
-      <label class="ab-cover-change" for="abCoverInput" title="কভার ছবি পরিবর্তন করুন">▧ <span>Change Cover</span></label>
+      <div class="ab-cover-menu-wrap" id="abCoverMenuWrap">
+        <button id="abCoverMenuButton" class="ab-cover-menu-button" type="button" aria-label="Cover photo options" aria-haspopup="true" aria-expanded="false" aria-controls="abCoverMenu">⋮</button>
+        <div id="abCoverMenu" class="ab-cover-menu" role="menu" hidden>
+          <button id="abCoverUploadAction" type="button" role="menuitem">＋ Upload Cover Photo</button>
+          <button id="abCoverChangeAction" type="button" role="menuitem" hidden>✎ Change Cover</button>
+          <button id="abCoverRemoveAction" type="button" role="menuitem" class="is-danger" hidden>⌫ Remove Cover</button>
+        </div>
+      </div>
       <input id="abCoverInput" type="file" accept="image/jpeg,image/png,image/webp" hidden>
-      <button id="abCoverRemove" class="ab-cover-remove" type="button" hidden>Remove</button>
     </div>
     <div class="ab-card-topline">
       <span class="ab-brand-mark">✦ ANONDO BANGLA</span>
@@ -440,7 +446,7 @@ window.addEventListener("DOMContentLoaded",init);
 <script src="firebase-auth.js"></script>
 <script src="social-community.js"></script>
 <script src="profile-section.js"></script>
-<script src="profile-cover.js"></script>
+<script src="profile-cover.js?v=2.7"></script>
 <script src="global-tools.js"></script>
 <script src="global-destinations.js"></script>
 <script src="navigation.js"></script>

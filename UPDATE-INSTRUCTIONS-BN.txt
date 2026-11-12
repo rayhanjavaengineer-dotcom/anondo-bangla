@@ -1,29 +1,28 @@
-ANONDO BANGLA — TRAVEL IDENTITY UI FIX 2.5
-=============================================
+ANONDO BANGLA — TRAVEL IDENTITY LAYOUT 2.7
+==========================================
 
-এই আপডেটে আগের 2.4-এর ওপর ভিত্তি করে মাত্র দুটি দৃশ্যমান Layout সমস্যা সংশোধন করা হয়েছে।
+এই আপডেটে Profile Picture-এর পাশের ফাঁকা জায়গায় পরিচিতির তথ্য সুন্দরভাবে সাজানো হয়েছে।
 
-যে ফাইলগুলো Replace করবেন:
-1. profile-section.css
-   - Change Cover / Remove Cover বাটনকে Cover-এর উপরের ডান পাশের নির্দিষ্ট স্থানে নেওয়া হয়েছে।
-   - XP pill ও progress bar-এর ওপর থেকে Cover control সরানো হয়েছে।
-   - Avatar-এর intentional overlap অপরিবর্তিত রাখা হয়েছে।
+যা পরিবর্তন হয়েছে:
+1. Profile Picture Cover-এর নিচের বাম পাশে আগের মতো overlap করবে।
+2. ছবির ডান পাশে Level Badge, Global XP, Progress Bar, নাম, Travel Title এবং Motto থাকবে।
+3. নাম ও পরিচিতির লেখা Cover-এর নিচের সীমানা থেকে পর্যাপ্ত ফাঁক রেখে শুরু হবে।
+4. ছোট মোবাইল স্ক্রিনেও ছবি ও পরিচিতির তথ্য পাশাপাশি থাকবে; লেখা একে অপরের ওপর উঠবে না।
+5. Cover-এর উপরের ডানদিকে Three-dot menu থাকবে। Cover না থাকলে Upload; থাকলে Change ও Remove দেখাবে।
+6. আগের Cover Photo ও Profile Photo storage key এবং Firebase authentication logic পরিবর্তন করা হয়নি।
+7. index.html-এর </html>-এর পরে থাকা অবৈধ raw CSS সরিয়ে সঠিক profile-section.css ফাইলে রাখা হয়েছে।
+8. Service Worker cache version পরিবর্তন করা হয়েছে।
 
-2. app-shell-v20.css
-   - Fixed bottom navigation-এর জন্য মোবাইলে অতিরিক্ত scroll space রাখা হয়েছে।
-   - শেষের Profile/Customise content navigation bar-এর নিচে ঢাকা পড়া কমানো হয়েছে।
+GitHub Repository Root-এ নিচের ৩টি ফাইল Replace করুন:
+- index.html
+- profile-section.css
+- sw.js
 
-3. sw.js
-   - Service Worker cache version 2.5 করা হয়েছে, যাতে নতুন CSS পুনরায় load হয়।
+profile-cover.js ফাইলটি আগের 2.6 সংস্করণ থেকে অপরিবর্তিত থাকবে।
+অন্য কোনো ফাইল মুছবেন না বা Replace করবেন না।
 
-GitHub:
-- ZIP extract করুন।
-- উপরের ৩টি ফাইল repository root-এ Replace করুন।
-- অন্য কোনো ফাইল Delete করবেন না।
-- Commit করে deployment শেষ হওয়া পর্যন্ত অপেক্ষা করুন।
-- Android browser-এ একবার পুরোপুরি reload করুন। পুরোনো cache থাকলে site data না মুছে আগে normal reload/close-open করুন।
+Commit summary:
+Improve traveler identity spacing beside profile photo
 
-গুরুত্বপূর্ণ:
-- Firebase Auth, Firestore, Storage, profile data বা cover-photo JavaScript পরিবর্তন করা হয়নি।
-- Cover image device-local storage-এ যেভাবে ছিল, সেভাবেই থাকবে।
-- Live deployment ও বাস্তব device verification ছাড়া 100% live success দাবি করা হচ্ছে না।
+পরীক্ষা: HTML parse, CSS presence, JavaScript syntax এবং ZIP integrity।
+Live Android rendering deploy-এর পর যাচাই করতে হবে।
