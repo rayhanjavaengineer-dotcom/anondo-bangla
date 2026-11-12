@@ -349,3 +349,35 @@ body.theme-dark .ab-field input,
 body.theme-dark .ab-auth-fields input{background:#101d23 !important;color:#f2f7f4 !important;-webkit-text-fill-color:#f2f7f4 !important;border-color:#526b68 !important;}
 body.theme-dark .ab-field input::placeholder,
 body.theme-dark .ab-auth-fields input::placeholder{color:#b7c8c2 !important;-webkit-text-fill-color:#b7c8c2 !important;opacity:1 !important;}
+
+
+/* v2.5 — keep cover controls clear of the overlapping XP/profile row.
+   The avatar intentionally overlaps the cover edge; the action button must not. */
+#abCoverArea > .ab-cover-change{
+  top:58px !important;
+  bottom:auto !important;
+  right:14px !important;
+  left:auto !important;
+}
+#abCoverArea > .ab-cover-remove{
+  top:101px !important;
+  bottom:auto !important;
+  right:14px !important;
+  left:auto !important;
+}
+@media(max-width:680px){
+  #abCoverArea > .ab-cover-change{
+    top:56px !important;
+    bottom:auto !important;
+    right:10px !important;
+  }
+  #abCoverArea > .ab-cover-remove{
+    top:98px !important;
+    bottom:auto !important;
+    right:10px !important;
+  }
+}
+@media(max-width:390px){
+  #abCoverArea > .ab-cover-change{top:54px !important}
+  #abCoverArea > .ab-cover-remove{top:94px !important}
+}
