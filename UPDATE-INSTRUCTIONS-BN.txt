@@ -1,18 +1,25 @@
-ANONDO BANGLA — TRAVEL IDENTITY 2.0
+ANONDO BANGLA — MOBILE UI & TRAVEL IDENTITY POLISH 2.1
 
-এই ZIP-এ শুধু প্রয়োজনীয় পরিবর্তিত ফাইল আছে। GitHub main branch-এ একই path-এ Replace/Upload করুন:
+১) ZIP Extract করুন।
+২) GitHub main branch-এর root folder-এ একই নামের ৪টি ফাইল Replace করুন।
+৩) অন্য কোনো ফাইল Delete করবেন না।
+৪) Commit করে Deploy সম্পন্ন হতে দিন।
 
-1. index.html
-2. profile-section.css
-3. navigation.js
-4. firebase-auth.js
+পরিবর্তিত ফাইল:
+- profile-section.css
+- app-shell-v20.css
+- navigation.js
+- app-shell-v20.js
 
-পরিবর্তন:
-- Login না করা অবস্থায় Email/Google Account panel উপরে থাকবে; Login সফল হলে এটি স্বয়ংক্রিয়ভাবে পৃষ্ঠার একদম নিচে চলে যাবে। Logout করলে আবার উপরে ফিরে আসবে।
-- Login সফল হলে success message দেখায় এবং account/sign-out অংশে scroll করে।
-- Traveler Profile-এ Facebook-inspired cover + overlapping avatar + profile details layout।
-- পুরোনো Travel Identity data, IDs, editor, photo, statistics ও Community markup রাখা হয়েছে।
-- Profile page refresh করলে আগের route ও scroll position restore হয়।
-- Profile open করলে name field-এ auto-focus করে editor-এ scroll হওয়ার bug সরানো হয়েছে।
+Commit summary:
+Polish mobile travel identity layout and preserve navigation state
 
-গুরুত্বপূর্ণ: Firebase credentials/configuration পরিবর্তন করা হয়নি। Live testing GitHub deploy-এর পর করতে হবে।
+Extended description:
+- Improve mobile Traveler Profile spacing and responsive statistics
+- Prevent fixed bottom navigation from hiding the final page content
+- Respect Android safe-area spacing
+- Keep the active bottom navigation tab synchronized
+- Restore the selected tool and scroll position after refresh
+- Preserve existing element IDs, Firebase authentication and travel data
+
+নোট: স্থানীয় Syntax ও ZIP পরীক্ষা করা হয়েছে। GitHub Deploy-এর পর বাস্তব Android ও Firebase পরীক্ষা করতে হবে।
