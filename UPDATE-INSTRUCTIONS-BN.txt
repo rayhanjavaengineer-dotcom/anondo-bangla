@@ -1,19 +1,17 @@
-ANONDO BANGLA — TRAVEL IDENTITY 2.2 UPDATE
+Anondo Bangla — UI / Dark Mode / Cover Control Hotfix 2.3
 
-GitHub main branch-এ নিচের 3টি ফাইল upload/replace করুন:
-1. index.html (Replace)
-2. profile-section.css (Replace)
-3. profile-cover.js (নতুন ফাইল হিসেবে Add)
+GitHub main branch-এ নিচের ৩টি ফাইলের path ও নাম ঠিক রেখে Replace করুন:
+1. profile-section.css
+2. social-community.css
+3. sw.js
 
-অন্য ফাইল delete করবেন না।
+কেন:
+- Cover Photo control-কে cover area-র ডান-নিচে স্থির করা, যাতে brand title-এর সঙ্গে overlap না হয়।
+- Dark Mode-এ Community Profile form-এর input, file picker, select, textarea ও placeholder-এর contrast ঠিক করা।
+- Service Worker cache version bump করা হয়েছে, যাতে নতুন CSS পুরোনো cache থেকে না আসে।
+- profile-cover.js-কে core cache list-এ যুক্ত করা হয়েছে।
 
-নতুন সুবিধা:
-- Traveler cover photo upload, preview, change ও remove
-- JPG/PNG/WebP, সর্বোচ্চ 8 MB input; upload-এর আগে browser-এ resize/compress
-- Cover photo এই device/browser-এর localStorage-এ সংরক্ষিত
-- Mobile-এ profile avatar ও name alignment ঠিক করা
-- Existing Firebase Auth, profile photo, community ও travel data untouched
+অন্য কোনো ফাইল মুছবেন না বা Firebase config/auth পরিবর্তন করবেন না।
+Deploy হওয়ার পর সাইট একবার reload করুন। প্রয়োজনে browser/PWA-তে পুরোনো cache পরিষ্কার করে আবার খুলুন।
 
-গুরুত্বপূর্ণ: এই সংস্করণে Cover Photo device-local; অন্য device-এ sync হয় না। Cross-device sync চাইলে পরে Firebase Storage rules ও account ownership যাচাই করে আলাদা integration করতে হবে।
-
-Commit summary: Add traveler cover photo controls and refine mobile profile avatar
+নোট: ZIP-এর ফাইলগুলো static source checks-এর জন্য প্রস্তুত; বাস্তব Live Android rendering পরীক্ষা deploy-এর পর করতে হবে।

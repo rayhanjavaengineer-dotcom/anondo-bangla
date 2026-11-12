@@ -245,3 +245,59 @@
  .ab-cover-remove{right:10px;bottom:48px;padding:6px 9px;font-size:9px}
 }
 @media(max-width:370px){.ab-identity-main{gap:8px}.ab-avatar-wrap{width:92px;height:92px;flex-basis:92px}.ab-avatar-ring{width:92px;height:92px}.ab-identity-copy h3{font-size:18px}.ab-cover-change span{display:none}}
+
+
+/* v2.3 visual hotfix: keep the cover control anchored inside the cover */
+#abCoverArea{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  overflow:hidden;
+}
+#abCoverArea > .ab-cover-change{
+  position:absolute !important;
+  left:auto !important;
+  top:auto !important;
+  right:14px !important;
+  bottom:14px !important;
+  z-index:20 !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:7px !important;
+  max-width:calc(100% - 28px);
+  min-height:36px;
+  padding:8px 12px !important;
+  border:1px solid rgba(255,255,255,.65) !important;
+  border-radius:999px !important;
+  background:rgba(4,28,31,.88) !important;
+  color:#fff !important;
+  font-size:12px !important;
+  line-height:1.2 !important;
+  font-weight:800 !important;
+  box-shadow:0 4px 16px rgba(0,0,0,.28) !important;
+  pointer-events:auto !important;
+  cursor:pointer;
+}
+#abCoverArea > .ab-cover-change span{display:inline !important}
+#abCoverArea > .ab-cover-remove{
+  position:absolute !important;
+  left:auto !important;
+  top:auto !important;
+  right:14px !important;
+  bottom:58px !important;
+  z-index:21 !important;
+  pointer-events:auto !important;
+}
+#abCoverArea > #abCoverInput{display:none !important}
+@media(max-width:560px){
+  #abCoverArea > .ab-cover-change{
+    right:10px !important;
+    bottom:10px !important;
+    min-height:34px;
+    padding:7px 10px !important;
+    font-size:11px !important;
+  }
+  #abCoverArea > .ab-cover-remove{right:10px !important;bottom:52px !important}
+}
